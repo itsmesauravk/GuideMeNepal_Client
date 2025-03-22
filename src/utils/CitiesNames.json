@@ -1,0 +1,387 @@
+[
+  {
+    "id": 1,
+    "districtId": "achham",
+    "name": "Achham"
+  },
+  {
+    "id": 2,
+    "districtId": "arghakhanchi",
+    "name": "Arghakhanchi"
+  },
+  {
+    "id": 3,
+    "districtId": "baglung",
+    "name": "Baglung"
+  },
+  {
+    "id": 4,
+    "districtId": "baitadi",
+    "name": "Baitadi"
+  },
+  {
+    "id": 5,
+    "districtId": "bajhang",
+    "name": "Bajhang"
+  },
+  {
+    "id": 6,
+    "districtId": "bajura",
+    "name": "Bajura"
+  },
+  {
+    "id": 7,
+    "districtId": "banke",
+    "name": "Banke"
+  },
+  {
+    "id": 8,
+    "districtId": "bara",
+    "name": "Bara"
+  },
+  {
+    "id": 9,
+    "districtId": "bardiya",
+    "name": "Bardiya"
+  },
+  {
+    "id": 10,
+    "districtId": "bhaktapur",
+    "name": "Bhaktapur"
+  },
+  {
+    "id": 11,
+    "districtId": "bhojpur",
+    "name": "Bhojpur"
+  },
+  {
+    "id": 12,
+    "districtId": "chitwan",
+    "name": "Chitwan"
+  },
+  {
+    "id": 13,
+    "districtId": "dadeldhura",
+    "name": "Dadeldhura"
+  },
+  {
+    "id": 14,
+    "districtId": "dailekh",
+    "name": "Dailekh"
+  },
+  {
+    "id": 15,
+    "districtId": "dang",
+    "name": "Dang"
+  },
+  {
+    "id": 16,
+    "districtId": "darchula",
+    "name": "Darchula"
+  },
+  {
+    "id": 17,
+    "districtId": "dhading",
+    "name": "Dhading"
+  },
+  {
+    "id": 18,
+    "districtId": "dhankuta",
+    "name": "Dhankuta"
+  },
+  {
+    "id": 19,
+    "districtId": "dhanusha",
+    "name": "Dhanusha"
+  },
+  {
+    "id": 20,
+    "districtId": "dolakha",
+    "name": "Dolakha"
+  },
+  {
+    "id": 21,
+    "districtId": "dolpa",
+    "name": "Dolpa"
+  },
+  {
+    "id": 22,
+    "districtId": "doti",
+    "name": "Doti"
+  },
+  {
+    "id": 23,
+    "districtId": "eastern-rukum",
+    "name": "Eastern Rukum"
+  },
+  {
+    "id": 24,
+    "districtId": "gorkha",
+    "name": "Gorkha"
+  },
+  {
+    "id": 25,
+    "districtId": "gulmi",
+    "name": "Gulmi"
+  },
+  {
+    "id": 26,
+    "districtId": "humla",
+    "name": "Humla"
+  },
+  {
+    "id": 27,
+    "districtId": "ilam",
+    "name": "Ilam"
+  },
+  {
+    "id": 28,
+    "districtId": "jajarkot",
+    "name": "Jajarkot"
+  },
+  {
+    "id": 29,
+    "districtId": "jhapa",
+    "name": "Jhapa"
+  },
+  {
+    "id": 30,
+    "districtId": "jumla",
+    "name": "Jumla"
+  },
+  {
+    "id": 31,
+    "districtId": "kailali",
+    "name": "Kailali"
+  },
+  {
+    "id": 32,
+    "districtId": "kalikot",
+    "name": "Kalikot"
+  },
+  {
+    "id": 33,
+    "districtId": "kanchanpur",
+    "name": "Kanchanpur"
+  },
+  {
+    "id": 34,
+    "districtId": "kapilvastu",
+    "name": "Kapilvastu"
+  },
+  {
+    "id": 35,
+    "districtId": "kaski",
+    "name": "Kaski"
+  },
+  {
+    "id": 36,
+    "districtId": "kathmandu",
+    "name": "Kathmandu"
+  },
+  {
+    "id": 37,
+    "districtId": "kavrepalanchok",
+    "name": "Kavrepalanchok"
+  },
+  {
+    "id": 38,
+    "districtId": "khotang",
+    "name": "Khotang"
+  },
+  {
+    "id": 39,
+    "districtId": "lalitpur",
+    "name": "Lalitpur"
+  },
+  {
+    "id": 40,
+    "districtId": "lamjung",
+    "name": "Lamjung"
+  },
+  {
+    "id": 41,
+    "districtId": "mahottari",
+    "name": "Mahottari"
+  },
+  {
+    "id": 42,
+    "districtId": "makwanpur",
+    "name": "Makwanpur"
+  },
+  {
+    "id": 43,
+    "districtId": "manang",
+    "name": "Manang"
+  },
+  {
+    "id": 44,
+    "districtId": "morang",
+    "name": "Morang"
+  },
+  {
+    "id": 45,
+    "districtId": "mugu",
+    "name": "Mugu"
+  },
+  {
+    "id": 46,
+    "districtId": "mustang",
+    "name": "Mustang"
+  },
+  {
+    "id": 47,
+    "districtId": "myagdi",
+    "name": "Myagdi"
+  },
+  {
+    "id": 48,
+    "districtId": "nawalpur",
+    "name": "Nawalpur"
+  },
+  {
+    "id": 49,
+    "districtId": "nuwakot",
+    "name": "Nuwakot"
+  },
+  {
+    "id": 50,
+    "districtId": "okhaldhunga",
+    "name": "Okhaldhunga"
+  },
+  {
+    "id": 51,
+    "districtId": "palpa",
+    "name": "Palpa"
+  },
+  {
+    "id": 52,
+    "districtId": "panchthar",
+    "name": "Panchthar"
+  },
+  {
+    "id": 53,
+    "districtId": "parasi",
+    "name": "Parasi"
+  },
+  {
+    "id": 54,
+    "districtId": "parbat",
+    "name": "Parbat"
+  },
+  {
+    "id": 55,
+    "districtId": "parsa",
+    "name": "Parsa"
+  },
+  {
+    "id": 56,
+    "districtId": "pyuthan",
+    "name": "Pyuthan"
+  },
+  {
+    "id": 57,
+    "districtId": "ramechhap",
+    "name": "Ramechhap"
+  },
+  {
+    "id": 58,
+    "districtId": "rasuwa",
+    "name": "Rasuwa"
+  },
+  {
+    "id": 59,
+    "districtId": "rautahat",
+    "name": "Rautahat"
+  },
+  {
+    "id": 60,
+    "districtId": "rolpa",
+    "name": "Rolpa"
+  },
+  {
+    "id": 61,
+    "districtId": "rupandehi",
+    "name": "Rupandehi"
+  },
+  {
+    "id": 62,
+    "districtId": "salyan",
+    "name": "Salyan"
+  },
+  {
+    "id": 63,
+    "districtId": "sankhuwasabha",
+    "name": "Sankhuwasabha"
+  },
+  {
+    "id": 64,
+    "districtId": "saptari",
+    "name": "Saptari"
+  },
+  {
+    "id": 65,
+    "districtId": "sarlahi",
+    "name": "Sarlahi"
+  },
+  {
+    "id": 66,
+    "districtId": "sindhuli",
+    "name": "Sindhuli"
+  },
+  {
+    "id": 67,
+    "districtId": "siraha",
+    "name": "Siraha"
+  },
+  {
+    "id": 68,
+    "districtId": "solukhumbu",
+    "name": "Solukhumbu"
+  },
+  {
+    "id": 69,
+    "districtId": "sunsari",
+    "name": "Sunsari"
+  },
+  {
+    "id": 70,
+    "districtId": "surkhet",
+    "name": "Surkhet"
+  },
+  {
+    "id": 71,
+    "districtId": "syangja",
+    "name": "Syangja"
+  },
+  {
+    "id": 72,
+    "districtId": "tanahun",
+    "name": "Tanahun"
+  },
+  {
+    "id": 73,
+    "districtId": "taplejung",
+    "name": "Taplejung"
+  },
+  {
+    "id": 74,
+    "districtId": "terhathum",
+    "name": "Terhathum"
+  },
+  {
+    "id": 75,
+    "districtId": "udayapur",
+    "name": "Udayapur"
+  },
+  {
+    "id": 76,
+    "districtId": "western-rukum",
+    "name": "Western Rukum"
+  },
+  {
+    "id": 77,
+    "districtId": "sindhupalchok",
+    "name": "Sindhupalchok"
+  }
+]

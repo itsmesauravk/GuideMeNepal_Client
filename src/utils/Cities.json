@@ -1,0 +1,327 @@
+[
+  {
+    "id": "achham",
+    "name": "Achham",
+    "imageUrl": "https://blog.irctctourism.com/wp-content/uploads/2024/05/featured.2.png"
+  },
+  {
+    "id": "arghakhanchi",
+    "name": "Arghakhanchi",
+    "imageUrl": "https://nepaltraveller.com/images/main/1605091331.sidetrackimagerara.jpg"
+  },
+  {
+    "id": "baglung",
+    "name": "Baglung",
+    "imageUrl": "https://lp-cms-production.imgix.net/2019-06/53693064.jpg"
+  },
+  {
+    "id": "baitadi",
+    "name": "Baitadi",
+    "imageUrl": "https://cdn.projectexpedition.com/photos/279668touractivityd09db5c9236a451fa0242d4dab5bf432_sized.jpg"
+  },
+  {
+    "id": "bajhang",
+    "name": "Bajhang",
+    "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/9d/e6/67/the-view-you-will-see.jpg?w=800&h=-1&s=1"
+  },
+  {
+    "id": "bajura",
+    "name": "Bajura",
+    "imageUrl": "https://worldexpeditions.com/croppedImages/Indian-Sub-Continent/Nepal/Tangge-village-2-2608542-1920px.jpg"
+  },
+  { "id": "banke", "name": "Banke", "imageUrl": "/images/districts/banke.jpg" },
+  { "id": "bara", "name": "Bara", "imageUrl": "/images/districts/bara.jpg" },
+  {
+    "id": "bardiya",
+    "name": "Bardiya",
+    "imageUrl": "/images/districts/bardiya.jpg"
+  },
+  {
+    "id": "bhaktapur",
+    "name": "Bhaktapur",
+    "imageUrl": "/images/districts/bhaktapur.jpg"
+  },
+  {
+    "id": "bhojpur",
+    "name": "Bhojpur",
+    "imageUrl": "/images/districts/bhojpur.jpg"
+  },
+  {
+    "id": "chitwan",
+    "name": "Chitwan",
+    "imageUrl": "/images/districts/chitwan.jpg"
+  },
+  {
+    "id": "dadeldhura",
+    "name": "Dadeldhura",
+    "imageUrl": "/images/districts/dadeldhura.jpg"
+  },
+  {
+    "id": "dailekh",
+    "name": "Dailekh",
+    "imageUrl": "/images/districts/dailekh.jpg"
+  },
+  { "id": "dang", "name": "Dang", "imageUrl": "/images/districts/dang.jpg" },
+  {
+    "id": "darchula",
+    "name": "Darchula",
+    "imageUrl": "/images/districts/darchula.jpg"
+  },
+  {
+    "id": "dhading",
+    "name": "Dhading",
+    "imageUrl": "/images/districts/dhading.jpg"
+  },
+  {
+    "id": "dhankuta",
+    "name": "Dhankuta",
+    "imageUrl": "/images/districts/dhankuta.jpg"
+  },
+  {
+    "id": "dhanusha",
+    "name": "Dhanusha",
+    "imageUrl": "/images/districts/dhanusha.jpg"
+  },
+  {
+    "id": "dolakha",
+    "name": "Dolakha",
+    "imageUrl": "/images/districts/dolakha.jpg"
+  },
+  { "id": "dolpa", "name": "Dolpa", "imageUrl": "/images/districts/dolpa.jpg" },
+  { "id": "doti", "name": "Doti", "imageUrl": "/images/districts/doti.jpg" },
+  {
+    "id": "eastern-rukum",
+    "name": "Eastern Rukum",
+    "imageUrl": "/images/districts/eastern-rukum.jpg"
+  },
+  {
+    "id": "gorkha",
+    "name": "Gorkha",
+    "imageUrl": "/images/districts/gorkha.jpg"
+  },
+  { "id": "gulmi", "name": "Gulmi", "imageUrl": "/images/districts/gulmi.jpg" },
+  { "id": "humla", "name": "Humla", "imageUrl": "/images/districts/humla.jpg" },
+  { "id": "ilam", "name": "Ilam", "imageUrl": "/images/districts/ilam.jpg" },
+  {
+    "id": "jajarkot",
+    "name": "Jajarkot",
+    "imageUrl": "/images/districts/jajarkot.jpg"
+  },
+  { "id": "jhapa", "name": "Jhapa", "imageUrl": "/images/districts/jhapa.jpg" },
+  { "id": "jumla", "name": "Jumla", "imageUrl": "/images/districts/jumla.jpg" },
+  {
+    "id": "kailali",
+    "name": "Kailali",
+    "imageUrl": "/images/districts/kailali.jpg"
+  },
+  {
+    "id": "kalikot",
+    "name": "Kalikot",
+    "imageUrl": "/images/districts/kalikot.jpg"
+  },
+  {
+    "id": "kanchanpur",
+    "name": "Kanchanpur",
+    "imageUrl": "/images/districts/kanchanpur.jpg"
+  },
+  {
+    "id": "kapilvastu",
+    "name": "Kapilvastu",
+    "imageUrl": "/images/districts/kapilvastu.jpg"
+  },
+  { "id": "kaski", "name": "Kaski", "imageUrl": "/images/districts/kaski.jpg" },
+  {
+    "id": "kathmandu",
+    "name": "Kathmandu",
+    "imageUrl": "/images/districts/kathmandu.jpg"
+  },
+  {
+    "id": "kavrepalanchok",
+    "name": "Kavrepalanchok",
+    "imageUrl": "/images/districts/kavrepalanchok.jpg"
+  },
+  {
+    "id": "khotang",
+    "name": "Khotang",
+    "imageUrl": "/images/districts/khotang.jpg"
+  },
+  {
+    "id": "lalitpur",
+    "name": "Lalitpur",
+    "imageUrl": "/images/districts/lalitpur.jpg"
+  },
+  {
+    "id": "lamjung",
+    "name": "Lamjung",
+    "imageUrl": "/images/districts/lamjung.jpg"
+  },
+  {
+    "id": "mahottari",
+    "name": "Mahottari",
+    "imageUrl": "/images/districts/mahottari.jpg"
+  },
+  {
+    "id": "makwanpur",
+    "name": "Makwanpur",
+    "imageUrl": "/images/districts/makwanpur.jpg"
+  },
+  {
+    "id": "manang",
+    "name": "Manang",
+    "imageUrl": "/images/districts/manang.jpg"
+  },
+  {
+    "id": "morang",
+    "name": "Morang",
+    "imageUrl": "/images/districts/morang.jpg"
+  },
+  { "id": "mugu", "name": "Mugu", "imageUrl": "/images/districts/mugu.jpg" },
+  {
+    "id": "mustang",
+    "name": "Mustang",
+    "imageUrl": "/images/districts/mustang.jpg"
+  },
+  {
+    "id": "myagdi",
+    "name": "Myagdi",
+    "imageUrl": "/images/districts/myagdi.jpg"
+  },
+  {
+    "id": "nawalpur",
+    "name": "Nawalpur",
+    "imageUrl": "/images/districts/nawalpur.jpg"
+  },
+  {
+    "id": "nuwakot",
+    "name": "Nuwakot",
+    "imageUrl": "/images/districts/nuwakot.jpg"
+  },
+  {
+    "id": "okhaldhunga",
+    "name": "Okhaldhunga",
+    "imageUrl": "/images/districts/okhaldhunga.jpg"
+  },
+  { "id": "palpa", "name": "Palpa", "imageUrl": "/images/districts/palpa.jpg" },
+  {
+    "id": "panchthar",
+    "name": "Panchthar",
+    "imageUrl": "/images/districts/panchthar.jpg"
+  },
+  {
+    "id": "parasi",
+    "name": "Parasi",
+    "imageUrl": "/images/districts/parasi.jpg"
+  },
+  {
+    "id": "parbat",
+    "name": "Parbat",
+    "imageUrl": "/images/districts/parbat.jpg"
+  },
+  { "id": "parsa", "name": "Parsa", "imageUrl": "/images/districts/parsa.jpg" },
+  {
+    "id": "pyuthan",
+    "name": "Pyuthan",
+    "imageUrl": "/images/districts/pyuthan.jpg"
+  },
+  {
+    "id": "ramechhap",
+    "name": "Ramechhap",
+    "imageUrl": "/images/districts/ramechhap.jpg"
+  },
+  {
+    "id": "rasuwa",
+    "name": "Rasuwa",
+    "imageUrl": "/images/districts/rasuwa.jpg"
+  },
+  {
+    "id": "rautahat",
+    "name": "Rautahat",
+    "imageUrl": "/images/districts/rautahat.jpg"
+  },
+  { "id": "rolpa", "name": "Rolpa", "imageUrl": "/images/districts/rolpa.jpg" },
+  {
+    "id": "rupandehi",
+    "name": "Rupandehi",
+    "imageUrl": "/images/districts/rupandehi.jpg"
+  },
+  {
+    "id": "salyan",
+    "name": "Salyan",
+    "imageUrl": "/images/districts/salyan.jpg"
+  },
+  {
+    "id": "sankhuwasabha",
+    "name": "Sankhuwasabha",
+    "imageUrl": "/images/districts/sankhuwasabha.jpg"
+  },
+  {
+    "id": "saptari",
+    "name": "Saptari",
+    "imageUrl": "/images/districts/saptari.jpg"
+  },
+  {
+    "id": "sarlahi",
+    "name": "Sarlahi",
+    "imageUrl": "/images/districts/sarlahi.jpg"
+  },
+  {
+    "id": "sindhuli",
+    "name": "Sindhuli",
+    "imageUrl": "/images/districts/sindhuli.jpg"
+  },
+  {
+    "id": "siraha",
+    "name": "Siraha",
+    "imageUrl": "/images/districts/siraha.jpg"
+  },
+  {
+    "id": "solukhumbu",
+    "name": "Solukhumbu",
+    "imageUrl": "/images/districts/solukhumbu.jpg"
+  },
+  {
+    "id": "sunsari",
+    "name": "Sunsari",
+    "imageUrl": "/images/districts/sunsari.jpg"
+  },
+  {
+    "id": "surkhet",
+    "name": "Surkhet",
+    "imageUrl": "/images/districts/surkhet.jpg"
+  },
+  {
+    "id": "syangja",
+    "name": "Syangja",
+    "imageUrl": "/images/districts/syangja.jpg"
+  },
+  {
+    "id": "tanahun",
+    "name": "Tanahun",
+    "imageUrl": "/images/districts/tanahun.jpg"
+  },
+  {
+    "id": "taplejung",
+    "name": "Taplejung",
+    "imageUrl": "/images/districts/taplejung.jpg"
+  },
+  {
+    "id": "terhathum",
+    "name": "Terhathum",
+    "imageUrl": "/images/districts/terhathum.jpg"
+  },
+  {
+    "id": "udayapur",
+    "name": "Udayapur",
+    "imageUrl": "/images/districts/udayapur.jpg"
+  },
+  {
+    "id": "western-rukum",
+    "name": "Western Rukum",
+    "imageUrl": "/images/districts/western-rukum.jpg"
+  },
+  {
+    "id": "sindhupalchok",
+    "name": "Sindhupalchok",
+    "imageUrl": "/images/districts/sindhupalchok.jpg"
+  }
+]
