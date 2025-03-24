@@ -8,10 +8,12 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
+import { signIn } from "next-auth/react"
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("np03cs4s230139@heraldcollege.edu.np")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -23,44 +25,42 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/client/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      if (response.data.success) {
-        toast.success(response.data.message || "Logged in successfully")
-        router.push("/")
-      } else {
-        toast.error(response.data.message || "Failed to login")
+      // const response = await axios.post(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/client/login`,
+      //   {
+      //     email,
+      //     password,
+      //   },
+      //   {
+      //     withCredentials: true,
+      //   }
+      // )
+      // if (response.data.success) {
+      //   // toast.success(response.data.message || "Logged in successfully")
+      //   router.push("/")
+      setLoading(true)
+      const result = await signIn("user-credentials", {
+        identifier: email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
+      })
+
+      console.log(result, "result")
+
+      if (result?.error) {
+        toast.error(result.error)
+      } else if (result?.url) {
+        router.push(result.url)
       }
     } catch (error: any) {
       console.log(error, "error")
       toast.error(error.response?.data?.message || "Failed to login")
+    } finally {
+      setLoading(false)
     }
   }
 
-  // const oauthLoginHandler = async (provider: string) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}`
-  //     )
-  //     if (response.data.success) {
-  //       toast.success(response.data.message || "Logged in successfully")
-  //       router.push("/")
-  //     } else {
-  //       toast.error(response.data.message || "Failed to login")
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "error")
-  //     toast.error(error.response?.data?.message || "Failed to login")
-  //   }
-  // }
   const oauthLoginHandler = (provider: string) => {
     try {
       // Direct browser redirect to OAuth provider
@@ -151,9 +151,10 @@ const LoginForm = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-primary-dark hover:bg-primary-darker text-white py-3 rounded-lg transition-colors font-medium"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
 
             <p className="text-center text-text-secondary">
