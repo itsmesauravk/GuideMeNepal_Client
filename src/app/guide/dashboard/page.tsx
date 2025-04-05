@@ -9,7 +9,8 @@ const page = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <Dashboard />
+      {/* <Dashboard /> */}
+      <h1>Dashboard</h1>
     </div>
   )
 }

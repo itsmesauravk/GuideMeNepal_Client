@@ -87,8 +87,12 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
+            <BreadcrumbLink href="/districts">Districts</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
             <BreadcrumbLink
-              href={`/locations/${guideDetails.guidingAreas[0].toLowerCase()}`}
+              href={`/districts/${guideDetails.guidingAreas[0].toLowerCase()}`}
             >
               {" "}
               {guideDetails.guidingAreas[0]}

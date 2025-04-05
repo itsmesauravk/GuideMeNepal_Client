@@ -2,6 +2,7 @@
 import { Search as SearchIcon } from "lucide-react"
 import React, { useState, ChangeEvent } from "react"
 import citiesName from "../../utils/CitiesNames.json"
+import { useRouter } from "next/navigation"
 
 // Define the District type
 interface District {
@@ -14,6 +15,8 @@ const HeroSection: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [searchResults, setSearchResults] = useState<District[]>([])
   const [showResults, setShowResults] = useState<boolean>(false)
+
+  const router = useRouter()
 
   // Import districts data
   const districts: District[] = citiesName
@@ -39,10 +42,7 @@ const HeroSection: React.FC = () => {
   const handleDistrictClick = (district: District): void => {
     setSearchTerm(district.name)
     setShowResults(false)
-    // You can add navigation or other actions here
-    console.log(
-      `Selected district: ${district.name} (ID: ${district.id}, District ID: ${district.districtId})`
-    )
+    router.push(`/districts/${district.districtId}`)
   }
 
   return (

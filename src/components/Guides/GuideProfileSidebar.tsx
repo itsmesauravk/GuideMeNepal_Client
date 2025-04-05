@@ -144,16 +144,32 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
               </span>
             </div>
           )}
-          <Link href={`/guides/${props.slug}/booking`}>
-            <Button className="w-full bg-primary-dark text-white rounded-lg py-3 text-lg font-medium hover:bg-blue-700 transition">
-              Create a new booking
-            </Button>
-          </Link>
-          <p className="text-center text-sm text-gray-600 mt-2 mb-2">OR</p>
-          {/* Message button */}
-          <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
-            Message {props.fullname}
-          </Button>
+          {props.availability.isAvailable ? (
+            <>
+              <Link href={`/guides/${props.slug}/booking`}>
+                <Button className="w-full bg-primary-dark text-white rounded-lg py-3 text-lg font-medium hover:bg-blue-700 transition">
+                  Create a new booking
+                </Button>
+              </Link>
+              <p className="text-center text-sm text-gray-600 mt-2 mb-2">OR</p>
+              {/* Message button */}
+              <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+                Message {props.fullname}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                className="w-full bg-gray-400 text-white rounded-lg py-3 text-lg font-medium cursor-not-allowed"
+                disabled
+              >
+                Currently Unavailable
+              </Button>
+              <p className="text-center text-sm text-gray-600 mt-2 mb-2">
+                This guide is not accepting bookings at this time
+              </p>
+            </>
+          )}
         </div>
 
         {/* Available areas */}

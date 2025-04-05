@@ -1,8 +1,19 @@
-import React from "react"
+import React, { useState } from "react"
 import { Languages, MapPin, Plus, X } from "lucide-react"
-import { Input } from "../ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
+} from "../ui/select"
+
 import { GuideRegisterForm } from "@/utils/Types"
 import { ArrayField } from "./GuideRegister"
+import LanguagesList from "../../utils/Languages.json"
+import DistrictName from "../../utils/CitiesNames.json"
 
 interface StepTwoProps {
   formData: GuideRegisterForm
@@ -17,23 +28,56 @@ const StepTwo: React.FC<StepTwoProps> = ({
   addArrayField,
   removeArrayField,
 }) => {
+  const [languageNote, setLanguageNote] = useState(
+    "Your first language selection should be your native language."
+  )
+  const [districtNote, setDistrictNote] = useState(
+    "The first district selection will be considered your primary guiding location."
+  )
+
   return (
     <div className="space-y-6">
+      {/* Languages Section */}
       <div className="space-y-3">
         <label className="block text-text-primary font-medium">Languages</label>
+
+        {/* Language Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3">
+          <p className="text-blue-800 text-sm">{languageNote}</p>
+        </div>
+
         {formData.languages.map((lang, index) => (
-          <div key={index} className="flex space-x-2">
+          <div key={index} className="flex space-x-2 mb-2">
             <div className="relative flex-1">
-              <Languages className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
-              <Input
-                type="text"
+              <Select
                 value={lang}
-                onChange={(e) =>
-                  handleArrayInput("languages", index, e.target.value)
+                onValueChange={(value) =>
+                  handleArrayInput("languages", index, value)
                 }
-                className="w-full pl-10 pr-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary"
-                placeholder="Language"
-              />
+              >
+                <SelectTrigger className="w-full pl-10 pr-4 py-3">
+                  <Languages className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
+                  <SelectValue placeholder="Select Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Languages</SelectLabel>
+                    {LanguagesList.map((language) => (
+                      <SelectItem
+                        key={language.id}
+                        value={language.language}
+                        disabled={
+                          index === 0
+                            ? false
+                            : formData.languages.includes(language.language)
+                        }
+                      >
+                        {language.language}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
             {formData.languages.length > 1 && (
               <button
@@ -56,23 +100,49 @@ const StepTwo: React.FC<StepTwoProps> = ({
         </button>
       </div>
 
+      {/* Guiding Areas Section */}
       <div className="space-y-3">
         <label className="block text-text-primary font-medium">
           Guiding Areas
         </label>
+
+        {/* District Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3">
+          <p className="text-blue-800 text-sm">{districtNote}</p>
+        </div>
+
         {formData.guidingAreas.map((area, index) => (
-          <div key={index} className="flex space-x-2">
+          <div key={index} className="flex space-x-2 mb-2">
             <div className="relative flex-1">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
-              <Input
-                type="text"
+              <Select
                 value={area}
-                onChange={(e) =>
-                  handleArrayInput("guidingAreas", index, e.target.value)
+                onValueChange={(value) =>
+                  handleArrayInput("guidingAreas", index, value)
                 }
-                className="w-full pl-10 pr-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary"
-                placeholder="Guiding Area"
-              />
+              >
+                <SelectTrigger className="w-full pl-10 pr-4 py-3">
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
+                  <SelectValue placeholder="Select District" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Districts</SelectLabel>
+                    {DistrictName.map((district) => (
+                      <SelectItem
+                        key={district.id}
+                        value={district.districtId}
+                        disabled={
+                          index === 0
+                            ? false
+                            : formData.guidingAreas.includes(district.name)
+                        }
+                      >
+                        {district.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
             {formData.guidingAreas.length > 1 && (
               <button

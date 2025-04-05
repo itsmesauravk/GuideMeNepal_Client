@@ -13,9 +13,13 @@ import {
 } from "@/components/ui/breadcrumb"
 import axios from "axios"
 import TimeAgo from "../common/TimeAgo"
+import citiesName from "../../utils/CitiesNames.json"
 
 import { GuideDetailsType } from "@/utils/Types"
 import { toast } from "sonner"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { SessionData } from "@/utils/Types"
 
 interface BookingProps {
   id: string
@@ -27,6 +31,9 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
   const [guideDetails, setGuideDetails] = useState<GuideDetailsType | null>(
     null
   )
+  const router = useRouter()
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
   const {
     register,
     handleSubmit,
@@ -52,8 +59,6 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
   }
 
   const handleCreateCustomizeBooking = async (formDetails: any) => {
-    console.log(formDetails)
-
     try {
       setLoading(true)
 
@@ -63,7 +68,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
           ...formDetails,
           guideId: guideDetails?.id,
           guideSlug: guideDetails?.slug,
-          userId: 2,
+          userId: session?.user?.id,
         }
       )
 
@@ -73,7 +78,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
         // Show success message
         toast.success("Booking request sent successfully")
         // Optionally redirect or clear form
-        // router.push("/bookings");
+        router.push("/my-bookings")
       } else {
         // Show error message from API if available
         toast.error(result.message || "Failed to send booking request")
@@ -186,7 +191,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink
-                href={`/locations/${guideDetails?.guidingAreas[0].toLowerCase()}`}
+                href={`/districts/${guideDetails?.guidingAreas[0].toLowerCase()}`}
               >
                 {" "}
                 {guideDetails?.guidingAreas[0] || "undefined"}
@@ -355,17 +360,39 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
                 </span>
               )}
             </div>
-            {/* destinatiom  */}
+            {/* contact  */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Phone Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Your phone number (+977)"
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                {...register("contact", { required: true })}
+              />
+              {errors.contact && (
+                <span className="text-xs text-red-500">
+                  Phone number is required
+                </span>
+              )}
+            </div>
+            {/* destination  */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Destination <span className="text-red-500">*</span>
               </label>
-              <input
-                type="text"
-                placeholder="Where do you want to go?"
+              <select
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 {...register("destination", { required: true })}
-              />
+              >
+                <option value="">Select a destination</option>
+                {citiesName.map((city) => (
+                  <option key={city.id} value={city.districtId}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
               {errors.destination && (
                 <span className="text-xs text-red-500">
                   Destination is required
