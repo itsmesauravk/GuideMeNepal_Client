@@ -46,7 +46,7 @@ const GuideRegister = () => {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<GuideRegisterForm>(initialFormData)
   const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(true)
+  const [submitted, setSubmitted] = useState(false)
 
   const handleInputChange = (e: InputChangeEvent): void => {
     const { name, value } = e.target

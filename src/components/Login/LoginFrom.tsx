@@ -46,8 +46,6 @@ const LoginForm = () => {
         callbackUrl: "/",
       })
 
-      console.log(result, "result")
-
       if (result?.error) {
         toast.error(result.error)
       } else if (result?.url) {

@@ -8,10 +8,12 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
+import { signIn } from "next-auth/react"
 
 const GuideLoginForm = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("sanjeetkazithapa@gmail.com")
+  const [password, setPassword] = useState("secret123")
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -23,25 +25,42 @@ const GuideLoginForm = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/guide/login`,
-        {
-          email,
-          password,
-        }
-      )
+      // const response = await axios.post(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/guide/login`,
+      //   {
+      //     email,
+      //     password,
+      //   }
+      // )
 
-      if (response.data.success) {
-        toast.success(response.data.message || "Logged in successfully")
-        if (response.data.data.firstTimeLogin) {
-          router.push(
-            `/auth/change-password?authToken=${response.data.data.guideToken}`
-          )
-        } else {
-          router.push("/guide/dashboard")
-        }
-      } else {
-        toast.error(response.data.message || "Failed to login")
+      // console.log(response.data.data.firstTimeLogin, "response")
+
+      // if (response.data.success) {
+      //   toast.success(response.data.message || "Logged in successfully")
+      //   if (response.data.data.data.firstTimeLogin) {
+      //     router.push(
+      //       `/auth/change-password?authToken=${response.data.data.jwt}`
+      //     )
+      //   } else {
+      //     router.push("/guide/dashboard")
+      //   }
+      // } else {
+      //   toast.error(response.data.message || "Failed to login")
+      // }
+      setLoading(true)
+      const result = await signIn("guide-credentials", {
+        identifier: email,
+        password,
+        redirect: false,
+        callbackUrl: "/guide/dashboard",
+      })
+
+      console.log(result, "result")
+
+      if (result?.error) {
+        toast.error(result.error)
+      } else if (result?.url) {
+        router.push(result.url)
       }
     } catch (error: any) {
       console.log(error, "error")
