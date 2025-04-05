@@ -15,12 +15,15 @@ import {
   History,
   ChevronDown,
   ChevronUp,
+  TrashIcon,
 } from "lucide-react"
 import { Spinner, Tooltip } from "@heroui/react"
 
 import Link from "next/link"
 import { BookingType } from "@/utils/Types"
 import TimeAgo from "../common/TimeAgo"
+import { useSession } from "next-auth/react"
+import { SessionData } from "@/utils/Types"
 
 const BookingHome = () => {
   const [bookings, setBookings] = useState<BookingType[]>([])
@@ -34,9 +37,13 @@ const BookingHome = () => {
   const [activeTab, setActiveTab] = useState("upcoming")
   const [expandedBooking, setExpandedBooking] = useState<number | null>(null)
 
+  const { data: sessionData } = useSession()
+
+  const session = sessionData as unknown as SessionData
+
   const handleGetMyBookings = async () => {
     setLoading(true)
-    const userId = 2
+    const userId = session?.user?.id
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/common/get-bookings/${userId}?role=user`
@@ -68,11 +75,17 @@ const BookingHome = () => {
 
     setCancelLoading(true)
     try {
-      // Implement your cancel booking API call here
-
-      // After successful cancellation
-      handleGetMyBookings()
-      closeCancelModal()
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/cancel-customize-booking-user/${selectedBookingId}`,
+        {
+          message: cancelReason,
+        }
+      )
+      const data = response.data
+      if (data.success) {
+        handleGetMyBookings()
+        closeCancelModal()
+      }
     } catch (error) {
       console.error("Error cancelling booking:", error)
     } finally {
@@ -113,9 +126,7 @@ const BookingHome = () => {
     } else {
       return bookings.filter(
         (booking) =>
-          ["rejected", "cancelled", "completed"].includes(
-            booking.bookingStatus
-          ) ||
+          ["rejected", "cancelled"].includes(booking.bookingStatus) ||
           (booking.bookingStatus === "accepted" &&
             booking.travelStatus === "completed")
       )
@@ -185,8 +196,10 @@ const BookingHome = () => {
   }
 
   useEffect(() => {
-    handleGetMyBookings()
-  }, [])
+    if (session?.user?.id) {
+      handleGetMyBookings()
+    }
+  }, [session?.user?.id])
 
   const filteredBookings = getFilteredBookings()
 
@@ -295,8 +308,14 @@ const BookingHome = () => {
                             (<TimeAgo timestamp={booking.createdAt} />)
                           </span>
                         </h2>
-                        <p className="text-medium text-gray-600">
-                          Guide: {booking.Guide.fullname}
+                        <p className="text-medium  text-gray-600 ">
+                          Guide: {booking.Guide.fullname}{" "}
+                          <Link
+                            href={`/guides/${booking.Guide.slug}`}
+                            className="text-blue-500 italic underline ml-2"
+                          >
+                            View Profile
+                          </Link>
                         </p>
                       </div>
                       <div className="flex flex-col items-end">
@@ -373,6 +392,19 @@ const BookingHome = () => {
                               </p>
                             </div>
                           )}
+                          {booking.cancelMessage && (
+                            <div className="md:col-span-2 bg-red-50 p-3 rounded-md border border-red-200">
+                              <p className="font-medium text-red-600">
+                                {booking.bookingStatus === "cancelled"
+                                  ? "Cancelled by you "
+                                  : "Rejected by guide "}
+                                :{" "}
+                                <span className="font-bold text-red-700">
+                                  {booking.cancelMessage}
+                                </span>
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
@@ -395,6 +427,16 @@ const BookingHome = () => {
                           >
                             <Trash2 className="h-3 w-3 mr-1" />
                             Cancel
+                          </button>
+                        )}
+                        {(booking.bookingStatus === "cancelled" ||
+                          booking.bookingStatus === "rejected") && (
+                          <button
+                            onClick={() => alert("Delete button")}
+                            className="px-3 py-1 text-md border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition-colors flex items-center"
+                          >
+                            <TrashIcon className="h-3 w-3 mr-1" />
+                            Remove
                           </button>
                         )}
                       </div>
@@ -455,7 +497,9 @@ const BookingHome = () => {
               </button>
               <button
                 onClick={handleCancelBooking}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center"
+                className={`px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center ${
+                  cancelLoading && "cursor-not-allowed opacity-70"
+                }`}
                 disabled={cancelLoading}
               >
                 {cancelLoading ? (
