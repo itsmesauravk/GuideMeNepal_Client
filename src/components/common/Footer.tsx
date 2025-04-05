@@ -1,5 +1,6 @@
 import React from "react"
 import Logo from "./Logo"
+import Link from "next/link"
 
 const Footer = () => {
   return (
@@ -77,7 +78,12 @@ const Footer = () => {
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Tour Guide</a>
+                <Link
+                  href={"/guides"}
+                  className="text-gray-600 font-semibold hover:text-gray-800"
+                >
+                  Tour Guide
+                </Link>
               </li>
             </nav>
           </div>

@@ -11,11 +11,14 @@ import {
   ChevronLeft,
   ChevronRight,
   NotebookIcon,
+  ClockIcon,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Cookies from "js-cookie"
+import { useSession } from "next-auth/react"
+import { SessionData } from "@/utils/Types"
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -23,12 +26,21 @@ const Sidebar = () => {
   const pathname = usePathname()
   const [token, setToken] = useState("")
 
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
+
   const sidebarItems = [
     {
       id: "dashboard",
       icon: <Home className="w-5 h-5" />,
       label: "Dashboard",
       url: "/guide/dashboard",
+    },
+    {
+      id: "ongoing",
+      icon: <ClockIcon className="w-5 h-5" />,
+      label: "Ongoing Tour",
+      url: "/guide/ongoing",
     },
     {
       id: "requests",
@@ -81,8 +93,6 @@ const Sidebar = () => {
     }
   }, [])
 
-  console.log("token", token)
-
   return (
     <div
       className={`
@@ -103,7 +113,7 @@ const Sidebar = () => {
         {!isCollapsed && (
           <div className="flex items-center gap-4">
             <span className="font-bold text-xl text-gray-800">
-              Guide FullName
+              {session?.user?.name}
             </span>
           </div>
         )}

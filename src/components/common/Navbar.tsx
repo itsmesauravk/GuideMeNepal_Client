@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, ChangeEvent } from "react"
+import React, { useState, ChangeEvent, useEffect } from "react"
 import {
   Search,
   Bell,
@@ -29,6 +29,9 @@ import {
   Avatar,
   User as HeroUser,
 } from "@heroui/react"
+import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 // Define the District type
 interface District {
@@ -37,20 +40,18 @@ interface District {
   name: string
 }
 
-interface NavbarProps {
-  isLoggedIn?: boolean
-}
-
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = true }) => {
+const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [searchResults, setSearchResults] = useState<District[]>([])
   const [showResults, setShowResults] = useState<boolean>(false)
+  const [isLoggedIn, setIsloggedIn] = useState<boolean>(false)
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  const userToken = Cookies.get("userToken")
-  console.log("User Token: ", userToken)
+  const router = useRouter()
+
+  const { data: session } = useSession()
 
   // Import districts data
   const districts: District[] = districtsData
@@ -76,11 +77,16 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = true }) => {
   const handleDistrictClick = (district: District): void => {
     setSearchTerm(district.name)
     setShowResults(false)
-    // You can add navigation or other actions here
-    console.log(
-      `Selected district: ${district.name} (ID: ${district.id}, District ID: ${district.districtId})`
-    )
+    router.push(`/districts/${district.districtId}`)
   }
+
+  useEffect(() => {
+    if (session?.user) {
+      setIsloggedIn(true)
+    } else {
+      setIsloggedIn(false)
+    }
+  }, [session])
 
   return (
     <nav className="bg-background border-b border-ui-divider">
@@ -142,12 +148,21 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = true }) => {
                 <div className="flex items-center gap-4">
                   <Dropdown placement="bottom-start">
                     <DropdownTrigger>
-                      <Avatar
-                        isBordered
-                        as="button"
-                        className="transition-transform"
-                        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                      />
+                      {session?.user?.image ? (
+                        <Avatar
+                          isBordered
+                          as="button"
+                          className="transition-transform"
+                          src={session?.user?.image}
+                        />
+                      ) : (
+                        <Avatar
+                          isBordered
+                          as="button"
+                          className="transition-transform"
+                          name={session?.user?.name || "image"}
+                        />
+                      )}
                     </DropdownTrigger>
                     <DropdownMenu aria-label="User Actions" variant="flat">
                       <DropdownItem href="/account" key="account">
@@ -169,7 +184,11 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = true }) => {
                       >
                         <Divider className="" />
                       </DropdownItem>
-                      <DropdownItem key="logout" color="danger">
+                      <DropdownItem
+                        key="logout"
+                        color="danger"
+                        onPress={() => signOut({ callbackUrl: "/" })}
+                      >
                         <p className="text-lg">Log Out</p>
                       </DropdownItem>
                     </DropdownMenu>

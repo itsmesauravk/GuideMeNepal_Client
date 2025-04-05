@@ -49,7 +49,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
 
   return (
     <Link href={`/guides/${safeDetails.slug}`}>
-      <Card className="w-80 max-w-sm hover:cursor-pointer">
+      <Card className="w-72 max-w-sm h-[380px] hover:cursor-pointer">
         <div className="relative">
           <img
             src={safeDetails?.imageUrl || "/images/user.webp"}
