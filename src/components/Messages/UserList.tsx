@@ -1,0 +1,303 @@
+"use client"
+import React, { useEffect, useState } from "react"
+import Image from "next/image"
+import { formatDistanceToNow } from "date-fns"
+import { useSocket } from "@/providers/ClientSocketProvider"
+import axios from "axios"
+import { useSession } from "next-auth/react"
+import { SessionData } from "@/utils/Types"
+
+interface Participant {
+  id: number
+  name: string
+  profilePicture: string
+  type: string
+}
+
+interface Conversation {
+  conversationId: number
+  isGroupChat: boolean
+  lastMessage: string
+  createdAt: string
+  updatedAt: string
+  participants: Participant[]
+}
+
+interface UserListProps {
+  messagesUsersList: Array<{
+    name: string
+    message: string
+    date: string
+    activeStatus: "online" | "offline"
+    status: "sent" | "delivered" | "received"
+    receivedCount?: number
+  }>
+  activeButton: string
+  handleTabChange: (tab: string) => void
+  handleSelectUser: (user: any) => void
+  selectedUser: { name: string; activeStatus: string; avatar: string } | null
+  animatingUserList: boolean
+  showUserList: boolean
+}
+
+const UserList = ({
+  messagesUsersList,
+  activeButton,
+  handleTabChange,
+  handleSelectUser,
+  selectedUser,
+  animatingUserList,
+  showUserList,
+}: UserListProps) => {
+  // Format the date to relative time (e.g., "2 hours ago")
+  const formatMessageDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString)
+      return formatDistanceToNow(date, { addSuffix: true })
+    } catch (error) {
+      return dateString || "Just now"
+    }
+  }
+
+  const { onlineUsers, socket } = useSocket()
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
+  const [conversations, setConversations] = useState<Conversation[]>([])
+
+  const userRole = session?.user?.role === "user" ? "User" : "Guide"
+  const myRole = session?.user?.role === "user" ? "Guide" : "User"
+  const myId = session?.user?.id || 0
+
+  const handleGetConversations = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/message/get-conversations/${session?.user?.id}/${userRole}`
+      )
+      if (response.data.success) {
+        setConversations(response.data.data)
+      } else {
+        console.log("Error fetching conversations:", response.data.message)
+      }
+    } catch (error) {
+      console.error("Error fetching conversations:", error)
+    }
+  }
+
+  // Real-time updates for new messages
+  useEffect(() => {
+    if (socket) {
+      // Listen for new conversations
+      socket.on("getConversation", (newConversation) => {
+        console.log("New conversation received:", newConversation)
+
+        setConversations((prevConversations) => {
+          // Check if the conversation already exists in our list
+          const existingConversationIndex = prevConversations.findIndex(
+            (conv) => conv.conversationId === newConversation.id
+          )
+
+          // If conversation exists, update it
+          if (existingConversationIndex !== -1) {
+            const updatedConversations = [...prevConversations]
+            updatedConversations[existingConversationIndex] = {
+              ...updatedConversations[existingConversationIndex],
+              lastMessage: newConversation.lastMessage,
+              updatedAt: newConversation.updatedAt,
+            }
+            return updatedConversations
+          }
+          // If it's a new conversation, we need to format it to match our Conversation type
+          // and add it to the list
+          else {
+            // You'll need to fetch the participant details or have them in the socket response
+            // This is a placeholder assuming the socket gives you this information in a future update
+            const formattedConversation: Conversation = {
+              conversationId: newConversation.id,
+              isGroupChat: newConversation.isGroupChat,
+              lastMessage: newConversation.lastMessage,
+              createdAt: newConversation.createdAt,
+              updatedAt: newConversation.updatedAt,
+              participants: [], // You'll need to populate this from the socket response
+            }
+
+            // If this is a new conversation, you might want to fetch the full details
+            // including participants
+            handleGetConversations()
+
+            return prevConversations // Return unchanged for now, as handleGetConversations will update
+          }
+        })
+      })
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("getConversation")
+      }
+    }
+  }, [socket])
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      handleGetConversations()
+    }
+  }, [session?.user?.id])
+
+  return (
+    <section
+      className={`transition-all duration-300 ease-in-out h-screen max-w-sm w-1/4 ${
+        animatingUserList
+          ? showUserList
+            ? "w-1/4 opacity-100"
+            : "w-0 opacity-0"
+          : ""
+      }`}
+    >
+      <div className="flex flex-col h-full">
+        {/* Tabs */}
+        <div className="flex border-b border-mistGray-400">
+          <p className="flex-1 text-center py-2 cursor-pointer hover:bg-gray-50">
+            Messages
+          </p>
+        </div>
+
+        {/* Search */}
+        <div className="p-4 border-b border-mistGray-400">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search messages"
+              className="w-full py-2 pl-10 pr-4 bg-gray-100 rounded-full focus:outline-none"
+            />
+            <svg
+              className="absolute w-5 h-5 text-gray-500 left-3 top-2.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* User List */}
+        <div className="flex-1 overflow-y-auto">
+          {conversations.length > 0 ? (
+            conversations.map((conversation) => {
+              // Add a check to ensure participants array exists and has elements
+              if (
+                !conversation.participants ||
+                conversation.participants.length === 0
+              ) {
+                return null // Skip rendering this conversation
+              }
+
+              // Since we're dealing with one-to-one chats, get the other participant
+              const participant = conversation.participants[0]
+              const isOnline = onlineUsers.includes(participant.id.toString())
+
+              return (
+                <div
+                  key={conversation.conversationId}
+                  className={`flex items-start p-4 cursor-pointer border-b border-mistGray-400 hover:bg-gray-50 `}
+                  onClick={() =>
+                    handleSelectUser({
+                      id: participant.id,
+                      name: participant.name,
+                      avatar: participant.profilePicture,
+                      type: participant.type,
+                      conversationId: conversation.conversationId,
+                      activeStatus: isOnline ? "online" : "offline",
+                      message: conversation.lastMessage,
+                      date: conversation.updatedAt,
+                    })
+                  }
+                >
+                  {/* Avatar */}
+                  <div className="relative mr-3">
+                    <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
+                      <Image
+                        src={
+                          participant.profilePicture || "/default-avatar.png"
+                        }
+                        alt={participant.name}
+                        width={48}
+                        height={48}
+                        className="object-cover"
+                      />
+                    </div>
+                    {/* Online indicator */}
+                    {isOnline && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                    )}
+                  </div>
+
+                  {/* User info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-baseline">
+                      <h3 className="font-medium truncate">
+                        {participant.name}{" "}
+                        {participant.type === "Guide" && (
+                          <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
+                            Guide
+                          </span>
+                        )}
+                      </h3>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      {isOnline ? (
+                        <p className="text-xs text-green-500 font-semibold">
+                          Online
+                        </p>
+                      ) : (
+                        <p className="text-xs text-red-500 font-semibold">
+                          Offline
+                        </p>
+                      )}
+                      •
+                      <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
+                        {formatMessageDate(conversation.updatedAt)}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="text-sm text-gray-600 truncate">
+                        {conversation.lastMessage}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full p-4 text-center text-gray-500">
+              <svg
+                className="w-12 h-12 mb-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                />
+              </svg>
+              <p>No conversations yet</p>
+              <p className="text-sm">Your messages will appear here</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default UserList
