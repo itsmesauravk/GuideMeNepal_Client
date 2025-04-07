@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Providers } from "./providers"
 import { Provider } from "@/providers/Providers"
+import { ClientSocketProvider } from "@/providers/ClientSocketProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,7 @@ export default function RootLayout({
       >
         <Provider>
           <Providers />
-          {children}
+          <ClientSocketProvider>{children}</ClientSocketProvider>
         </Provider>
       </body>
     </html>
