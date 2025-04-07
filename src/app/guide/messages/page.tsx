@@ -1,4 +1,5 @@
 import Sidebar from "@/components/common/Sidebar"
+import UserMessages from "@/components/Messages/UserMessage"
 
 import React from "react"
 
@@ -8,7 +9,7 @@ const page = () => {
       {/* Sidebar */}
       <Sidebar />
 
-      <div className="bg-blue-100 w-full">Messages</div>
+      <UserMessages />
     </div>
   )
 }
