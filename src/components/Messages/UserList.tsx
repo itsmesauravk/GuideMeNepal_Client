@@ -154,16 +154,22 @@ const UserList = ({
       }`}
     >
       <div className="flex flex-col h-full">
-        {/* Tabs */}
-        <div className="flex border-b border-mistGray-400">
-          <p className="flex-1 text-center py-2 cursor-pointer hover:bg-gray-50">
-            Messages
-          </p>
-        </div>
-
         {/* Search */}
-        <div className="p-4 border-b border-mistGray-400">
-          <div className="relative">
+        <div className="flex gap-2 p-4 border-b border-mistGray-400">
+          {/* small user profile  */}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 border-2 border-green-600 bg-gray-300 rounded-full overflow-hidden">
+              <Image
+                src={session?.user?.image || "/images/default_user.avif"}
+                alt={session?.user?.name || "User"}
+                width={40}
+                height={40}
+                className="object-cover"
+              />
+            </div>
+          </div>
+          {/* search part  */}
+          <div className="relative w-full">
             <input
               type="text"
               placeholder="Search messages"

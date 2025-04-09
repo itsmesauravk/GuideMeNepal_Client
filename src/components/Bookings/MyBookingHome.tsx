@@ -16,6 +16,12 @@ import {
   ChevronDown,
   ChevronUp,
   TrashIcon,
+  TimerIcon,
+  ClockAlertIcon,
+  Star,
+  MessageSquare,
+  InfoIcon,
+  Loader2Icon,
 } from "lucide-react"
 import { Spinner, Tooltip } from "@heroui/react"
 
@@ -24,6 +30,9 @@ import { BookingType } from "@/utils/Types"
 import TimeAgo from "../common/TimeAgo"
 import { useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
+import BookingCard from "./BookingCard"
+import { toast } from "sonner"
+import { set } from "date-fns"
 
 const BookingHome = () => {
   const [bookings, setBookings] = useState<BookingType[]>([])
@@ -34,7 +43,8 @@ const BookingHome = () => {
   )
   const [cancelReason, setCancelReason] = useState("")
   const [cancelLoading, setCancelLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState("upcoming")
+  const [userCompletingBooking, setUserCompletingBooking] = useState(false)
+  const [activeTab, setActiveTab] = useState("ongoing")
   const [expandedBooking, setExpandedBooking] = useState<number | null>(null)
 
   const { data: sessionData } = useSession()
@@ -51,6 +61,19 @@ const BookingHome = () => {
       const data = response.data
       if (data.success) {
         setBookings(data.data)
+        // if booking include accepted and on-going || guide-completed, set active tab to ongoing
+        if (
+          data.data.some(
+            (booking: BookingType) =>
+              booking.bookingStatus === "accepted" &&
+              (booking.travelStatus === "on-going" ||
+                booking.travelStatus === "guide-completed")
+          )
+        ) {
+          setActiveTab("ongoing")
+        } else {
+          setActiveTab("upcoming")
+        }
       }
     } catch (error) {
       console.error("Error fetching bookings:", error)
@@ -68,6 +91,14 @@ const BookingHome = () => {
     setSelectedBookingId(null)
     setCancelReason("")
     setCancelModalOpen(false)
+  }
+
+  const handleCalculateDaysRemaining = (startDate: string) => {
+    const today = new Date()
+    const tripStart = new Date(startDate)
+    const diffTime = tripStart.getTime() - today.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return diffDays
   }
 
   const handleCancelBooking = async () => {
@@ -105,23 +136,23 @@ const BookingHome = () => {
     })
   }
 
-  // Calculate days remaining until trip start
-  const getDaysRemaining = (startDate: string) => {
-    const today = new Date()
-    const tripStart = new Date(startDate)
-    const diffTime = tripStart.getTime() - today.getTime()
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
-  }
+ 
 
   // Get bookings based on active tab
   const getFilteredBookings = () => {
-    if (activeTab === "upcoming") {
+    if (activeTab === "ongoing") {
+      return bookings.filter(
+        (booking) =>
+          ["accepted"].includes(booking.bookingStatus) &&
+          (booking.travelStatus === "on-going" ||
+            booking.travelStatus === "guide-completed" ||
+            booking.travelStatus === "completed")
+      )
+    } else if (activeTab === "upcoming") {
       return bookings.filter(
         (booking) =>
           ["pending", "accepted"].includes(booking.bookingStatus) &&
-          (booking.travelStatus === "not-started" ||
-            booking.travelStatus === "on-going")
+          booking.travelStatus === "not-started"
       )
     } else {
       return bookings.filter(
@@ -133,65 +164,26 @@ const BookingHome = () => {
     }
   }
 
-  // Get status badge color
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-      case "accepted":
-        return "bg-green-100 text-green-800"
-      case "pending":
-        return "bg-yellow-100 text-yellow-800"
-      case "cancelled":
-      case "rejected":
-        return "bg-red-100 text-red-800"
-      case "completed":
-        return "bg-blue-100 text-blue-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
-  }
-
-  // Get travel status display info
-  const getTravelStatusInfo = (booking: BookingType) => {
-    if (booking.bookingStatus === "accepted") {
-      if (booking.travelStatus === "not-started") {
-        const daysRemaining = getDaysRemaining(booking.startDate)
-        return {
-          color: "text-blue-600",
-          icon: <Calendar className="h-4 w-4 mr-1" />,
-          text: `${daysRemaining} days until trip starts`,
-        }
-      } else if (booking.travelStatus === "on-going") {
-        return {
-          color: "text-green-600",
-          icon: <Clock className="h-4 w-4 mr-1" />,
-          text: "Trip in progress",
-        }
-      } else if (booking.travelStatus === "completed") {
-        return {
-          color: "text-gray-600",
-          icon: <CheckCircle className="h-4 w-4 mr-1" />,
-          text: "Trip completed",
-        }
+  const handleUserCompleteBooking = async (bookingId: number) => {
+    try {
+      setUserCompletingBooking(true)
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/complete-booking-user/${bookingId}`
+      )
+      const data = response.data
+      if (data.success) {
+        // setOnGoingBooking(data.data)
+        toast.success("Booking completed successfully")
+        handleGetMyBookings()
+      } else {
+        console.log("Error completing booking:", data.message)
+        toast.error(data.message || "Error completing booking")
       }
-    } else if (booking.bookingStatus === "rejected") {
-      return {
-        color: "text-red-600",
-        icon: <XCircle className="h-4 w-4 mr-1" />,
-        text: "Rejected by guide",
-      }
-    } else if (booking.bookingStatus === "cancelled") {
-      return {
-        color: "text-gray-600",
-        icon: <Trash2 className="h-4 w-4 mr-1" />,
-        text: "Cancelled by you",
-      }
-    }
-
-    return {
-      color: "text-yellow-600",
-      icon: <AlertTriangle className="h-4 w-4 mr-1" />,
-      text: "Awaiting confirmation",
+    } catch (error) {
+      console.log("Error completing booking:", error)
+      toast.error("Error completing booking")
+    } finally {
+      setUserCompletingBooking(false)
     }
   }
 
@@ -217,8 +209,19 @@ const BookingHome = () => {
         </Tooltip>
       </div>
 
-      {/* Tabs */}
+      {/* Tabs for upcoming and history*/}
       <div className="flex border-b mb-6">
+        <button
+          className={`px-4 py-2 font-medium flex items-center ${
+            activeTab === "ongoing"
+              ? "border-b-2 border-green-700 text-green-700"
+              : "text-gray-600 hover:text-gray-800"
+          }`}
+          onClick={() => setActiveTab("ongoing")}
+        >
+          <Calendar className="h-4 w-4 mr-1" />
+          On-going
+        </button>
         <button
           className={`px-4 py-2 font-medium flex items-center ${
             activeTab === "upcoming"
@@ -255,7 +258,7 @@ const BookingHome = () => {
       )}
 
       {filteredBookings.length === 0 && !loading && (
-        <div className="pt-16 pb-24 text-center">
+        <div className="pt-14 pb-14 text-center">
           <div className="flex justify-center mb-4">
             {activeTab === "upcoming" ? (
               <Calendar className="h-16 w-16 text-gray-400" />
@@ -277,190 +280,14 @@ const BookingHome = () => {
       {filteredBookings.length > 0 && !loading && (
         <div className="grid grid-cols-1 gap-4">
           {filteredBookings.map((booking) => {
-            const statusInfo = getTravelStatusInfo(booking)
-            const isExpanded = expandedBooking === booking.id
-
             return (
-              <div
+              <BookingCard
                 key={booking.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                <div className="flex">
-                  {/* Guide Profile Photo - Smaller */}
-                  <div className="w-24 h-24 md:w-32 md:h-auto">
-                    <div className="h-full relative">
-                      <img
-                        src={booking.Guide.profilePhoto}
-                        alt={booking.Guide.fullname}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Main Content */}
-                  <div className="p-4 flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h2 className="text-lg font-bold text-gray-800 capitalize">
-                          {booking.destination}{" "}
-                          <span className="text-sm text-gry-600">
-                            {" "}
-                            (<TimeAgo timestamp={booking.createdAt} />)
-                          </span>
-                        </h2>
-                        <p className="text-medium  text-gray-600 ">
-                          Guide: {booking.Guide.fullname}{" "}
-                          <Link
-                            href={`/guides/${booking.Guide.slug}`}
-                            className="text-blue-500 italic underline ml-2"
-                          >
-                            View Profile
-                          </Link>
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-end">
-                        <span
-                          className={`px-2 py-1 rounded-full text-md font-medium mb-1 ${getStatusColor(
-                            booking.bookingStatus
-                          )}`}
-                        >
-                          {booking.bookingStatus.charAt(0).toUpperCase() +
-                            booking.bookingStatus.slice(1)}
-                        </span>
-                        <div
-                          className={`flex items-center text-md ${statusInfo.color}`}
-                        >
-                          {statusInfo.icon}
-                          <span>{statusInfo.text}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Compact Info */}
-                    <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-1 text-sm">
-                      <div className="flex items-center text-gray-600">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        <span>{formatDate(booking.startDate)}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600">
-                        <Clock className="h-3 w-3 mr-1" />
-                        <span>{booking.estimatedDays} days</span>
-                      </div>
-                      <div className="flex items-center text-gray-600">
-                        <Users className="h-3 w-3 mr-1" />
-                        <span>
-                          {booking.numberOfAdults +
-                            (booking.numberOfChildren || 0)}{" "}
-                          people
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Expanded Details */}
-                    {isExpanded && (
-                      <div className="mt-3 pt-3 border-t border-gray-100">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <div className="flex items-center text-gray-700">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              <span className="font-medium">
-                                Starting from:
-                              </span>
-                            </div>
-                            <p className="ml-4 text-gray-600">
-                              {booking.startingLocation}
-                            </p>
-                          </div>
-
-                          <div>
-                            <div className="flex items-center text-gray-700">
-                              <MessageCircle className="h-3 w-3 mr-1" />
-                              <span className="font-medium">Request Type:</span>
-                            </div>
-                            <p className="ml-4 text-gray-600 capitalize">
-                              {booking.bookingType}
-                            </p>
-                          </div>
-
-                          {booking.estimatedPrice && (
-                            <div className="md:col-span-2">
-                              <p className="font-medium text-gray-800">
-                                Estimated Price:{" "}
-                                <span className="font-bold text-blue-700">
-                                  ${booking.estimatedPrice.toLocaleString()}
-                                </span>
-                              </p>
-                            </div>
-                          )}
-                          {booking.cancelMessage && (
-                            <div className="md:col-span-2 bg-red-50 p-3 rounded-md border border-red-200">
-                              <p className="font-medium text-red-600">
-                                {booking.bookingStatus === "cancelled"
-                                  ? "Cancelled by you "
-                                  : "Rejected by guide "}
-                                :{" "}
-                                <span className="font-bold text-red-700">
-                                  {booking.cancelMessage}
-                                </span>
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Action Buttons */}
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="flex gap-2">
-                        <Link
-                          href={`/messages/${booking.Guide.slug}`}
-                          className="px-3 py-1 text-md bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex items-center"
-                        >
-                          <MessageCircle className="h-3 w-3 mr-1" />
-                          Message
-                        </Link>
-
-                        {booking.bookingStatus === "pending" && (
-                          <button
-                            onClick={() => openCancelModal(booking.id)}
-                            className="px-3 py-1 text-md border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition-colors flex items-center"
-                          >
-                            <Trash2 className="h-3 w-3 mr-1" />
-                            Cancel
-                          </button>
-                        )}
-                        {(booking.bookingStatus === "cancelled" ||
-                          booking.bookingStatus === "rejected") && (
-                          <button
-                            onClick={() => alert("Delete button")}
-                            className="px-3 py-1 text-md border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition-colors flex items-center"
-                          >
-                            <TrashIcon className="h-3 w-3 mr-1" />
-                            Remove
-                          </button>
-                        )}
-                      </div>
-
-                      <button
-                        onClick={() => toggleExpand(booking.id)}
-                        className="text-gray-500 hover:text-gray-700 flex items-center text-md"
-                      >
-                        {isExpanded ? (
-                          <>
-                            <ChevronUp className="h-4 w-4 mr-1" />
-                            Less
-                          </>
-                        ) : (
-                          <>
-                            <ChevronDown className="h-4 w-4 mr-1" />
-                            More
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                booking={booking}
+                openCancelModal={openCancelModal}
+                handleUserCompleteBooking={handleUserCompleteBooking}
+                userCompletingBooking={userCompletingBooking}
+              />
             )
           })}
         </div>
