@@ -4,10 +4,9 @@ import UserList from "./UserList"
 // import ConversationDetails from "./ConversationDetails"
 import ConversationView from "./ConversationVeiw"
 // import { useGetInquiriesQuery } from "@/src/services/api/user/inquiryApi"
-import { useSearchParams } from "next/navigation"
+
 import ConversationDetails from "./ConversationDetails"
 import { useSocket } from "@/providers/ClientSocketProvider"
-import { on } from "events"
 
 interface MessageUser {
   name: string
@@ -43,8 +42,6 @@ const messagesUsersList: MessageUser[] = [
 ]
 
 const UserMessages = () => {
-  const searchParams = useSearchParams()
-
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   // const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
 
