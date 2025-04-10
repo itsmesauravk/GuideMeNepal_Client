@@ -119,3 +119,16 @@ export interface SessionData {
     image: string
   }
 }
+
+//guide review
+export interface GuideReviewType {
+  id: number
+  guideId: number
+  userId: number
+  rating: number
+  destination: string
+  comments: string | null
+  createdAt: string
+  updatedAt: string
+  user: User
+}
