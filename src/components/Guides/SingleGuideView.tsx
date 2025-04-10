@@ -8,6 +8,7 @@ import {
   Clock,
   Calendar,
   CheckCircle,
+  Loader2Icon,
 } from "lucide-react"
 import {
   Breadcrumb,
@@ -22,13 +23,22 @@ import { Button } from "../ui/button"
 import GuideProfileSidebar from "./GuideProfileSidebar"
 import SimilarGuides from "./SimilarGuides"
 
-import { GuideDetailsType } from "@/utils/Types"
+import { GuideDetailsType, GuideReviewType } from "@/utils/Types"
+import Link from "next/link"
+import TimeAgo from "../common/TimeAgo"
+import Image from "next/image"
 
 const SingleGuideView = ({ slug }: { slug: string }) => {
   const [guideDetails, setGuideDetails] = useState<GuideDetailsType | null>(
     null
   )
+  const [guideId, setGuideId] = useState<number | null>(null)
+  const [reviews, setReviews] = useState<GuideReviewType[] | null>([])
+  const [totalReviews, setTotalReviews] = useState(0)
+  const [averageRating, setAverageRating] = useState(0)
+
   const [loading, setLoading] = useState(true)
+  const [loadingReviews, setLoadingReviews] = useState(true)
 
   const [expanded, setExpanded] = useState(false)
 
@@ -41,11 +51,30 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
       const data = response.data
       if (data.success) {
         setGuideDetails(data.data)
+        setGuideId(data.data.id)
       }
     } catch (error) {
       console.error("Error fetching guide details:", error)
     } finally {
       setLoading(false)
+    }
+  }
+  const handleGetGuideReviews = async () => {
+    try {
+      setLoadingReviews(true)
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/get-guide-reviews/${guideId}`
+      )
+      const data = response.data
+      if (data.success) {
+        setReviews(data.data.reviews)
+        setTotalReviews(data.data.total)
+        setAverageRating(data.data.average)
+      }
+    } catch (error) {
+      console.error("Error fetching guide reviews:", error)
+    } finally {
+      setLoadingReviews(false)
     }
   }
 
@@ -60,6 +89,12 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
   useEffect(() => {
     handleGetGuideDetails()
   }, [])
+
+  useEffect(() => {
+    if (guideId) {
+      handleGetGuideReviews()
+    }
+  }, [guideId])
 
   if (loading) {
     return (
@@ -172,13 +207,19 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
                       key={star}
-                      className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                      className={`h-4 w-4 ${
+                        star <= averageRating
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
+                      }`}
                     />
                   ))}
                 </div>
-                <span className="ml-1 font-semibold">5 / 5</span>
+                <span className="ml-1 font-semibold">
+                  {averageRating.toFixed(1)} / 5
+                </span>
                 <span className="ml-1 text-blue-600">
-                  ({guideDetails.id} reviews)
+                  ({totalReviews} reviews)
                 </span>
               </div>
               <div className="flex gap-2 mt-1">
@@ -234,77 +275,87 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
           <div className="mb-6">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-bold mb-4 pb-2 border-b border-red-500 inline-block">
-                Reviews
+                Reviews ({totalReviews})
               </h3>
-              <Button className="mt-4 bg-primary-dark hover:bg-primary-darker">
-                Write a review
-              </Button>
             </div>
 
-            <p className="text-gray-600 mt-4">
-              No reviews yet. Be the first to review {guideDetails.fullname}.
-            </p>
+            {loadingReviews && (
+              <div className="flex flex-col items-center justify-center h-16 mt-6">
+                <Loader2Icon className="animate-spin h-6 w-6 text-primary-dark" />
+                <p className="text-gray-600 mt-4 animate-pulse">
+                  Loading reviews...
+                </p>
+              </div>
+            )}
 
-            <div className="border-b pb-6 mb-6">
-              {/* <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">
-                    M
-                  </div>
-                  <div>
-                    <p className="font-bold">Sample Client</p>
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                      <span className="ml-1">5 / 5</span>
+            {!loadingReviews && reviews && totalReviews > 0 ? (
+              <div>
+                {reviews?.map((review) => (
+                  <div key={review.id} className="border-b pb-6 mb-6">
+                    <div className="bg-gray-50 p-4 rounded-lg mt-2">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <Image
+                            src={
+                              review.user.profilePicture ||
+                              "/images/default_user.avif"
+                            }
+                            alt={review.user.fullName}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                          />
+                          <div>
+                            {/* <p className="font-bold">{reviews?.user?.fullName}</p> */}
+                            <p className="font-bold">{review.user.fullName}</p>
+                            <div className="flex">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                  key={star}
+                                  className={`h-4 w-4 ${
+                                    star <= review.rating
+                                      ? "fill-yellow-400 text-yellow-400"
+                                      : "text-gray-300"
+                                  }`}
+                                />
+                              ))}
+                              <span className="ml-1">{review.rating} / 5</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Link href={`/districts/${review.destination}`}>
+                            <p className="font-semibold underline text-primary-dark/80 italic">
+                              {review.destination}
+                            </p>
+                          </Link>
+                          <p className="text-sm text-gray-600">
+                            (<TimeAgo timestamp={review.createdAt} />)
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-700">{review.comments}</p>
                     </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold text-blue-600">Service Example</p>
-                  <p className="text-sm text-gray-600">
-                    {new Date().toLocaleDateString()}
-                  </p>
-                </div>
-              </div> */}
-
-              {/* <div className="bg-gray-50 p-4 rounded-lg mt-2">
-                <p className="font-bold mb-2">"Great Service"</p>
-                <p className="text-gray-700">
-                  This would be a sample review. When you have actual reviews,
-                  they will appear here.
-                </p>
-              </div> */}
-
-              {/* Guide Response */}
-              {/* <div className="mt-4 ml-12 bg-white p-4 border rounded-lg">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-8 w-8 rounded-full overflow-hidden">
-                    {guideDetails.profilePhoto && (
-                      <img
-                        src={guideDetails.profilePhoto}
-                        alt={guideDetails.fullname}
-                        className="h-full w-full object-cover"
-                      />
-                    )}
+                ))}
+                {reviews.length > 3 && (
+                  <div className="flex justify-center items-center mt-4">
+                    <Button
+                      variant="outline"
+                      className="px-4 py-2 hover:bg-blue-100"
+                    >
+                      Load More Reviews
+                    </Button>
                   </div>
-                  <p className="font-bold">
-                    {guideDetails.fullname}{" "}
-                    <span className="font-normal text-blue-600">
-                      ({guideDetails.id} reviews)
-                    </span>
-                  </p>
-                </div>
-                <p className="text-gray-700">
-                  Thank you for your review! I'm glad I could help make your
-                  trip enjoyable.
-                </p>
-              </div> */}
-            </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-gray-600 mt-4">
+                No reviews yet. Be the first to review {guideDetails.fullname}.
+              </p>
+            )}
+            {}
           </div>
         </div>
 

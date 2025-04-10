@@ -1,5 +1,9 @@
-import { X } from "lucide-react"
-import { useState } from "react"
+"use client"
+import axios from "axios"
+import { set } from "date-fns"
+import { Loader2Icon, X } from "lucide-react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 interface ReviewModalProps {
   setReviewModelOpen: (open: boolean) => void
@@ -22,24 +26,63 @@ const ReviewModal = ({
   const [hoveredRating, setHoveredRating] = useState(0)
   const [comments, setComments] = useState("")
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState("")
+
   const handleRatingClick = (selectedRating: number) => {
     setRating(selectedRating)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (rating >= 1) {
-      alert(
-        `Guide Id : ${guideId} \nUser Id : ${userId} \nDestination : ${destination} \nRating : ${rating} \nComments : ${comments}`
-      )
-      console.log(bookingDetails)
+      try {
+        setIsSubmitting(true)
+        setError("") // Reset error message
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/common/create-guide-review`,
+          {
+            guideId,
+            userId,
+            destination,
+            rating,
+            comments,
+          }
+        )
 
-      //   onSuccessReview()
-      //   setReviewModelOpen(false)
-      // Reset form
-      setRating(0)
-      setComments("")
+        const data = response.data
+        if (data.success) {
+          toast.success(data.message || "Your Feedback added successfully.")
+          onSuccessReview()
+          setReviewModelOpen(false)
+        } else {
+          toast.error(data.message || "Something went wrong, Please try again.")
+          setError(data.message || "Something went wrong, Please try again.")
+        }
+        // Reset form
+        setRating(0)
+        setComments("")
+      } catch (error) {
+        console.error("Error submitting review:", error)
+
+        setError(
+          "An error occurred while submitting your review. Please try again."
+        )
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
+
+  //settimeout for 2 seconds to remove error message
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => {
+        setError("")
+      }, 2000)
+
+      return () => clearTimeout(timeout)
+    }
+  }, [error])
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -112,6 +155,10 @@ const ReviewModal = ({
           ></textarea>
         </div>
 
+        {error && <p className="text-red-500 text-xs mb-2 mt-2">{error}</p>}
+
+        {/* Booking Details */}
+
         {/* Submit Button */}
         <div className="flex justify-end">
           <button
@@ -123,7 +170,14 @@ const ReviewModal = ({
                 : "bg-primary-dark text-white hover:bg-primary-darker"
             }`}
           >
-            Submit Review
+            {isSubmitting ? (
+              <p className="flex items-center gap-2">
+                <Loader2Icon className="animate-spin mr-2 w-4 h-4 " />
+                Submitting...
+              </p>
+            ) : (
+              <p>Submit Feedback</p>
+            )}
           </button>
         </div>
       </div>
