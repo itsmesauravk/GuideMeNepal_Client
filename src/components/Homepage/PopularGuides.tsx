@@ -4,7 +4,6 @@ import GuideCard from "../common/GuideCard"
 import axios from "axios"
 
 const PopularGuides = () => {
-
   const [popularGuides, setPopularGuides] = useState([])
 
   const handleGetPopularGuides = async () => {

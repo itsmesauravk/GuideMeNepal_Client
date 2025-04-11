@@ -64,6 +64,10 @@ const LoginForm = () => {
       // Direct browser redirect to OAuth provider
       // window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}`
       window.location.href = `http://localhost:4000/auth/${provider}`
+      // signIn("oauth-credentials", {
+      //   callbackUrl: "/",
+      //   provider,
+      // })
     } catch (error) {
       console.error("OAuth redirect error:", error)
       toast.error("Failed to initiate login")

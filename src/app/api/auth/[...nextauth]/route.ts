@@ -1,7 +1,9 @@
 import NextAuth, { User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import axios from "axios"
 import { JWT } from "next-auth/jwt"
+import { Provider } from "@/providers/Providers"
 
 interface AuthResponse {
   data: {
@@ -19,6 +21,7 @@ interface AuthResponse {
 
 const handler = NextAuth({
   providers: [
+    //for user
     CredentialsProvider({
       id: "user-credentials",
       name: "User Login",
@@ -60,6 +63,7 @@ const handler = NextAuth({
         }
       },
     }),
+    //for guide
     CredentialsProvider({
       id: "guide-credentials",
       name: "Guide Login",

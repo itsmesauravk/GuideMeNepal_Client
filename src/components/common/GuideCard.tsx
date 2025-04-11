@@ -16,6 +16,8 @@ interface GuideDetails {
   verified: boolean
   profilePhoto?: string
   aboutMe?: string
+  averageRating?: number
+  totalReviews?: number
 }
 
 interface GuideCardProps {
@@ -25,7 +27,6 @@ interface GuideCardProps {
 
 const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
   // Validate rating is between 0 and 5
-  const validRating = Math.min(Math.max(details?.rating || 0, 0), 5)
 
   // Default values for required fields
   const safeDetails = {
@@ -33,8 +34,8 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
     slug: details?.slug || "guide-name-unavailable",
     guidingArea: details?.guidingAreas || [],
 
-    rating: validRating,
-    reviews: details?.reviews || 0,
+    rating: details?.averageRating || 0,
+    reviews: details?.totalReviews || 0,
     languages: details?.languageSpeak || [],
     verified: details?.verified || false,
     imageUrl: details?.profilePhoto || "/api/placeholder/400/256",

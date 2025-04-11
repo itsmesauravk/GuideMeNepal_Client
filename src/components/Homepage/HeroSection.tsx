@@ -47,7 +47,7 @@ const HeroSection: React.FC = () => {
 
   return (
     <div
-      className="hero-section relative h-[540px] w-full bg-cover bg-center"
+      className="hero-section relative h-[520px] w-full bg-cover bg-center"
       style={{ backgroundImage: "url('./images/rara.jpg')" }}
     >
       {/* Background Overlay */}

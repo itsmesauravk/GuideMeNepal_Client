@@ -34,6 +34,8 @@ export interface GuideDetailsType {
   }
   created_at: string
   lastActiveAt: string
+  totalReviews: number
+  averageRating: number
 }
 
 interface Guide {
@@ -74,11 +76,12 @@ export interface BookingType {
 }
 
 interface User {
-  id: number
-  slug: string
+  id?: number
+  slug?: string
   fullName: string
-  email: string
+  email?: string
   profilePicture: string
+  country?: string
 }
 
 export interface Booking {
@@ -123,12 +126,12 @@ export interface SessionData {
 //guide review
 export interface GuideReviewType {
   id: number
-  guideId: number
-  userId: number
+  guideId?: number
+  userId?: number
   rating: number
   destination: string
   comments: string | null
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
   user: User
 }

@@ -1,15 +1,5 @@
 "use client"
-import {
-  Bell,
-  LogIn,
-  Menu,
-  MessageCircle,
-  SearchIcon,
-  Shield,
-  User,
-  UserPlus,
-} from "lucide-react"
-import Link from "next/link"
+
 import React, { useState } from "react"
 import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
@@ -18,6 +8,7 @@ import HowItWorks from "./HowItWorks"
 import PopularGuides from "./PopularGuides"
 import Features from "./Features"
 import HeroSection from "./HeroSection"
+import Testimonials from "./Testimonials"
 
 const HomePage = () => {
   return (
@@ -37,35 +28,7 @@ const HomePage = () => {
       <HowItWorks />
 
       {/* Testimonials */}
-      <section className="testimonials py-16 bg-soft-white">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-12 text-charcoal-gray">
-            Traveler Experiences
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-light-gray p-6 rounded-lg shadow-md">
-              <p className="italic mb-4 text-charcoal-gray">
-                "An incredible experience with my local guide. Truly memorable!"
-              </p>
-              <div className="flex items-center justify-center">
-                <img
-                  src="/placeholder-avatar.jpg"
-                  alt="Traveler"
-                  className="w-16 h-16 rounded-full mr-4 object-cover"
-                />
-                <div>
-                  <h4 className="font-bold text-charcoal-gray">
-                    Sarah Johnson
-                  </h4>
-                  <p className="text-charcoal-gray/70">USA</p>
-                </div>
-              </div>
-            </div>
-            {/* Placeholder for other testimonial cards */}
-          </div>
-        </div>
-      </section>
+      <Testimonials />
       {/* Trust and Safety */}
       <section className="trust-safety bg-royal-blue text-soft-white py-16">
         <div className="container mx-auto text-center">

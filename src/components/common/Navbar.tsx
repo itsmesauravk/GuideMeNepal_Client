@@ -135,15 +135,27 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden gap-4 md:flex items-center space-x-4">
+          <div className="hidden gap-2 md:flex items-center space-x-4">
             {isLoggedIn ? (
               <>
-                <HeroButton onPress={onOpen}>
+                <div className="flex items-center gap-6">
+                  <Link href="/my-bookings">
+                    <p className="font-medium cursor-pointer hover:underline">
+                      Bookings
+                    </p>
+                  </Link>
+                  <Link href="/messages">
+                    <p className="font-medium cursor-pointer hover:underline">
+                      Messages
+                    </p>
+                  </Link>
+                </div>
+                <HeroButton onPress={onOpen} className="relative bg-white">
                   <Bell className="w-6 h-6" />
                 </HeroButton>
                 <Notification isOpen={isOpen} onOpenChange={onOpenChange} />
 
-                {/* <MessageSquare className="h-6 w-6 hover:text-primary-light font-semibold hover:cursor-pointer" /> */}
+                {/* <MessageSquare className="h-6 w-6 hover:text-primary-light font-medium hover:cursor-pointer" /> */}
 
                 <div className="flex items-center gap-4">
                   <Dropdown placement="bottom-start">
@@ -165,7 +177,7 @@ const Navbar = () => {
                       )}
                     </DropdownTrigger>
                     <DropdownMenu aria-label="User Actions" variant="flat">
-                      <DropdownItem href="/account" key="account">
+                      <DropdownItem href="/my-account" key="account">
                         <p className="text-lg">My Account</p>
                       </DropdownItem>
                       <DropdownItem href="/my-bookings" key="my-booking">
@@ -197,13 +209,15 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Button
-                  variant="ghost"
-                  className="text-text-secondary hover:text-primary text-lg"
-                >
-                  <HelpCircleIcon className="h-6 w-6" />
-                  Help
-                </Button>
+                <Link href={"/help"}>
+                  <Button
+                    variant="ghost"
+                    className="text-text-secondary hover:text-primary text-lg"
+                  >
+                    <HelpCircleIcon className="h-6 w-6" />
+                    Help
+                  </Button>
+                </Link>
                 <Link href={"/login"}>
                   <Button
                     variant="default"
