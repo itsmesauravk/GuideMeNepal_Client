@@ -59,14 +59,17 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
                       key={star}
-                      className="h-3 w-3 fill-yellow-400 text-yellow-400"
+                      className={`h-4 w-4 ${
+                        star <= props.averageRating || 0
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
+                      }`}
                     />
                   ))}
                 </div>
-                <span className="ml-1 text-sm">5 / 5</span>
+                <span className="ml-1 text-sm">{props.averageRating} / 5</span>
                 <span className="ml-1 text-sm text-blue-600">
-                  {/* ({props.reviewCount || props.id} reviews) */}({props.id}{" "}
-                  reviews)
+                  ({props.totalReviews} reviews)
                 </span>
               </div>
             </div>
@@ -153,9 +156,11 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
               </Link>
               <p className="text-center text-sm text-gray-600 mt-2 mb-2">OR</p>
               {/* Message button */}
-              <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
-                Message {props.fullname}
-              </Button>
+              <Link href={`/messages?chat=${props.slug}`}>
+                <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+                  Message {props.fullname}
+                </Button>
+              </Link>
             </>
           ) : (
             <>

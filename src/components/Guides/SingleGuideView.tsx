@@ -67,7 +67,7 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
       )
       const data = response.data
       if (data.success) {
-        setReviews(data.data.reviews)
+        setReviews(data.data.reviews.slice(0, 3))
         setTotalReviews(data.data.total)
         setAverageRating(data.data.average)
       }
@@ -339,8 +339,8 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
                     </div>
                   </div>
                 ))}
-                {reviews.length > 3 && (
-                  <div className="flex justify-center items-center mt-4">
+                {totalReviews > 3 && (
+                  <div className="flex justify-center items-center mt-2">
                     <Button
                       variant="outline"
                       className="px-4 py-2 hover:bg-blue-100"
