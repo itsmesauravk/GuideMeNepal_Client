@@ -135,3 +135,16 @@ export interface GuideReviewType {
   updatedAt?: string
   user: User
 }
+
+//notification types
+export interface NotificationType {
+  id: number
+  title: string
+  description: string
+  notificationType: string
+  isRead: boolean
+  userId?: number
+  guideId?: number
+  bookingId?: number
+  createdAt: string
+}

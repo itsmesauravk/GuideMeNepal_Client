@@ -20,6 +20,7 @@ import Cookies from "js-cookie"
 
 import { Button as HeroButton, useDisclosure, Divider } from "@heroui/react"
 import Notification from "./Notification"
+import { useNotificationCount } from "@/providers/NotificationCountProvider"
 
 import {
   Dropdown,
@@ -50,6 +51,8 @@ const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const router = useRouter()
+
+  const { notificationCount } = useNotificationCount()
 
   const { data: session } = useSession()
 
@@ -150,9 +153,18 @@ const Navbar = () => {
                     </p>
                   </Link>
                 </div>
-                <HeroButton onPress={onOpen} className="relative bg-white">
-                  <Bell className="w-6 h-6" />
+                <HeroButton
+                  onPress={onOpen}
+                  className="relative bg-white p-2 rounded-full"
+                >
+                  <Bell className="w-6 h-6 text-gray-800" />
+                  {notificationCount > 0 && (
+                    <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">
+                      {notificationCount > 99 ? "99+" : notificationCount}
+                    </span>
+                  )}
                 </HeroButton>
+
                 <Notification isOpen={isOpen} onOpenChange={onOpenChange} />
 
                 {/* <MessageSquare className="h-6 w-6 hover:text-primary-light font-medium hover:cursor-pointer" /> */}
