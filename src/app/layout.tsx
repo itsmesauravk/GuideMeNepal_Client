@@ -4,6 +4,7 @@ import "./globals.css"
 import { Providers } from "./providers"
 import { Provider } from "@/providers/Providers"
 import { ClientSocketProvider } from "@/providers/ClientSocketProvider"
+import { NotificationCountProvider } from "@/providers/NotificationCountProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,9 @@ export default function RootLayout({
       >
         <Provider>
           <Providers />
-          <ClientSocketProvider>{children}</ClientSocketProvider>
+          <ClientSocketProvider>
+            <NotificationCountProvider>{children}</NotificationCountProvider>
+          </ClientSocketProvider>
         </Provider>
       </body>
     </html>
