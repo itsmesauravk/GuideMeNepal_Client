@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Link from "next/link"
 import { Input } from "../ui/input"
-import { Search, MapPin, ArrowRight } from "lucide-react"
+import { Search, MapPin, ArrowRight, Loader2Icon, BirdIcon } from "lucide-react"
 
 interface District {
   id: number
@@ -84,6 +84,22 @@ const DistrictsHome = () => {
           characteristics of Nepal's districts
         </p>
       </div>
+
+      {loading && (
+        <div className="flex flex-col gap-2 justify-center items-center h-64">
+          <Loader2Icon className="animate-spin text-primary-dark h-10 w-10 mx-auto" />
+          <p className="text-lg text-gray-600 animate-pulse">
+            Loading districts...
+          </p>
+        </div>
+      )}
+
+      {!loading && districts.length === 0 && (
+        <div className="flex flex-col gap-2 justify-center items-center h-64">
+          <BirdIcon className="text-gray-600 h-10 w-10 mx-auto" />
+          <p className="text-lg text-gray-600">No districts found</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {districts.map((district) => (
