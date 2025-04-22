@@ -108,7 +108,7 @@ const Navbar = () => {
                 type="text"
                 value={searchTerm}
                 onChange={handleSearch}
-                placeholder="Search..."
+                placeholder="Search location..."
                 className="w-full h-12 pl-12 bg-background border-ui-divider focus:border-primary-light focus:ring-primary"
               />
 
