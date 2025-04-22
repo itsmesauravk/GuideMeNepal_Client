@@ -4,6 +4,8 @@ import axios from "axios"
 import Link from "next/link"
 import { Input } from "../ui/input"
 import { Search, MapPin, ArrowRight, Loader2Icon, BirdIcon } from "lucide-react"
+import Image from "next/image"
+import PopularLoactionSkeleton from "../Skeletons/PopularLoactionSkeleton"
 
 interface District {
   id: number
@@ -19,10 +21,12 @@ const DistrictCard: React.FC<District> = ({ name, slug, image, tags }) => {
     <Link href={`/districts/${slug}`} className="group ">
       <div className="bg-white rounded-xl overflow-hidden shadow-lg ">
         <div className="relative h-52 w-full">
-          <img
+          <Image
             src={image}
             alt={name}
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+            width={500}
+            height={300}
           />
           <ArrowRight className="absolute right-4 top-4 text-white z-10 transform -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70" />
@@ -85,14 +89,10 @@ const DistrictsHome = () => {
         </p>
       </div>
 
-      {loading && (
-        <div className="flex flex-col gap-2 justify-center items-center h-64">
-          <Loader2Icon className="animate-spin text-primary-dark h-10 w-10 mx-auto" />
-          <p className="text-lg text-gray-600 animate-pulse">
-            Loading districts...
-          </p>
-        </div>
-      )}
+      {loading &&
+        [...Array(4)].map((_, index) => (
+          <PopularLoactionSkeleton key={`skeleton-${index}`} />
+        ))}
 
       {!loading && districts.length === 0 && (
         <div className="flex flex-col gap-2 justify-center items-center h-64">
