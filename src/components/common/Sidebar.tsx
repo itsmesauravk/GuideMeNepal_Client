@@ -195,11 +195,13 @@ import {
   ClockIcon,
   BellIcon,
   Menu,
+  ArrowLeftFromLineIcon,
+  MessageSquareTextIcon,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Cookies from "js-cookie"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
 import { useNotificationCount } from "@/providers/NotificationCountProvider"
 
@@ -250,11 +252,18 @@ const Sidebar = () => {
       url: "/guide/messages",
       value: 0,
     },
+    // {
+    //   id: "availability",
+    //   icon: <Calendar className="w-5 h-5" />,
+    //   label: "Availability",
+    //   url: "/availability",
+    //   value: 0,
+    // },
     {
-      id: "availability",
-      icon: <Calendar className="w-5 h-5" />,
-      label: "Availability",
-      url: "/availability",
+      id: "reviews",
+      icon: <MessageSquareTextIcon className="w-5 h-5" />,
+      label: "Reviews",
+      url: "/guide/reviews",
       value: 0,
     },
     {
@@ -300,6 +309,12 @@ const Sidebar = () => {
   // Function to determine what items to show in mobile top nav (limit to 4)
   const getMobileNavItems = () => {
     return navItems.slice(0, 5)
+  }
+
+  const handleLogout = () => {
+    const confirmLogout = confirm("Are you sure you want to log out?")
+    if (!confirmLogout) return
+    signOut()
   }
 
   // Desktop Sidebar
@@ -373,14 +388,10 @@ const Sidebar = () => {
       <div className="border-t p-4">
         <div
           className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
-          onClick={() => {
-            /* Help/Support Logic */
-          }}
+          onClick={handleLogout}
         >
-          <HelpCircle className="w-5 h-5 mr-4" />
-          {!isCollapsed && (
-            <span className="text-gray-600">Help & Support</span>
-          )}
+          <ArrowLeftFromLineIcon className="w-5 h-5 mr-4 text-red-600" />
+          {!isCollapsed && <span className="text-red-600">Log Out</span>}
         </div>
       </div>
     </div>
