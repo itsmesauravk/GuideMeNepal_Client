@@ -120,6 +120,18 @@ const UserMessages = () => {
     }
   }, [onlineUsers, socket])
 
+  //for selected user
+  // handleSelectUser({
+  //   id: participant.id,
+  //   name: participant.name,
+  //   avatar: participant.profilePicture,
+  //   type: participant.type,
+  //   conversationId: conversation.conversationId,
+  //   activeStatus: isOnline ? "online" : "offline",
+  //   message: conversation.lastMessage,
+  //   date: conversation.updatedAt,
+  // })
+
   return (
     <>
       <div className="flex flex-col w-full">
