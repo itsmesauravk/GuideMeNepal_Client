@@ -21,12 +21,10 @@ const DistrictCard: React.FC<District> = ({ name, slug, image, tags }) => {
     <Link href={`/districts/${slug}`} className="group ">
       <div className="bg-white rounded-xl overflow-hidden shadow-lg ">
         <div className="relative h-52 w-full">
-          <Image
+          <img
             src={image}
             alt={name}
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
-            width={500}
-            height={300}
           />
           <ArrowRight className="absolute right-4 top-4 text-white z-10 transform -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70" />
