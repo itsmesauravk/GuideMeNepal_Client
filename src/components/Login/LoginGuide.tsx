@@ -55,8 +55,6 @@ const GuideLoginForm = () => {
         callbackUrl: "/guide/dashboard",
       })
 
-      console.log(result, "result")
-
       if (result?.error) {
         toast.error(result.error)
       } else if (result?.url) {
@@ -117,9 +115,10 @@ const GuideLoginForm = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-primary-dark hover:bg-primary-darker text-white py-3 rounded-lg transition-colors font-medium"
             >
-              Login
+              {loading ? "Loading..." : "Login"}
             </button>
 
             <p className="text-center text-text-secondary">
