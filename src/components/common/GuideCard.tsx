@@ -4,6 +4,7 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 
 interface GuideDetails {
   fullname: string
@@ -108,12 +109,14 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
 
   return (
     <Link href={`/guides/${safeDetails.slug}`}>
-      <Card className="w-full sm:w-72 max-w-full sm:max-w-sm h-auto hover:cursor-pointer transition-all duration-200 hover:shadow-md">
+      <Card className="w-full sm:w-56 max-w-full  h-auto hover:cursor-pointer transition-all duration-200 hover:shadow-md">
         <div className="relative">
-          <img
+          <Image
             src={safeDetails?.imageUrl || "/images/user.webp"}
             alt={`${safeDetails.name} - Guide Image`}
             className="w-full h-48 sm:h-64 object-cover rounded-t-lg"
+            width={400}
+            height={256}
           />
           {safeDetails.verified && (
             <Badge className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-primary-dark hover:bg-primary-dark text-xs sm:text-sm">
@@ -122,7 +125,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
           )}
         </div>
 
-        <CardHeader className="space-y-1 pt-3 sm:pt-2 px-3 sm:px-2">
+        <CardHeader className="space-y-1 pt-3  px-3 sm:px-2 sm:pt-1">
           <div className="w-full flex flex-col sm:flex-row gap-1 sm:gap-1 justify-between items-start">
             <div>
               <h3 className="font-semibold text-base sm:text-xs text-gray-900 line-clamp-1">
@@ -144,7 +147,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
           </div>
         </CardHeader>
 
-        <CardContent className="py-2 px-3 sm:px-2">
+        <CardContent className="py-2 px-3 sm:px-2 sm:py-1">
           <div className="flex flex-wrap gap-1 sm:gap-1">
             {safeDetails.guidingArea.map((area, index) => (
               <Badge
@@ -158,7 +161,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
           </div>
         </CardContent>
 
-        <CardContent className="py-2 px-3 sm:px-2">
+        <CardContent className="py-2 px-3 sm:px-2 sm:py-1">
           <p className="text-xs sm:text-sm text-gray-600 line-clamp-3">
             {safeDetails.bio.split(" ").slice(0, 20).join(" ") + "..."}
           </p>

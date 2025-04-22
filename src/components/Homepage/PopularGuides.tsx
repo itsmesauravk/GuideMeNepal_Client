@@ -16,7 +16,7 @@ const PopularGuides = () => {
       )
       const data = response.data
       if (data.success) {
-        setPopularGuides(data.data)
+        setPopularGuides(data.data.slice(0, 4))
       }
     } catch (error) {
       console.log(error)
@@ -36,7 +36,7 @@ const PopularGuides = () => {
           Top Rated Guides
         </h2>
 
-        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 lg:gap-6 justify-center w-full px-2 sm:px-4">
+        <div className="flex flex-wrap gap-4 sm:gap-3 md:gap-4 lg:gap-6 justify-center w-full px-2 sm:px-4">
           {isLoading
             ? [...Array(4)].map((_, index) => (
                 <GuideCardSkeleton key={`skeleton-${index}`} />
