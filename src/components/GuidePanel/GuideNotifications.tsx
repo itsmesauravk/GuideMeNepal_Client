@@ -37,6 +37,7 @@ const GuideNotifications = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/common/all-notifications/${session?.user?.id}/guide`
       )
       const data = response.data
+
       if (data.success) {
         setNotifications(
           data.data.notifications || data.data.notification || []
@@ -78,8 +79,8 @@ const GuideNotifications = () => {
 
   const markAsRead = async (id: number) => {
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-notification-read/${id}`
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-notification-as-read/${id}`
       )
       setNotifications((prev) =>
         prev.map((notification) =>
@@ -98,7 +99,7 @@ const GuideNotifications = () => {
 
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-all-notifications-read/${session?.user?.id}/guide`
+        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-all-notification-as-read/${session?.user?.id}/guide`
       )
       setNotifications((prev) =>
         prev.map((notification) => ({ ...notification, isRead: true }))
@@ -117,6 +118,8 @@ const GuideNotifications = () => {
         return "📅"
       case "trip":
         return "✈️"
+      case "review":
+        return "📝"
       default:
         return "📣"
     }
@@ -141,7 +144,7 @@ const GuideNotifications = () => {
   })
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8  ">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <h1 className="text-2xl font-semibold">Notifications</h1>
@@ -206,7 +209,7 @@ const GuideNotifications = () => {
             {filteredNotifications.map((notification) => (
               <div
                 key={notification.id}
-                className={`p-4 hover:bg-gray-50 transition-colors ${
+                className={`p-4 hover:bg-gray-50 transition-colors mb-4 ${
                   !notification.isRead ? "bg-blue-50" : ""
                 }`}
                 onClick={() =>
@@ -227,6 +230,17 @@ const GuideNotifications = () => {
                     <p className="text-gray-600 mt-1">
                       {notification.description}
                     </p>
+
+                    {notification.notificationType === "review" && (
+                      <div className="mt-3">
+                        <Link
+                          href={"/guide/reviews"}
+                          className="px-3 py-1 text-sm bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition"
+                        >
+                          View Rating
+                        </Link>
+                      </div>
+                    )}
 
                     {notification.bookingId && (
                       <div className="mt-3">
