@@ -136,8 +136,6 @@ const BookingHome = () => {
     })
   }
 
- 
-
   // Get bookings based on active tab
   const getFilteredBookings = () => {
     if (activeTab === "ongoing") {
@@ -145,8 +143,8 @@ const BookingHome = () => {
         (booking) =>
           ["accepted"].includes(booking.bookingStatus) &&
           (booking.travelStatus === "on-going" ||
-            booking.travelStatus === "guide-completed" ||
-            booking.travelStatus === "completed")
+            (booking.travelStatus === "completed" &&
+              booking.reviewstatus === false))
       )
     } else if (activeTab === "upcoming") {
       return bookings.filter(
@@ -164,28 +162,28 @@ const BookingHome = () => {
     }
   }
 
-  const handleUserCompleteBooking = async (bookingId: number) => {
-    try {
-      setUserCompletingBooking(true)
-      const response = await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/common/complete-booking-user/${bookingId}`
-      )
-      const data = response.data
-      if (data.success) {
-        // setOnGoingBooking(data.data)
-        toast.success("Booking completed successfully")
-        handleGetMyBookings()
-      } else {
-        console.log("Error completing booking:", data.message)
-        toast.error(data.message || "Error completing booking")
-      }
-    } catch (error) {
-      console.log("Error completing booking:", error)
-      toast.error("Error completing booking")
-    } finally {
-      setUserCompletingBooking(false)
-    }
-  }
+  // const handleUserCompleteBooking = async (bookingId: number) => {
+  //   try {
+  //     setUserCompletingBooking(true)
+  //     const response = await axios.patch(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/common/complete-booking-user/${bookingId}`
+  //     )
+  //     const data = response.data
+  //     if (data.success) {
+  //       // setOnGoingBooking(data.data)
+  //       toast.success("Booking completed successfully")
+  //       handleGetMyBookings()
+  //     } else {
+  //       console.log("Error completing booking:", data.message)
+  //       toast.error(data.message || "Error completing booking")
+  //     }
+  //   } catch (error) {
+  //     console.log("Error completing booking:", error)
+  //     toast.error("Error completing booking")
+  //   } finally {
+  //     setUserCompletingBooking(false)
+  //   }
+  // }
 
   useEffect(() => {
     if (session?.user?.id) {
@@ -209,7 +207,7 @@ const BookingHome = () => {
         </Tooltip>
       </div>
 
-      {/* Tabs for upcoming and history*/}
+      {/* Tabs for on-going,  upcoming and history*/}
       <div className="flex border-b mb-6">
         <button
           className={`px-4 py-2 font-medium flex items-center ${
@@ -285,8 +283,6 @@ const BookingHome = () => {
                 key={booking.id}
                 booking={booking}
                 openCancelModal={openCancelModal}
-                handleUserCompleteBooking={handleUserCompleteBooking}
-                userCompletingBooking={userCompletingBooking}
               />
             )
           })}

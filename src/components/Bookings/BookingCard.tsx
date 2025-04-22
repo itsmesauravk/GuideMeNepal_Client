@@ -16,6 +16,7 @@ import {
   Info as InfoIcon,
   MessageSquare,
   X,
+  StarIcon,
 } from "lucide-react"
 import TimeAgo from "../common/TimeAgo"
 import { BookingType } from "@/utils/Types"
@@ -26,17 +27,15 @@ import { useSession } from "next-auth/react"
 
 interface BookingCardProps {
   booking: BookingType
-  handleUserCompleteBooking: (bookingId: number) => void
   openCancelModal: (bookingId: number) => void
-  userCompletingBooking?: boolean
 }
 
 const BookingCard = ({
   booking,
-  handleUserCompleteBooking,
+  // handleUserCompleteBooking,
   openCancelModal,
-  userCompletingBooking = false,
-}: BookingCardProps) => {
+}: // userCompletingBooking = false,
+BookingCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [reviewModelOpen, setReviewModelOpen] = useState(false)
 
@@ -274,7 +273,7 @@ const BookingCard = ({
             <div className="mt-3 flex items-center justify-between">
               <div className="flex gap-2">
                 <Link
-                  href={`/messages/${booking.Guide.slug}`}
+                  href={`/messages?chat=${booking.Guide.slug}`}
                   className="px-3 py-1 text-md bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex items-center"
                 >
                   <MessageCircle className="h-3 w-3 mr-1" />
@@ -340,66 +339,6 @@ const BookingCard = ({
         </div>
       </div>
 
-      {/* Completion action section for user when guide has completed - appears below main booking card */}
-      {booking.travelStatus === "guide-completed" &&
-        booking.bookingStatus === "accepted" && (
-          <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-blue-100 p-2 rounded-full mr-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-blue-800">
-                    Tour Completed by Guide
-                  </h4>
-                  <p className="text-sm text-blue-600">
-                    Your guide has marked this tour as completed on{" "}
-                    {formatDate(booking.updatedAt)}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => handleUserCompleteBooking(booking.id)}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium flex items-center transition-colors"
-                disabled={userCompletingBooking}
-              >
-                {userCompletingBooking ? (
-                  <div className="flex gap-2 items-center">
-                    <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                    Processing...
-                  </div>
-                ) : (
-                  <div className="flex gap-2 items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Confirm Completion
-                  </div>
-                )}
-              </button>
-            </div>
-
-            <div className="mt-3 text-sm text-blue-700 bg-blue-100 p-3 rounded-md">
-              <div className="flex items-start">
-                <InfoIcon className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
-                <p>
-                  Please confirm the tour completion if you're satisfied with
-                  the service. This will finalize the booking process and allow
-                  you to leave feedback for your guide.
-                </p>
-              </div>
-            </div>
-
-            {/* Optional rating prompt */}
-            <div className="mt-3 flex items-center text-sm text-gray-600">
-              <MessageSquare className="h-4 w-4 mr-2" />
-              <span>
-                Don't forget to share your experience after completion!
-              </span>
-            </div>
-          </div>
-        )}
-
       {/* Display when user is viewing a completed booking where they've already confirmed */}
       {booking.travelStatus === "completed" && (
         <div className="mt-2 flex flex-col justify-between bg-green-50 border border-green-200 rounded-lg p-3 shadow-sm">
@@ -417,22 +356,31 @@ const BookingCard = ({
             </div>
 
             <div className="mt-2 flex  justify-end">
-              <Button
-                onClick={handleOpenReviewModal}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-sm rounded-md font-medium flex items-center"
-              >
-                {reviewModelOpen ? (
-                  <div className="flex gap-2 items-center">
-                    <X className="h-3 w-3 mr-1" />
-                    Close Review
-                  </div>
-                ) : (
-                  <div className="flex gap-2 items-center">
-                    <Star className="h-3 w-3 mr-1" />
-                    Give Review
-                  </div>
-                )}
-              </Button>
+              {booking.reviewstatus ? (
+                <div className="flex gap-2 items-center">
+                  <StarIcon className="h-3 w-3 mr-1" />
+                  You have already given a feedback
+                </div>
+              ) : (
+                <Button
+                  onClick={handleOpenReviewModal}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-sm rounded-md font-medium flex items-center"
+                >
+                  {reviewModelOpen ? (
+                    <div className="flex gap-2 items-center">
+                      <X className="h-3 w-3 mr-1" />
+                      Close Review
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex gap-2 items-center">
+                        <Star className="h-3 w-3 mr-1" />
+                        Give Review
+                      </div>
+                    </div>
+                  )}
+                </Button>
+              )}
             </div>
           </div>
 

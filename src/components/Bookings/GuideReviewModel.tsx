@@ -41,6 +41,7 @@ const ReviewModal = ({
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/common/create-guide-review`,
           {
+            bookingId: bookingDetails?.id,
             guideId,
             userId,
             destination,
