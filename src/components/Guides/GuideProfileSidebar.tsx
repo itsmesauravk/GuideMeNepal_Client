@@ -89,14 +89,14 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
                 />
               </svg>
             </div>
-            <div className="flex gap-x-4">
+            {/* <div className="flex gap-x-4">
               <Calendar
                 aria-label="Date (Unavailable)"
                 calendarWidth={220}
                 isDateUnavailable={isDateUnavailable}
                 aria-multiselectable={true}
               />
-            </div>
+            </div> */}
           </div>
           {/* Group size selection */}
           <div className="mb-4">
@@ -131,20 +131,20 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
           {/* {props.limitedAvailability && (     ===> this is original, below is for test only*/}
           {props.lastActiveAt && (
             <div className="bg-red-50 text-red-700 p-2 rounded-lg mb-4 flex items-center justify-center gap-2">
-              <svg
+              {/* <svg
                 className="h-5 w-5"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="currentColor" 
                 strokeWidth="2"
               >
                 <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              <span>
-                {/* {props.availabilityMessage ||
+              </svg> */}
+              {/* <span> */}
+              {/* {props.availabilityMessage ||
                   "March: Only 3 slots left!"} */}
-                March: Only 3 slots left!
-              </span>
+              {/* March: Only 3 slots left!  */}
+              {/* </span> */}
             </div>
           )}
           {props.availability.isAvailable ? (
