@@ -5,7 +5,8 @@ import GuideCard from "../common/GuideCard"
 import axios from "axios"
 import { set } from "date-fns"
 import { Spinner } from "@heroui/spinner"
-import { BirdIcon } from "lucide-react"
+import { BirdIcon, Loader2Icon } from "lucide-react"
+import GuideCardSkeleton from "../Skeletons/GuideCardSkeleton"
 
 interface DistrictGuidesProps {
   district: string
@@ -43,11 +44,10 @@ const DistrictGuides: React.FC<DistrictGuidesProps> = ({ district }) => {
         </h2>
       </div>
 
-      {loading && (
-        <div className="text-center mt-8 text-primary-dark">
-          <Spinner className="text-primary-dark" />
-        </div>
-      )}
+      {loading &&
+        [...Array(4)].map((_, index) => (
+          <GuideCardSkeleton key={`skeleton-${index}`} />
+        ))}
 
       <div className="flex flex-wrap gap-4">
         {popularGuides.map((guide, index) => (

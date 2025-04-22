@@ -98,8 +98,11 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl font-medium">Loading...</div>
+      <div className="flex flex-col gap-2 justify-center items-center h-screen">
+        <Loader2Icon className="animate-spin text-primary-dark h-10 w-10 mx-auto" />
+        <p className="text-lg text-gray-600 animate-pulse">
+          Loading Guide Profile...
+        </p>
       </div>
     )
   }
