@@ -17,6 +17,8 @@ import {
   MessageSquare,
   X,
   StarIcon,
+  AlertCircleIcon,
+  CircleAlertIcon,
 } from "lucide-react"
 import TimeAgo from "../common/TimeAgo"
 import { BookingType } from "@/utils/Types"
@@ -24,20 +26,17 @@ import { Button } from "../ui/button"
 import ReviewModal from "./GuideReviewModel"
 import { SessionData } from "@/utils/Types"
 import { useSession } from "next-auth/react"
+import ReportGuideModel from "./ReportGuideModel"
 
 interface BookingCardProps {
   booking: BookingType
   openCancelModal: (bookingId: number) => void
 }
 
-const BookingCard = ({
-  booking,
-  // handleUserCompleteBooking,
-  openCancelModal,
-}: // userCompletingBooking = false,
-BookingCardProps) => {
+const BookingCard = ({ booking, openCancelModal }: BookingCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [reviewModelOpen, setReviewModelOpen] = useState(false)
+  const [reportModelOpen, setReportModelOpen] = useState(false)
 
   const { data: sessionData } = useSession()
 
@@ -142,6 +141,10 @@ BookingCardProps) => {
 
   const handleOpenReviewModal = () => {
     setReviewModelOpen(!reviewModelOpen)
+  }
+
+  const handleOpenReportModal = () => {
+    setReportModelOpen(!reportModelOpen)
   }
 
   return (
@@ -354,11 +357,11 @@ BookingCardProps) => {
                 </p>
               </div>
             </div>
-
+            {/* for review status  */}
             <div className="mt-2 flex  justify-end">
               {booking.reviewstatus ? (
-                <div className="flex gap-2 items-center">
-                  <StarIcon className="h-3 w-3 mr-1" />
+                <div className="flex text-yellow-600 items-center">
+                  <StarIcon className="h-5 w-5 mr-1" />
                   You have already given a feedback
                 </div>
               ) : (
@@ -382,6 +385,32 @@ BookingCardProps) => {
                 </Button>
               )}
             </div>
+            {/* for report status  */}
+            <div className="mt-2 flex  justify-end">
+              {booking.reportstatus ? (
+                <div className="flex text-red-600 items-center">
+                  <CircleAlertIcon className="h-5 w-5 mr-1" />
+                  You have already reported a feedback
+                </div>
+              ) : (
+                <Button
+                  onClick={handleOpenReportModal}
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-sm rounded-md font-medium flex items-center"
+                >
+                  {reportModelOpen ? (
+                    <div className="flex gap-2 items-center">
+                      <X className="h-3 w-3 mr-1" />
+                      Close Report
+                    </div>
+                  ) : (
+                    <div className="flex gap-2 items-center">
+                      <AlertCircleIcon className="h-4 w-4 inline-block" />
+                      Report this guide
+                    </div>
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* review model  */}
@@ -395,6 +424,21 @@ BookingCardProps) => {
               onSuccessReview={() => {
                 // handleUserCompleteBooking(booking.id)
                 setReviewModelOpen(false)
+              }}
+            />
+          )}
+
+          {/* report model  */}
+          {reportModelOpen && (
+            <ReportGuideModel
+              setReportModelOpen={setReportModelOpen}
+              bookingDetails={booking}
+              guideId={booking.Guide.id}
+              userId={session?.user?.id}
+              destination={booking.destination}
+              onSuccessReport={() => {
+                // handleUserCompleteBooking(booking.id)
+                setReportModelOpen(false)
               }}
             />
           )}

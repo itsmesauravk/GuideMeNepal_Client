@@ -93,14 +93,6 @@ const BookingHome = () => {
     setCancelModalOpen(false)
   }
 
-  const handleCalculateDaysRemaining = (startDate: string) => {
-    const today = new Date()
-    const tripStart = new Date(startDate)
-    const diffTime = tripStart.getTime() - today.getTime()
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
-  }
-
   const handleCancelBooking = async () => {
     if (!selectedBookingId) return
 
@@ -161,29 +153,6 @@ const BookingHome = () => {
       )
     }
   }
-
-  // const handleUserCompleteBooking = async (bookingId: number) => {
-  //   try {
-  //     setUserCompletingBooking(true)
-  //     const response = await axios.patch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/common/complete-booking-user/${bookingId}`
-  //     )
-  //     const data = response.data
-  //     if (data.success) {
-  //       // setOnGoingBooking(data.data)
-  //       toast.success("Booking completed successfully")
-  //       handleGetMyBookings()
-  //     } else {
-  //       console.log("Error completing booking:", data.message)
-  //       toast.error(data.message || "Error completing booking")
-  //     }
-  //   } catch (error) {
-  //     console.log("Error completing booking:", error)
-  //     toast.error("Error completing booking")
-  //   } finally {
-  //     setUserCompletingBooking(false)
-  //   }
-  // }
 
   useEffect(() => {
     if (session?.user?.id) {
