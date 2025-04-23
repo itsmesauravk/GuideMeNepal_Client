@@ -120,6 +120,8 @@ const GuideNotifications = () => {
         return "✈️"
       case "review":
         return "📝"
+      case "report":
+        return "⚠️"
       default:
         return "📣"
     }

@@ -92,8 +92,8 @@ const Notification: React.FC<NotificationProps> = ({
 
   const markAsRead = async (id: number) => {
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-notification-read/${id}`
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-notification-as-read/${id}`
       )
       setNotifications((prev) =>
         prev.map((notification) =>
@@ -111,8 +111,8 @@ const Notification: React.FC<NotificationProps> = ({
     if (notifications.length === 0) return
 
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-all-notifications-read/${session?.user?.id}/${session?.user?.role}`
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/mark-all-notification-as-read/${session?.user?.id}/user`
       )
       setNotifications((prev) =>
         prev.map((notification) => ({ ...notification, isRead: true }))
@@ -130,6 +130,8 @@ const Notification: React.FC<NotificationProps> = ({
         return "📅"
       case "trip":
         return "✈️"
+      case "report":
+        return "⚠️"
       default:
         return "📣"
     }
