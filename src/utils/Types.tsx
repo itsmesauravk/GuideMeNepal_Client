@@ -65,6 +65,7 @@ export interface BookingType {
   bookingType: string
   bookingStatus: string
   reviewstatus: boolean
+  reportstatus?: boolean
   cancelMessage: string | null
   travelStatus: string
   travelLocations: string[]
