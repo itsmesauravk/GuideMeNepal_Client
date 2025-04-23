@@ -140,7 +140,7 @@ const OngoingTourGuideView = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-4">
+    <div className="min-h-screen w-full bg-gray-50 p-4 ">
       {(bookingTravelStatus === "not-started" ||
         bookingTravelStatus === "on-going") && (
         <>
@@ -339,8 +339,8 @@ const OngoingTourGuideView = () => {
                   <strong>traveler</strong> must also confirm completion.
                 </li>
                 <li>
-                  The trip is considered <strong>fully completed</strong> only
-                  after both the guide and traveler confirm it.
+                  The trip is considered <strong>fully completed</strong> when
+                  the guide complete's it.
                 </li>
                 <li>
                   Ensure you have all{" "}
@@ -356,100 +356,6 @@ const OngoingTourGuideView = () => {
             </div>
           </div>
         </>
-      )}
-
-      {/* When booking is completed by guide but waiting for traveler confirmation */}
-      {bookingTravelStatus === "guide-completed" && (
-        <div className="bg-white rounded-lg shadow p-6 mt-10">
-          <div className="flex items-center space-x-3 mb-4">
-            <CheckCircle className="h-6 w-6 text-green-500" />
-            <h3 className="font-semibold text-lg">
-              Guide Completion Confirmed
-            </h3>
-          </div>
-
-          {/* Status card with visual indicator */}
-          <div className="bg-green-50 p-4 rounded-lg mb-4">
-            <div className="flex items-center mb-3">
-              <div className="bg-green-500 p-2 rounded-full mr-3">
-                <CheckCircle className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="font-medium text-green-700">
-                  You have marked this tour as completed
-                </p>
-                <p className="text-sm text-green-600">
-                  {new Date().toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Waiting for traveler section */}
-          <div className="bg-blue-50 p-4 rounded-lg flex items-center mb-4">
-            <div className="bg-blue-100 p-2 rounded-full mr-3">
-              <Clock className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="font-medium text-blue-700">
-                Waiting for traveler confirmation
-              </p>
-              <p className="text-sm text-blue-600">
-                The traveler has been notified to confirm tour completion
-              </p>
-            </div>
-          </div>
-
-          {/* What happens next section */}
-          <div className="border border-gray-200 rounded-lg p-4">
-            <h4 className="font-medium text-gray-700 mb-2">
-              What happens next?
-            </h4>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <div className="bg-gray-200 rounded-full p-1 mr-2 mt-1">
-                  <User className="h-3 w-3 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-600">
-                  The traveler will review and confirm tour completion
-                </span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-gray-200 rounded-full p-1 mr-2 mt-1">
-                  <CheckCircle className="h-3 w-3 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-600">
-                  Once confirmed by both parties, the booking will be fully
-                  completed
-                </span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-gray-200 rounded-full p-1 mr-2 mt-1">
-                  <MessageCircle className="h-3 w-3 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-600">
-                  The traveler may leave feedback about their experience
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact support if needed */}
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500">
-              Having issues with tour completion?
-              <button className="text-primary-dark hover:underline ml-1 font-medium">
-                Contact Support
-              </button>
-            </p>
-          </div>
-        </div>
       )}
     </div>
   )

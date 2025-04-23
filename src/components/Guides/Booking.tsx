@@ -20,6 +20,7 @@ import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { SessionData } from "@/utils/Types"
+import { Loader2Icon } from "lucide-react"
 
 interface BookingProps {
   id: string
@@ -297,11 +298,11 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  {
-                    type: "customize",
-                    label: "Customize",
-                    desc: "Tailor your own experience",
-                  },
+                  // {
+                  //   type: "customize",
+                  //   label: "Customize",
+                  //   desc: "Tailor your own experience",
+                  // },
                   {
                     type: "group",
                     label: "Group",
@@ -475,7 +476,14 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
                 disabled={loading}
                 className="px-6 py-3 bg-primary-dark text-white font-medium rounded-md hover:bg-primary-darker transition-colors shadow-md hover:shadow-lg"
               >
-                Send Booking Request
+                {loading ? (
+                  <div className="flex gap-2">
+                    <Loader2Icon className="w-5 h-5 animate-spin" />
+                    <p>Submitting your details...</p>
+                  </div>
+                ) : (
+                  <p>Submit your details</p>
+                )}
               </button>
             </div>
           </form>

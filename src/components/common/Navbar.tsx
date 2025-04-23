@@ -9,6 +9,7 @@ import {
   X,
   HelpCircleIcon,
   LogInIcon,
+  Calendar,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -81,6 +82,8 @@ const Navbar = () => {
     setSearchTerm(district.name)
     setShowResults(false)
     router.push(`/districts/${district.districtId}`)
+    // Close mobile menu when selecting a district
+    setIsMobileMenuOpen(false)
   }
 
   useEffect(() => {
@@ -167,8 +170,6 @@ const Navbar = () => {
 
                 <Notification isOpen={isOpen} onOpenChange={onOpenChange} />
 
-                {/* <MessageSquare className="h-6 w-6 hover:text-primary-light font-medium hover:cursor-pointer" /> */}
-
                 <div className="flex items-center gap-4">
                   <Dropdown placement="bottom-start">
                     <DropdownTrigger>
@@ -247,102 +248,136 @@ const Navbar = () => {
           <div className="md:hidden">
             <Button
               variant="ghost"
-              size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-text-secondary hover:text-primary"
             >
               {isMobileMenuOpen ? (
-                <X className="h-10 w-10" />
+                <X className="h-24 w-24" />
               ) : (
-                <Menu className="h-10 w-10" />
+                <Menu className="h-24 w-24" />
               )}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - Improved */}
       {isMobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="md:hidden bg-white shadow-lg absolute z-50 left-0 right-0">
+          <div className="px-4 pt-4 pb-6 space-y-4">
             {/* Search Bar - Mobile */}
-            <div className="p-2">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-10 w-10 text-text-secondary" />
-                </div>
-                <Input
-                  type="text"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  placeholder="Search..."
-                  className="w-full pl-12 bg-background border-ui-divider focus:border-primary focus:ring-primary"
-                />
-
-                {/* Mobile Search Results Dropdown */}
-                {showResults && (
-                  <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
-                    {searchResults.length > 0 ? (
-                      <ul className="py-2">
-                        {searchResults.map((district) => (
-                          <li
-                            key={district.id}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
-                            onClick={() => handleDistrictClick(district)}
-                          >
-                            {district.name}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <div className="px-4 py-3 text-red-500 font-medium text-left">
-                        Not found
-                      </div>
-                    )}
-                  </div>
-                )}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-text-secondary" />
               </div>
+              <Input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Search location..."
+                className="w-full pl-10 h-12 bg-background border-ui-divider focus:border-primary focus:ring-primary"
+              />
+
+              {/* Mobile Search Results Dropdown */}
+              {showResults && (
+                <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <ul className="py-2">
+                      {searchResults.map((district) => (
+                        <li
+                          key={district.id}
+                          className="px-4 py-3 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
+                          onClick={() => handleDistrictClick(district)}
+                        >
+                          {district.name}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="px-4 py-3 text-red-500 font-medium text-left">
+                      No locations found
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Mobile Navigation Items */}
             {isLoggedIn ? (
-              <div className="space-y-2">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-text-secondary hover:text-primary text-lg"
+              <div className="space-y-3 pt-2">
+                <Link href="/my-account">
+                  <div className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100">
+                    <User className="h-6 w-6 mr-3 text-gray-700" />
+                    <span className="font-medium text-lg">My Account</span>
+                  </div>
+                </Link>
+                <Link href="/my-bookings">
+                  <div className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100">
+                    <Calendar className="h-6 w-6 mr-3 text-gray-700" />
+                    <span className="font-medium text-lg">My Bookings</span>
+                  </div>
+                </Link>
+                <Link href="/messages">
+                  <div className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100">
+                    <MessageSquare className="h-6 w-6 mr-3 text-gray-700" />
+                    <span className="font-medium text-lg">Messages</span>
+                  </div>
+                </Link>
+                <div
+                  className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                  onClick={onOpen}
                 >
-                  <Bell className="h-10 w-10 mr-2" />
-                  Notifications
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-text-secondary hover:text-primary text-lg"
-                >
-                  <MessageSquare className="h-10 w-10 mr-2" />
-                  Messages
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-text-secondary hover:text-primary text-lg"
-                >
-                  <User className="h-10 w-10 mr-2" />
-                  Profile
-                </Button>
+                  <div className="relative">
+                    <Bell className="h-6 w-6 mr-3 text-gray-700" />
+                    {notificationCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                        {notificationCount > 9 ? "9+" : notificationCount}
+                      </span>
+                    )}
+                  </div>
+                  <span className="font-medium text-lg">Notifications</span>
+                </div>
+                <Link href="/help">
+                  <div className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100">
+                    <HelpCircleIcon className="h-6 w-6 mr-3 text-gray-700" />
+                    <span className="font-medium text-lg">Help</span>
+                  </div>
+                </Link>
+
+                <div className="pt-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      signOut({ callbackUrl: "/" })
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className="w-full py-3 border border-red-500 text-red-500 hover:bg-red-50"
+                  >
+                    <LogInIcon className="h-5 w-5 mr-2 rotate-180" />
+                    Sign Out
+                  </Button>
+                </div>
               </div>
             ) : (
-              <div className="space-y-2">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-text-secondary hover:text-primary text-lg"
-                >
-                  Help
-                </Button>
-                <Button
-                  variant="default"
-                  className="w-full bg-primary hover:bg-primary-dark text-white text-lg"
-                >
-                  Login
-                </Button>
+              <div className="space-y-3 pt-2">
+                <Link href="/help">
+                  <div className="flex items-center py-3 px-2 rounded-lg hover:bg-gray-100">
+                    <HelpCircleIcon className="h-6 w-6 mr-3 text-gray-700" />
+                    <span className="font-medium text-lg">Help</span>
+                  </div>
+                </Link>
+                <div className="pt-3">
+                  <Link href="/login">
+                    <Button
+                      variant="default"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full py-6 bg-primary hover:bg-primary-dark text-white text-lg"
+                    >
+                      <LogInIcon className="h-5 w-5 mr-2" />
+                      Login
+                    </Button>
+                  </Link>
+                </div>
               </div>
             )}
           </div>

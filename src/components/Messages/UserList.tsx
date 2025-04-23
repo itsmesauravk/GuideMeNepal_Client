@@ -1,17 +1,19 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import Image from "next/image"
 import { formatDistanceToNow } from "date-fns"
 import { useSocket } from "@/providers/ClientSocketProvider"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
+import { useSearchParams } from "next/navigation"
 
 interface Participant {
   id: number
   name: string
   profilePicture: string
   type: string
+  slug: string
 }
 
 interface Conversation {
@@ -20,6 +22,7 @@ interface Conversation {
   lastMessage: string
   createdAt: string
   updatedAt: string
+
   participants: Participant[]
 }
 
@@ -137,11 +140,42 @@ const UserList = ({
     }
   }, [socket])
 
+  //get the user slug from query in the url
+  const searchParams = useSearchParams()
+  const chatId = searchParams.get("chat")
+
   useEffect(() => {
     if (session?.user?.id) {
       handleGetConversations()
     }
   }, [session?.user?.id])
+
+  useEffect(() => {
+    if (chatId !== null) {
+      // Find the conversation with the matching chatId
+      // console.log("Chat ID:", chatId)
+      // console.log("Conversations:", conversations)
+      const conversation = conversations.find(
+        (conv) => conv.participants[0].slug === chatId
+      )
+      // console.log("Selected conversation:", conversation)
+
+      if (conversation) {
+        const participant = conversation.participants[0]
+        const isOnline = onlineUsers.includes(participant.id.toString())
+        handleSelectUser({
+          id: participant.id,
+          name: participant.name,
+          avatar: participant.profilePicture,
+          type: participant.type,
+          conversationId: conversation.conversationId,
+          activeStatus: isOnline ? "online" : "offline",
+          message: conversation.lastMessage,
+          date: conversation.updatedAt,
+        })
+      }
+    }
+  }, [chatId, conversations, onlineUsers])
 
   return (
     <section
