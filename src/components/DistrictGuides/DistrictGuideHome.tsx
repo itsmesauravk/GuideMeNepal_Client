@@ -12,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { TagIcon } from "lucide-react"
 
 interface DistrictGuideHomeProps {
   slug: string
@@ -27,6 +28,9 @@ interface DistrictDetails {
 
 const DistrictGuideHome: React.FC<DistrictGuideHomeProps> = ({ slug }) => {
   const [districtData, setDistrictData] = useState<DistrictDetails>()
+  const [districtTags, setDistrictTags] = useState<string[]>([])
+  const [expanded, setExpanded] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const getSingleDistrictData = async () => {
     const response = await axios.get(
@@ -36,6 +40,7 @@ const DistrictGuideHome: React.FC<DistrictGuideHomeProps> = ({ slug }) => {
 
     if (data.success) {
       setDistrictData(data.data)
+      setDistrictTags(data.data.tags)
     }
   }
 
@@ -85,6 +90,35 @@ const DistrictGuideHome: React.FC<DistrictGuideHomeProps> = ({ slug }) => {
         </Breadcrumb>
         <h2 className="text-3xl font-bold mb-4">About {districtData?.name}</h2>
         <p className="text-lg">{districtData?.description}</p>
+
+        {/* for showing tags of district  */}
+        {expanded && (
+          <div className="mt-8">
+            <h3 className="flex text-xl items-center gap-2 font-bold mb-2">
+              <TagIcon className="w-5 h-5 text-primary-dark" /> District Tags
+            </h3>
+            <div className="flex flex-wrap gap-4">
+              {districtTags.map((tag, index) => (
+                <p
+                  key={index}
+                  className="text-lg border border-gray-300 rounded-full px-3 py-1"
+                >
+                  {tag}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
+        {districtTags.length > 0 && (
+          <div>
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="border border-primary-dark rounded-full px-8 py-2 mt-6 hover:bg-gray-50 transition"
+            >
+              {expanded ? "Show Less" : "Show More"}
+            </button>
+          </div>
+        )}
       </div>
       <DistrictGuides district={districtData?.slug || slug} />
     </div>

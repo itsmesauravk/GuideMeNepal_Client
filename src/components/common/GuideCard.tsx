@@ -109,7 +109,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
 
   return (
     <Link href={`/guides/${safeDetails.slug}`}>
-      <Card className="w-full sm:w-56 max-w-full  h-auto hover:cursor-pointer transition-all duration-200 hover:shadow-md">
+      <Card className="w-full sm:w-56 lg:w-72 max-w-full h-auto hover:cursor-pointer transition-all duration-200 hover:shadow-md">
         <div className="relative">
           <Image
             src={safeDetails?.imageUrl || "/images/user.webp"}
@@ -128,7 +128,7 @@ const GuideCard: React.FC<GuideCardProps> = ({ details, onProfileClick }) => {
         <CardHeader className="space-y-1 pt-3  px-3 sm:px-2 sm:pt-1">
           <div className="w-full flex flex-col sm:flex-row gap-1 sm:gap-1 justify-between items-start">
             <div>
-              <h3 className="font-semibold text-base sm:text-xs text-gray-900 line-clamp-1">
+              <h3 className="font-semibold text-base sm:text-xs lg:text-lg text-gray-900 line-clamp-1">
                 {safeDetails.name}
               </h3>
               <p className="w-full text-xs sm:text-sm text-gray-600 line-clamp-1">

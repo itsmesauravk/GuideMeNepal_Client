@@ -383,16 +383,35 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Destination <span className="text-red-500">*</span>
               </label>
-              <select
+              {/* <select
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 {...register("destination", { required: true })}
               >
                 <option value="">Select a destination</option>
+                guideDetails?.guidingAreas
                 {citiesName.map((city) => (
                   <option key={city.id} value={city.districtId}>
                     {city.name}
                   </option>
                 ))}
+
+              </select> */}
+              <select
+                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                {...register("destination", { required: true })}
+              >
+                <option value="">Select a destination</option>
+                {citiesName
+                  .filter((city) =>
+                    guideDetails?.guidingAreas?.includes(
+                      city.name.toLowerCase()
+                    )
+                  )
+                  .map((city) => (
+                    <option key={city.id} value={city.districtId}>
+                      {city.name}
+                    </option>
+                  ))}
               </select>
               {errors.destination && (
                 <span className="text-xs text-red-500">
