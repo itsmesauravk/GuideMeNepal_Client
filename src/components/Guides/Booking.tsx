@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { Children, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import Image from "next/image"
 
@@ -18,7 +18,7 @@ import citiesName from "../../utils/CitiesNames.json"
 import { GuideDetailsType } from "@/utils/Types"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { SessionData } from "@/utils/Types"
 import { Loader2Icon } from "lucide-react"
 
@@ -33,6 +33,8 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
     null
   )
   const router = useRouter()
+  const searchParams = useSearchParams()
+
   const { data: sessionData } = useSession()
   const session = sessionData as unknown as SessionData
   const {
@@ -42,11 +44,27 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
     formState: { errors },
   } = useForm()
 
+  useEffect(() => {
+    const adultParam = searchParams.get("adult")
+    const childrenParam = searchParams.get("child")
+    const dateParam = searchParams.get("date")
+
+    if (adultParam) {
+      setValue("numberOfAdults", parseInt(adultParam))
+    }
+    if (childrenParam) {
+      setValue("numberOfChildren", parseInt(childrenParam))
+    }
+    if (dateParam) {
+      setValue("startDate", dateParam)
+    }
+  }, [searchParams])
+
   const handleGetGuideDetails = async () => {
     try {
       setLoading(true)
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/guide/single-guide-details/${id}?select=id,fullname,profilePhoto,guideType,guidingAreas,languageSpeak,lastActiveAt,slug`
+        `${process.env.NEXT_PUBLIC_API_URL}/guide/single-guide-details/${id}?select=id,fullname,profilePhoto,guideType,guidingAreas,languageSpeak,lastActiveAt,slug,availability`
       )
       const data = response.data
       if (data.success) {
@@ -266,7 +284,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
                       className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...register("numberOfAdults", { required: true })}
                     >
-                      {[...Array(10)].map((_, i) => (
+                      {[...Array(4)].map((_, i) => (
                         <option key={i} value={i + 1}>
                           {i + 1}
                         </option>
@@ -281,7 +299,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
                       className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...register("numberOfChildren")}
                     >
-                      {[...Array(11)].map((_, i) => (
+                      {[...Array(3)].map((_, i) => (
                         <option key={i} value={i}>
                           {i}
                         </option>
@@ -492,7 +510,9 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={
+                  loading || guideDetails?.availability.isAvailable === false
+                }
                 className="px-6 py-3 bg-primary-dark text-white font-medium rounded-md hover:bg-primary-darker transition-colors shadow-md hover:shadow-lg"
               >
                 {loading ? (

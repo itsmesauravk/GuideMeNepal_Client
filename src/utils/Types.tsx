@@ -36,6 +36,14 @@ export interface GuideDetailsType {
   lastActiveAt: string
   totalReviews: number
   averageRating: number
+  availability_date?: [
+    {
+      id: number
+      startDate: string
+      endDate: string
+      reason: string
+    }
+  ]
 }
 
 interface Guide {
