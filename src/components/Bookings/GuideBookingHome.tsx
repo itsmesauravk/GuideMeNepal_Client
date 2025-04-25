@@ -258,7 +258,7 @@ const GuideBookingHome = () => {
   }
 
   return (
-    <div className="p-4 md:p-6 bg-gray-50 min-h-screen w-full">
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen w-full  mt-32 lg:mt-0">
       {!selectedBooking ? (
         // Booking List View
         <div>

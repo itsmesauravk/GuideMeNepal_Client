@@ -12,6 +12,7 @@ import {
   Users2Icon,
   Minus,
   Plus,
+  BellIcon,
 } from "lucide-react"
 
 import TimeAgo from "../common/TimeAgo"
@@ -28,12 +29,17 @@ import {
   toCalendarDate,
   DateValue,
   getDayOfWeek,
+  endOfMonth,
+  ZonedDateTime,
+  CalendarDateTime,
+  startOfMonth,
 } from "@internationalized/date"
 import { useLocale } from "@react-aria/i18n"
 
 import Link from "next/link"
 
 import { GuideDetailsType } from "@/utils/Types"
+import { addDays, eachDayOfInterval } from "date-fns"
 
 const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -69,6 +75,28 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
           date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
       )
     )
+  }
+
+  function getTotalAvailableDaysInCurrentMonth() {
+    // Get the current month's first and last day
+    const firstDayOfMonth = startOfMonth(now)
+    const lastDayOfMonth = endOfMonth(now)
+
+    // Initialize counter for available days
+    let availableDays = 0
+
+    // Loop through all days in the current month
+    let currentDate = firstDayOfMonth
+    while (currentDate.compare(lastDayOfMonth) <= 0) {
+      // If the date is available (not unavailable), increment counter
+      if (!isDateUnavailable(currentDate)) {
+        availableDays++
+      }
+      // Move to next day
+      currentDate = currentDate.add({ days: 1 })
+    }
+
+    return availableDays
   }
 
   const incrementAdults = () => {
@@ -267,20 +295,13 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
           {/* {props.limitedAvailability && (     ===> this is original, below is for test only*/}
           {props.lastActiveAt && (
             <div className="bg-red-50 text-red-700 p-2 rounded-lg mb-4 flex items-center justify-center gap-2">
-              {/* <svg
-                className="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor" 
-                strokeWidth="2"
-              >
-                <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg> */}
-              {/* <span> */}
-              {/* {props.availabilityMessage ||
+              <BellIcon className="h-5 w-5" />
+              <span>
+                {/* {props.availabilityMessage ||
                   "March: Only 3 slots left!"} */}
-              {/* March: Only 3 slots left!  */}
-              {/* </span> */}
+                {new Date().toLocaleString("default", { month: "long" })}: Only{" "}
+                {getTotalAvailableDaysInCurrentMonth()} slots left!
+              </span>
             </div>
           )}
           {props.availability.isAvailable ? (
