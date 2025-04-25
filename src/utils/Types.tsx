@@ -124,12 +124,14 @@ export interface Booking {
 //auth
 
 export interface SessionData {
+  jwt?: string
   user: {
     id: string
     email: string
     name: string
     role: string
     image: string
+    firstTimeLogin?: boolean
   }
 }
 
