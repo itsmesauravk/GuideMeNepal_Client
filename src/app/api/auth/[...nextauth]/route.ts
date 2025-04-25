@@ -15,6 +15,7 @@ interface AuthResponse {
       role: string
       image: string
       authMethod: string
+      firstTimeLogin?: boolean
     }
   }
 }
@@ -93,6 +94,7 @@ const handler = NextAuth({
               name: user.name,
               role: user.role, // Will be "guide"
               image: user.image,
+              firstTimeLogin: user.firstTimeLogin,
             }
           }
           return null
@@ -114,6 +116,7 @@ const handler = NextAuth({
         token.role = (user as any).role
         token.image = user.image
         token.jwt = (user as any).jwt
+        token.firstTimeLogin = (user as any).firstTimeLogin
       }
       return token
     },
@@ -124,6 +127,7 @@ const handler = NextAuth({
         name: token.name,
         role: token.role,
         image: token.image,
+        firstTimeLogin: token.firstTimeLogin,
       }
       session.jwt = token.jwt
       return session

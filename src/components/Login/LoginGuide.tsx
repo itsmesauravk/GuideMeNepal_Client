@@ -8,7 +8,8 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
-import { signIn } from "next-auth/react"
+import { getSession, signIn } from "next-auth/react"
+import { SessionData } from "@/utils/Types"
 
 const GuideLoginForm = () => {
   const [email, setEmail] = useState("sanjeetkazithapa@gmail.com")
@@ -58,7 +59,18 @@ const GuideLoginForm = () => {
       if (result?.error) {
         toast.error(result.error)
       } else if (result?.url) {
-        router.push(result.url)
+        // router.push(result.url)
+        // Get the session to check firstTimeLogin
+        const data = await getSession()
+
+        const session = data as unknown as SessionData
+
+        if (session?.user?.firstTimeLogin) {
+          // Redirect to change password page with JWT
+          router.push(`/auth/change-password?authToken=${session.jwt}`)
+        } else {
+          router.push(result.url)
+        }
       }
     } catch (error: any) {
       console.log(error, "error")
