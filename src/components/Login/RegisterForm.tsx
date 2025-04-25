@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Mail, Lock, User } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -14,6 +14,8 @@ const RegisterFormClient = () => {
   const [fullName, setFullName] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
 
   const router = useRouter()
 
@@ -40,16 +42,26 @@ const RegisterFormClient = () => {
         }
       )
       if (response.data.success) {
-        toast.success(response.data.message || "Registered successfully")
-        router.push("/login")
+        // toast.success(response.data.message || "Registered successfully")
+        // router.push("/login")
+        setSuccessMessage("Please check your email to verify your account")
       } else {
-        toast.error(response.data.message || "Failed to register")
+        // toast.error(response.data.message || "Failed to register")
+        setErrorMessage(response.data.message || "Failed to register")
       }
     } catch (error: any) {
       console.log(error, "error")
-      toast.error(error.response?.data?.message || "Failed to register")
+      // toast.error(error.response?.data?.message || "Failed to register")
+      setErrorMessage(error.response?.data?.message || "Failed to register")
     }
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSuccessMessage("")
+      setErrorMessage("")
+    }, 5000)
+  }, [setSuccessMessage, setErrorMessage])
 
   return (
     <>
@@ -78,6 +90,18 @@ const RegisterFormClient = () => {
 
           {/* Login Form */}
           <form onSubmit={handleRegister} className="space-y-6">
+            <div>
+              {successMessage && (
+                <div className="bg-green-100 text-green-700 p-4 rounded-lg mb-4">
+                  {successMessage}
+                </div>
+              )}
+              {errorMessage && (
+                <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+                  {errorMessage}
+                </div>
+              )}
+            </div>
             <div>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
