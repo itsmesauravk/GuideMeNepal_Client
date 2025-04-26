@@ -66,7 +66,7 @@ const Populars = () => {
       <section className="py-10  sm:px-6 lg:px-8 ">
         <div className="container mx-auto">
           <div className="max-w-2xl mx-auto text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Popular Locations
             </h2>
             <p className="text-gray-600">
