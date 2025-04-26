@@ -1,184 +1,3 @@
-// "use client"
-// import React, { useState, useEffect } from "react"
-// import {
-//   Home,
-//   MessageCircle,
-//   Calendar,
-//   User,
-//   Settings,
-//   Bell,
-//   HelpCircle,
-//   ChevronLeft,
-//   ChevronRight,
-//   NotebookIcon,
-//   ClockIcon,
-//   BellIcon,
-// } from "lucide-react"
-// import Image from "next/image"
-// import Link from "next/link"
-// import { usePathname } from "next/navigation"
-// import Cookies from "js-cookie"
-// import { useSession } from "next-auth/react"
-// import { SessionData } from "@/utils/Types"
-
-// const Sidebar = () => {
-//   const [isCollapsed, setIsCollapsed] = useState(false)
-//   const [activeItem, setActiveItem] = useState("")
-//   const pathname = usePathname()
-//   const [token, setToken] = useState("")
-
-//   const { data: sessionData } = useSession()
-//   const session = sessionData as unknown as SessionData
-
-//   const sidebarItems = [
-//     {
-//       id: "dashboard",
-//       icon: <Home className="w-5 h-5" />,
-//       label: "Dashboard",
-//       url: "/guide/dashboard",
-//     },
-//     {
-//       id: "notification",
-//       icon: <BellIcon className="w-5 h-5" />,
-//       label: "Notification",
-//       url: "/guide/notification",
-//     },
-//     {
-//       id: "ongoing",
-//       icon: <ClockIcon className="w-5 h-5" />,
-//       label: "Ongoing Tour",
-//       url: "/guide/ongoing",
-//     },
-//     {
-//       id: "requests",
-//       icon: <NotebookIcon className="w-5 h-5" />,
-//       label: "Bookings Request",
-//       url: "/guide/bookings",
-//     },
-//     {
-//       id: "messages",
-//       icon: <MessageCircle className="w-5 h-5" />,
-//       label: "Messages",
-//       url: "/guide/messages",
-//     },
-//     {
-//       id: "availability",
-//       icon: <Calendar className="w-5 h-5" />,
-//       label: "Availability",
-//       url: "/availability",
-//     },
-//     {
-//       id: "profile",
-//       icon: <User className="w-5 h-5" />,
-//       label: "Profile",
-//       url: "/profile",
-//     },
-//     {
-//       id: "settings",
-//       icon: <Settings className="w-5 h-5" />,
-//       label: "Settings",
-//       url: "/settings",
-//     },
-//   ]
-
-//   useEffect(() => {
-//     // Find the active item based on the current pathname
-//     const activeMenuItem = sidebarItems.find((item) =>
-//       pathname.startsWith(item.url)
-//     )
-
-//     // Update the active item if a match is found
-//     if (activeMenuItem) {
-//       setActiveItem(activeMenuItem.id)
-//     }
-//   }, [pathname])
-
-//   useEffect(() => {
-//     const token = Cookies.get("guideToken")
-//     if (token) {
-//       setToken(token)
-//     }
-//   }, [])
-
-//   return (
-//     <div
-//       className={`
-//         ${isCollapsed ? "w-16" : "w-72"}
-//         bg-white
-//         border-r
-//         h-screen
-//         flex
-//         flex-col
-//         transition-all
-//         duration-300
-//         ease-in-out
-//         shadow-md
-//       `}
-//     >
-//       {/* Sidebar Header */}
-//       <div className="flex items-center justify-between p-4 border-b">
-//         {!isCollapsed && (
-//           <div className="flex items-center gap-4">
-//             <span className="font-bold text-xl text-gray-800">
-//               {session?.user?.name}
-//             </span>
-//           </div>
-//         )}
-//         <button
-//           onClick={() => setIsCollapsed(!isCollapsed)}
-//           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-//         >
-//           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
-//         </button>
-//       </div>
-
-//       {/* Navigation Items */}
-//       <nav className="flex-grow pt-4">
-//         {sidebarItems.map((item) => (
-//           <Link
-//             href={item.url}
-//             key={item.id}
-//             className={`
-//               flex
-//               items-center
-//               cursor-pointer
-//               px-4
-//               py-3
-//               hover:bg-gray-100
-//               transition-colors
-//               ${
-//                 activeItem === item.id
-//                   ? "bg-blue-50 text-blue-600 border-r-4 border-blue-600"
-//                   : "text-gray-600"
-//               }
-//             `}
-//           >
-//             <span className="mr-4">{item.icon}</span>
-//             {!isCollapsed && <span>{item.label}</span>}
-//           </Link>
-//         ))}
-//       </nav>
-
-//       {/* Sidebar Footer */}
-//       <div className="border-t p-4">
-//         <div
-//           className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
-//           onClick={() => {
-//             /* Help/Support Logic */
-//           }}
-//         >
-//           <HelpCircle className="w-5 h-5 mr-4" />
-//           {!isCollapsed && (
-//             <span className="text-gray-600">Help & Support</span>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Sidebar
-
 "use client"
 import React, { useState, useEffect } from "react"
 import {
@@ -252,13 +71,13 @@ const Sidebar = () => {
       url: "/guide/messages",
       value: 0,
     },
-    // {
-    //   id: "availability",
-    //   icon: <Calendar className="w-5 h-5" />,
-    //   label: "Availability",
-    //   url: "/availability",
-    //   value: 0,
-    // },
+    {
+      id: "availability",
+      icon: <Calendar className="w-5 h-5" />,
+      label: "Availability",
+      url: "/guide/availability",
+      value: 0,
+    },
     {
       id: "reviews",
       icon: <MessageSquareTextIcon className="w-5 h-5" />,
@@ -399,7 +218,7 @@ const Sidebar = () => {
 
   // Mobile Top Navigation Bar
   const MobileTopNav = () => (
-    <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b shadow-md z-10">
+    <div className="fixed lg:hidden top-0 left-0 right-0 bg-white border-b shadow-md z-10">
       <div className="flex items-center justify-between px-4 h-16">
         <span className="font-bold text-gray-800 truncate">
           {session?.user?.name}

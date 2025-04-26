@@ -140,7 +140,7 @@ const OngoingTourGuideView = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-4 ">
+    <div className="min-h-screen w-full bg-gray-50 p-4  mt-32 lg:mt-0 ">
       {(bookingTravelStatus === "not-started" ||
         bookingTravelStatus === "on-going") && (
         <>

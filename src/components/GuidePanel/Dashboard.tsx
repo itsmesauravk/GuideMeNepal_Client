@@ -260,7 +260,7 @@ const Dashboard: React.FC = () => {
     bookings.ongoing.length
 
   return (
-    <div className="flex h-screen w-full bg-gray-50 md:mt-32">
+    <div className="flex h-screen w-full bg-gray-50  mt-32 lg:mt-0">
       {/* Sidebar */}
 
       {/* Main Content */}
