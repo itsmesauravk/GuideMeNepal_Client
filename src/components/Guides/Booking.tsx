@@ -20,7 +20,7 @@ import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { SessionData } from "@/utils/Types"
-import { Loader2Icon } from "lucide-react"
+import { Loader2Icon, StarIcon } from "lucide-react"
 
 interface BookingProps {
   id: string
@@ -32,6 +32,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
   const [guideDetails, setGuideDetails] = useState<GuideDetailsType | null>(
     null
   )
+
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -140,13 +141,23 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
               </h2>
               <div className="flex items-center mt-1 mb-4">
                 <div className="flex text-yellow-400 text-sm">
-                  <span>★</span>
-                  <span>★</span>
-                  <span>★</span>
-                  <span>★</span>
-                  <span>★</span>
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const rating = guideDetails?.averageRating ?? 0 // if undefined, use 0
+                    return (
+                      <StarIcon
+                        key={star}
+                        className={`h-4 w-4 ${
+                          star <= rating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    )
+                  })}
                 </div>
-                <span className="ml-1 text-xs text-gray-600">4.9/5 (120)</span>
+                <span className="ml-1 text-xs text-gray-600">
+                  {guideDetails?.averageRating}/5 ({guideDetails?.totalReviews})
+                </span>
               </div>
             </div>
           </div>
@@ -250,6 +261,7 @@ const Booking: React.FC<BookingProps> = ({ id }) => {
                       className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...register("startDate", { required: true })}
                     />
+
                     {errors.startDate && (
                       <span className="text-xs text-red-500">
                         Start date is required

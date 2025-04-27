@@ -287,13 +287,11 @@ const Sidebar = () => {
 
           <div className="p-4 border-t mt-auto">
             <div
-              className="flex items-center cursor-pointer hover:bg-gray-100 p-3 rounded"
-              onClick={() => {
-                /* Help/Support Logic */
-              }}
+              className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
+              onClick={handleLogout}
             >
-              <HelpCircle className="w-5 h-5 mr-4" />
-              <span className="text-gray-600">Help & Support</span>
+              <ArrowLeftFromLineIcon className="w-5 h-5 mr-4 text-red-600" />
+              <span className="text-red-600">Log Out</span>
             </div>
           </div>
         </div>

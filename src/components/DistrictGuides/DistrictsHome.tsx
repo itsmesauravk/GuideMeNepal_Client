@@ -87,10 +87,13 @@ const DistrictsHome = () => {
         </p>
       </div>
 
-      {loading &&
-        [...Array(4)].map((_, index) => (
-          <PopularLoactionSkeleton key={`skeleton-${index}`} />
-        ))}
+      {loading && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, index) => (
+            <PopularLoactionSkeleton key={`skeleton-${index}`} />
+          ))}
+        </div>
+      )}
 
       {!loading && districts.length === 0 && (
         <div className="flex flex-col gap-2 justify-center items-center h-64">
