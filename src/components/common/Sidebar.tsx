@@ -23,11 +23,16 @@ import Cookies from "js-cookie"
 import { signOut, useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
 import { useNotificationCount } from "@/providers/NotificationCountProvider"
+import { set } from "date-fns"
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [activeItem, setActiveItem] = useState("")
+
+  const [logoutModelOpen, setLogoutModelOpen] = useState(false)
+  const [logoutModelLoading, setLogoutModelLoading] = useState(false)
+
   const pathname = usePathname()
   const [token, setToken] = useState("")
 
@@ -131,8 +136,6 @@ const Sidebar = () => {
   }
 
   const handleLogout = () => {
-    const confirmLogout = confirm("Are you sure you want to log out?")
-    if (!confirmLogout) return
     signOut()
   }
 
@@ -207,7 +210,7 @@ const Sidebar = () => {
       <div className="border-t p-4">
         <div
           className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
-          onClick={handleLogout}
+          onClick={() => setLogoutModelOpen(true)}
         >
           <ArrowLeftFromLineIcon className="w-5 h-5 mr-4 text-red-600" />
           {!isCollapsed && <span className="text-red-600">Log Out</span>}
@@ -288,7 +291,7 @@ const Sidebar = () => {
           <div className="p-4 border-t mt-auto">
             <div
               className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded"
-              onClick={handleLogout}
+              onClick={() => setLogoutModelOpen(true)}
             >
               <ArrowLeftFromLineIcon className="w-5 h-5 mr-4 text-red-600" />
               <span className="text-red-600">Log Out</span>
@@ -297,6 +300,38 @@ const Sidebar = () => {
         </div>
       </div>
     )
+
+  //for logout modal
+  const LogoutModal = () => {
+    return (
+      <div
+        className={`${
+          logoutModelOpen ? "block" : "hidden"
+        } fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50`}
+      >
+        <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+          <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
+          <p>Are you sure you want to log out?</p>
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={() => setLogoutModelOpen(false)}
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleLogout}
+              className={`${
+                logoutModelLoading ? "opacity-50 cursor-not-allowed" : ""
+              } bg-red-600 text-white px-4 py-2 rounded`}
+            >
+              {logoutModelLoading ? "Logging out..." : "Log Out"}
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Add padding to content when mobile top nav is present
   const ContentPadding = () => <div className="lg:hidden h-28"></div>
@@ -307,6 +342,7 @@ const Sidebar = () => {
       <MobileTopNav />
       <MobileFullMenu />
       <ContentPadding />
+      <LogoutModal />
     </>
   )
 }

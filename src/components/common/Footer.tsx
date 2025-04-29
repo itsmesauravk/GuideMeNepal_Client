@@ -80,9 +80,17 @@ const Footer = () => {
               <li>
                 <Link
                   href={"/guides"}
-                  className="text-gray-600 font-semibold hover:text-gray-800"
+                  className="text-gray-600 font-semibold hover:text-gray-800 hover:underline"
                 >
-                  Tour Guide
+                  Become a Guide
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/login/guide"}
+                  className="text-gray-600 font-medium hover:text-gray-800 hover:underline"
+                >
+                  Login as Guide
                 </Link>
               </li>
             </nav>
