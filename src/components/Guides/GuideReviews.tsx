@@ -158,7 +158,9 @@ const GuideReviews = () => {
               >
                 <div className="flex items-start">
                   <img
-                    src={review.user.profilePicture || "/api/placeholder/40/40"}
+                    src={
+                      review.user.profilePicture || "/images/default_user.avif"
+                    }
                     alt={review.user.fullName}
                     className="w-10 h-10 rounded-full object-cover mr-4"
                   />

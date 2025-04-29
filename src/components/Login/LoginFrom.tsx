@@ -90,7 +90,8 @@ const LoginForm = () => {
               <div className="flex gap-6 justify-center mb-6">
                 <button
                   onClick={() => {
-                    oauthLoginHandler("google")
+                    // oauthLoginHandler("google")
+                    signIn("google")
                   }}
                   className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center hover:shadow-lg transition-shadow hover:bg-background-secondary"
                 >
@@ -102,7 +103,8 @@ const LoginForm = () => {
                 </button>
                 <button
                   onClick={() => {
-                    oauthLoginHandler("facebook")
+                    // oauthLoginHandler("facebook")
+                    signIn("facebook")
                   }}
                   className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center hover:shadow-lg transition-shadow hover:bg-background-secondary"
                 >

@@ -341,7 +341,10 @@ const GuideBookingHome = () => {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center">
                       <Image
-                        src={booking.User.profilePicture}
+                        src={
+                          booking.User.profilePicture ||
+                          "/images/default_user.avif"
+                        }
                         alt={booking.User.fullName}
                         width={40}
                         height={40}
@@ -479,7 +482,10 @@ const GuideBookingHome = () => {
               </h2>
               <div className="flex items-center">
                 <Image
-                  src={selectedBooking.User.profilePicture}
+                  src={
+                    selectedBooking.User.profilePicture ||
+                    "/images/default_user.avif"
+                  }
                   alt={selectedBooking.User.fullName}
                   width={40}
                   height={40}

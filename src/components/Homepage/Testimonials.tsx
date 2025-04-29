@@ -63,7 +63,7 @@ const Testimonials = () => {
       <p className="text-center mb-6 ">{review.comments}</p>
       <div className="inline-flex items-center">
         <Image
-          src={review.user.profilePicture}
+          src={review.user.profilePicture || "/images/default_user.avif"}
           alt={review.user.fullName}
           className="w-12 h-12 rounded-full flex-shrink-0"
           width={48}

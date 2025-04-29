@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
 import { BookingType } from "@/utils/Types"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const OngoingTourGuideView = () => {
   const [onGoingBooking, setOnGoingBooking] = useState<BookingType | null>(null)
@@ -26,6 +27,8 @@ const OngoingTourGuideView = () => {
   const [bookingTravelStatus, setBookingTravelStatus] = useState("")
   const [completeBookingLoading, setCompleteBookingLoading] = useState(false)
   const [cancelBookingLoading, setCancelBookingLoading] = useState(false)
+
+  const router = useRouter()
 
   const { data: sessionData } = useSession()
   const session = sessionData as unknown as SessionData
@@ -102,6 +105,7 @@ const OngoingTourGuideView = () => {
         // setOnGoingBooking(data.data)
         toast.success("Booking completed successfully")
         handleGetOngoingTour(guideId)
+        router.push("/guide/dashboard")
       } else {
         console.log("Error completing booking:", data.message)
         toast.error(data.message || "Error completing booking")
