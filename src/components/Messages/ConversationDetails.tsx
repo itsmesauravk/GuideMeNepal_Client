@@ -34,7 +34,7 @@ const ConversationDetails = ({
       <div className="flex flex-col items-center mb-6">
         <div className="relative w-24 h-24 mb-4">
           <Image
-            src={selectedUser.avatar}
+            src={selectedUser.avatar || "/images/default_user.avif"}
             alt={selectedUser.name}
             width={96}
             height={96}

@@ -319,7 +319,7 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
               </Link>
               <p className="text-center text-sm text-gray-600 mt-2 mb-2">OR</p>
               {/* Message button */}
-              <Link href={`/messages?chat=${props.slug}`}>
+              <Link href={`/messages?chat=${props.slug}&id=${props.id}`}>
                 <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
                   Message {props.fullname}
                 </Button>

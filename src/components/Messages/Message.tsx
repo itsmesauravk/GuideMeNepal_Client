@@ -199,7 +199,7 @@ const Message: React.FC<MessageProps> = ({
           <div className="relative mr-3">
             <div className="w-10 h-10 bg-gray-300 rounded-full overflow-hidden">
               <Image
-                src={selectedUser.avatar}
+                src={selectedUser.avatar || "/images/default_user.avif"}
                 alt={selectedUser.name}
                 width={40}
                 height={40}

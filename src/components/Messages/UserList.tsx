@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useEffect, useState } from "react"
+import React, { Suspense, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { formatDistanceToNow } from "date-fns"
 import { useSocket } from "@/providers/ClientSocketProvider"
@@ -68,23 +68,8 @@ const UserList = ({
   const [conversations, setConversations] = useState<Conversation[]>([])
 
   const userRole = session?.user?.role === "user" ? "User" : "Guide"
-  const myRole = session?.user?.role === "user" ? "Guide" : "User"
-  const myId = session?.user?.id || 0
 
-  const handleGetConversations = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/message/get-conversations/${session?.user?.id}/${userRole}`
-      )
-      if (response.data.success) {
-        setConversations(response.data.data)
-      } else {
-        console.log("Error fetching conversations:", response.data.message)
-      }
-    } catch (error) {
-      console.error("Error fetching conversations:", error)
-    }
-  }
+  const myId = session?.user?.id || 0
 
   // Real-time updates for new messages
   useEffect(() => {
@@ -140,9 +125,53 @@ const UserList = ({
     }
   }, [socket])
 
-  //get the user slug from query in the url
+  //this will load all my conversation if there are created  // Fetch conversations from the server
+  const handleGetConversations = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/message/get-conversations/${session?.user?.id}/${userRole}`
+      )
+      if (response.data.success) {
+        setConversations(response.data.data)
+      } else {
+        console.log("Error fetching conversations:", response.data.message)
+      }
+    } catch (error) {
+      console.error("Error fetching conversations:", error)
+    }
+  }
+
+  //get the user slug from query in the url - this is for opening the chat page with the selected user
   const searchParams = useSearchParams()
-  const chatId = searchParams.get("chat")
+  const chatId = searchParams.get("chat") // chatId is userslug
+  const guideId = searchParams.get("id") // guideId is the id of the guide
+
+  //this function is for creating new conversation with user if not exist already
+  const handleCreateNewConverstion = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/message/send-message`,
+        {
+          senderId: myId,
+          senderModel: userRole,
+          reciverId: guideId,
+          reciverType: "Guide",
+          content: "Hello",
+          contentType: "text",
+        }
+      )
+      const data = response.data
+      if (data.success) {
+        console.log("New conversation created successfully:", data.data)
+        // fetching the conversations again to update the list
+        await handleGetConversations()
+      } else {
+        console.error("Error creating new conversation:", data.message)
+      }
+    } catch (error) {
+      console.error("Error creating new conversation:", error)
+    }
+  }
 
   useEffect(() => {
     if (session?.user?.id) {
@@ -150,11 +179,13 @@ const UserList = ({
     }
   }, [session?.user?.id])
 
+  const isCreatingConversation = useRef(false)
+
   useEffect(() => {
     if (chatId !== null) {
+      // if chat id is not null then opening the user chats
       // Find the conversation with the matching chatId
-      // console.log("Chat ID:", chatId)
-      // console.log("Conversations:", conversations)
+
       const conversation = conversations.find(
         (conv) => conv.participants[0].slug === chatId
       )
@@ -172,6 +203,20 @@ const UserList = ({
           activeStatus: isOnline ? "online" : "offline",
           message: conversation.lastMessage,
           date: conversation.updatedAt,
+        })
+        // Reset the creation flag
+        isCreatingConversation.current = false
+      } else if (!isCreatingConversation.current && guideId) {
+        // No conversation found and not already creating one
+        isCreatingConversation.current = true
+
+        // Create new conversation
+        handleCreateNewConverstion().then(() => {
+          // This will only run after the conversation is created
+          // Keep the flag true until the next render cycle completes
+          setTimeout(() => {
+            isCreatingConversation.current = false
+          }, 0)
         })
       }
     }
@@ -264,7 +309,8 @@ const UserList = ({
                     <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
                       <Image
                         src={
-                          participant.profilePicture || "/default-avatar.png"
+                          participant.profilePicture ||
+                          "/images/default_user.avif"
                         }
                         alt={participant.name}
                         width={48}
