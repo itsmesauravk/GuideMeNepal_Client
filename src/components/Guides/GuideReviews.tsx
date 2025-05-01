@@ -5,6 +5,7 @@ import { Loader2, RefreshCcw, Star, StarHalf } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
 import TimeAgo from "../common/TimeAgo"
+import Image from "next/image"
 
 // Define the review type based on the response structure
 interface ReviewType {
@@ -95,7 +96,7 @@ const GuideReviews = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 mt-32 lg:mt-0">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-semibold">Reviews</h1>
@@ -157,12 +158,14 @@ const GuideReviews = () => {
                 className="p-4 hover:bg-gray-50 transition-colors mb-4"
               >
                 <div className="flex items-start">
-                  <img
+                  <Image
                     src={
                       review.user.profilePicture || "/images/default_user.avif"
                     }
                     alt={review.user.fullName}
                     className="w-10 h-10 rounded-full object-cover mr-4"
+                    width={40}
+                    height={40}
                   />
                   <div className="flex-1">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">

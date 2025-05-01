@@ -183,6 +183,23 @@ const Message: React.FC<MessageProps> = ({
     return isMe
   }
 
+  //for infinte scrolling
+  const handleInfiniteScroll = async () => {
+    console.log(
+      "Scroll height (entire document):",
+      document.documentElement.scrollHeight
+    )
+    console.log("Inner Height (actual height):", window.innerHeight)
+    try {
+    } catch (error) {
+      setError("An error occurred while fetching more messages")
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleInfiniteScroll)
+  }, [])
+
   return (
     <>
       {/* Header */}

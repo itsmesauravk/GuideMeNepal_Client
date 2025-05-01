@@ -91,17 +91,10 @@ const Sidebar = () => {
       value: 0,
     },
     {
-      id: "profile",
-      icon: <User className="w-5 h-5" />,
-      label: "Profile",
-      url: "/profile",
-      value: 0,
-    },
-    {
       id: "settings",
       icon: <Settings className="w-5 h-5" />,
       label: "Settings",
-      url: "/settings",
+      url: "/guide/settings",
       value: 0,
     },
   ]

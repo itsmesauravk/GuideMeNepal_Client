@@ -1,16 +1,11 @@
-"use client"
-
 import Sidebar from "@/components/common/Sidebar"
-import Dashboard from "@/components/GuidePanel/Dashboard"
-
 import React from "react"
 
 const page = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <Dashboard />
-      {/* <h1>Dashboard will be under development soon...</h1> */}
+      <div>hello</div>
     </div>
   )
 }

@@ -68,8 +68,9 @@ const GuideBookingHome = () => {
       if (data.success) {
         const availableBookings = data.data.filter(
           (booking: Booking) =>
-            booking.bookingStatus === "pending" ||
-            booking.bookingStatus === "accepted"
+            (booking.bookingStatus === "pending" ||
+              booking.bookingStatus === "accepted") &&
+            booking.travelStatus !== "completed"
         )
         setBookings(availableBookings)
       }

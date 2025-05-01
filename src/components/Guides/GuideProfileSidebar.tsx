@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { SessionData } from "@/utils/Types"
 import {
   Star,
   MapPin,
@@ -40,6 +41,8 @@ import Link from "next/link"
 
 import { GuideDetailsType } from "@/utils/Types"
 import { addDays, eachDayOfInterval } from "date-fns"
+import { useSession } from "next-auth/react"
+import { toast } from "sonner"
 
 const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -47,6 +50,13 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
   const [startingDate, setStartingDate] = useState<CalendarDate | null>(null)
   const [adultCount, setAdultCount] = useState(1)
   const [childCount, setChildCount] = useState(0)
+
+  const [userId, setUserId] = useState<string | null>(null)
+  const [userRole, setUserRole] = useState<string | null>(null)
+
+  const { data: sessionData } = useSession()
+
+  const session = sessionData as unknown as SessionData
 
   let now = today(getLocalTimeZone())
   let { locale } = useLocale()
@@ -114,6 +124,16 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
   const decrementChildren = () => {
     if (childCount > 0) setChildCount(childCount - 1)
   }
+
+  useEffect(() => {
+    if (session) {
+      setUserId(session.user.id)
+      setUserRole(session.user.role)
+    } else {
+      setUserId(null)
+      setUserRole(null)
+    }
+  }, [])
 
   return (
     <div className="md:col-span-1">
@@ -306,24 +326,47 @@ const GuideProfileSidebar: React.FC<GuideDetailsType> = (props) => {
           )}
           {props.availability.isAvailable ? (
             <>
-              <Link
-                href={`/guides/${
-                  props.slug
-                }/booking?adult=${adultCount}&child=${childCount}${
-                  startingDate ? `&date=${startingDate}` : ""
-                }`}
-              >
-                <Button className="w-full bg-primary-dark text-white rounded-lg py-3 text-lg font-medium hover:bg-blue-700 transition">
+              {userId && userRole === "user" ? (
+                <Link
+                  href={`/guides/${
+                    props.slug
+                  }/booking?adult=${adultCount}&child=${childCount}${
+                    startingDate ? `&date=${startingDate}` : ""
+                  }`}
+                >
+                  <Button className="w-full bg-primary-dark text-white rounded-lg py-3 text-lg font-medium hover:bg-blue-700 transition">
+                    Create a new booking
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  className="w-full bg-primary-dark text-white rounded-lg py-3 text-lg font-medium hover:bg-blue-700 transition"
+                  onClick={() => {
+                    toast.info("Please login to create a booking")
+                  }}
+                >
                   Create a new booking
                 </Button>
-              </Link>
+              )}
+
               <p className="text-center text-sm text-gray-600 mt-2 mb-2">OR</p>
               {/* Message button */}
-              <Link href={`/messages?chat=${props.slug}&id=${props.id}`}>
-                <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+              {userId && userRole === "user" ? (
+                <Link href={`/messages?chat=${props.slug}&id=${props.id}`}>
+                  <Button className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+                    Message {props.fullname}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  className=" mt-4 w-full text-lg bg-primary-dark text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition"
+                  onClick={() => {
+                    toast.info("Please login to send a message")
+                  }}
+                >
                   Message {props.fullname}
                 </Button>
-              </Link>
+              )}
             </>
           ) : (
             <>
