@@ -1,5 +1,6 @@
 import type { NextConfig } from "next"
 
+
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
@@ -11,6 +12,7 @@ const nextConfig: NextConfig = {
       "images.unsplash.com", // Added for Unsplash images
     ],
   },
+
 }
 
 export default nextConfig

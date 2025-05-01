@@ -4,6 +4,12 @@ import UserMessages from "@/components/Messages/UserMessage"
 import { Loader2Icon } from "lucide-react"
 import React, { Suspense } from "react"
 
+export const metadata = {
+  title: "Messages - Guide Me Nepal",
+  description:
+    "Manage your messages and stay connected with clients. Keep track of your conversations and never miss an important message.",
+}
+
 const page = () => {
   return (
     <>

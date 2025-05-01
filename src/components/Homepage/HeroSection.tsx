@@ -58,6 +58,7 @@ const HeroSection: React.FC = () => {
         <h1 className="text-5xl font-bold mb-6 drop-shadow-lg text-white">
           Find Trusted Guides in Nepal
         </h1>
+
         <p className="text-xl mb-8 max-w-2xl text-white">
           Discover authentic adventures with certified local experts who know
           Nepal like no one else

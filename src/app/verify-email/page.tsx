@@ -1,9 +1,14 @@
-"use client"
 import Footer from "@/components/common/Footer"
 import Navbar from "@/components/common/Navbar"
 import VerifyEmail from "@/components/Login/VerifyEmail"
 import { Loader2Icon } from "lucide-react"
 import React, { Suspense } from "react"
+
+export const metadata = {
+  title: "Verify Email - Guide Me Nepal",
+  description:
+    "Verify your email address to complete the registration process. Check your inbox for the verification link.",
+}
 
 const page = () => {
   return (

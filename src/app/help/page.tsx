@@ -2,6 +2,12 @@ import Footer from "@/components/common/Footer"
 import Navbar from "@/components/common/Navbar"
 import React from "react"
 
+export const metadata = {
+  title: "Help & Support - Guide Me Nepal",
+  description:
+    "Get help and support for your Guide Me Nepal account. Find answers to common questions and contact our support team.",
+}
+
 const page = () => {
   return (
     <>
