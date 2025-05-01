@@ -14,14 +14,25 @@ import {
   SelectValue,
 } from "../ui/select"
 import CountryCode from "../../utils/CountryCode.json"
+import axios from "axios"
+
+interface personalInfoInterface {
+  fullName: string
+  email: string
+  contact?: string
+  gender?: string
+  dob?: string
+  country?: string
+}
 
 const PersonalInfo = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<personalInfoInterface>({
     fullName: "",
     email: "",
     contact: "",
     gender: "",
     dob: "",
+    country: "",
   })
 
   const [isLoading, setIsLoading] = useState(false)
@@ -31,6 +42,10 @@ const PersonalInfo = () => {
   })
 
   const router = useRouter()
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
+
+  const userId = session?.user?.id
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -40,28 +55,48 @@ const PersonalInfo = () => {
     }))
   }
 
+  const getUserData = async () => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/client/my-profile/${userId}`
+    )
+
+    const data = response.data
+    if (data.success) {
+      console.log(data.data)
+      setFormData({
+        fullName: data.data.fullName || "",
+        email: data.data.email || "",
+        gender: data.data.gender || "",
+        contact: data.data.contact || "",
+        country: data.data.country || "",
+        dob: data.data.dob || "",
+      })
+    }
+  }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setIsLoading(true)
     setMessage({ type: "", text: "" })
 
     try {
-      // Example API call - replace with your actual endpoint
-      const response = await fetch("/api/user/update-profile", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.ok) {
-        setMessage({ type: "success", text: "Profile updated successfully!" })
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/client/update-profile/${userId}`,
+        formData
+      )
+      const data = response.data
+      if (data.success) {
+        setMessage({
+          type: "success",
+          text: "Profile updated successfully!",
+        })
+        setTimeout(() => {
+          router.push("/my-account")
+        }, 2000)
       } else {
-        const error = await response.json()
         setMessage({
           type: "error",
-          text: error.message || "Failed to update profile",
+          text: data.message || "Failed to update profile.",
         })
       }
     } catch (error) {
@@ -73,6 +108,10 @@ const PersonalInfo = () => {
       setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    getUserData()
+  }, [userId])
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -176,9 +215,9 @@ const PersonalInfo = () => {
               />
               <Input
                 type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
+                id="country"
+                name="country"
+                value={formData.country}
                 onChange={handleChange}
                 className="pl-10 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 placeholder="Enter your country"
@@ -221,12 +260,17 @@ const PersonalInfo = () => {
               Gender
             </label>
 
-            <Select>
+            <Select
+              value={formData.gender}
+              onValueChange={(value) =>
+                setFormData((prev) => ({ ...prev, gender: value }))
+              }
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Gender" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="make">Male</SelectItem>
+                <SelectItem value="male">Male</SelectItem>
                 <SelectItem value="female">Female</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
                 <SelectItem value="prefer_not_to_say">

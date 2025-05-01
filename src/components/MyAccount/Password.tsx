@@ -5,9 +5,14 @@ import { Lock, Eye, EyeOff, ArrowLeft, Shield, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Input } from "../ui/input"
+import axios from "axios"
+import { SessionData } from "@/utils/Types"
 
 const Password = () => {
-  const { data: session } = useSession()
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
+
+  const userId = session?.user?.id
 
   const router = useRouter()
 
@@ -86,20 +91,20 @@ const Password = () => {
     setMessage({ type: "", text: "" })
 
     try {
-      // Example API call - replace with your actual endpoint
-      const response = await fetch("/api/user/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          currentPassword: formData.currentPassword,
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/client/update-password/${userId}`,
+        {
+          oldPassword: formData.currentPassword,
           newPassword: formData.newPassword,
-        }),
-      })
+        }
+      )
+      const data = response.data
 
-      if (response.ok) {
-        setMessage({ type: "success", text: "Password changed successfully!" })
+      if (data.success) {
+        setMessage({
+          type: "success",
+          text: data.message || "Password changed successfully!",
+        })
         // Reset form
         setFormData({
           currentPassword: "",
@@ -107,18 +112,10 @@ const Password = () => {
           confirmPassword: "",
         })
       } else {
-        const error = await response.json()
-        if (error.code === "invalid_credentials") {
-          setErrors((prev) => ({
-            ...prev,
-            currentPassword: "Current password is incorrect",
-          }))
-        } else {
-          setMessage({
-            type: "error",
-            text: error.message || "Failed to change password",
-          })
-        }
+        setMessage({
+          type: "error",
+          text: data.message || "Failed to change password",
+        })
       }
     } catch (error) {
       setMessage({
@@ -159,6 +156,15 @@ const Password = () => {
   }
 
   const passwordStrength = getPasswordStrength(formData.newPassword)
+
+  const togglePasswordVisibility = (
+    field: "currentPassword" | "newPassword" | "confirmPassword"
+  ) => {
+    setShowPasswords((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }))
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -235,7 +241,7 @@ const Password = () => {
               <button
                 type="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                // onClick={() => togglePasswordVisibility("currentPassword")}
+                onClick={() => togglePasswordVisibility("currentPassword")}
               >
                 {showPasswords.currentPassword ? (
                   <EyeOff size={18} />
@@ -279,7 +285,7 @@ const Password = () => {
               <button
                 type="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                // onClick={() => togglePasswordVisibility("newPassword")}
+                onClick={() => togglePasswordVisibility("newPassword")}
               >
                 {showPasswords.newPassword ? (
                   <EyeOff size={18} />
@@ -351,7 +357,7 @@ const Password = () => {
               <button
                 type="button"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                // onClick={() => togglePasswordVisibility("confirmPassword")}
+                onClick={() => togglePasswordVisibility("confirmPassword")}
               >
                 {showPasswords.confirmPassword ? (
                   <EyeOff size={18} />

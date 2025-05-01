@@ -2,29 +2,25 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useSession } from "next-auth/react"
 import { Camera, Upload, ArrowLeft, UserCircle, Trash2 } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
-import { SessionData } from "@/utils/Types"
 import { useRouter } from "next/navigation"
+import axios from "axios"
+import { SessionData } from "@/utils/Types"
 
 const ProfilePicture = () => {
-  const { data: sessionData } = useSession()
-  const session: SessionData = sessionData as unknown as SessionData
-
-  const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [currentImage, setCurrentImage] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [message, setMessage] = useState({ type: "", text: "" })
+
+  const { data: sessionData } = useSession()
+  const session = sessionData as unknown as SessionData
+  const userId = session?.user?.id
 
   const router = useRouter()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (session && session.user && session.user.image) {
-      setProfileImage(session.user.image)
-    }
-  }, [session])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage({ type: "", text: "" })
@@ -32,19 +28,18 @@ const ProfilePicture = () => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    // Validate file type
     if (!file.type.includes("image/")) {
       setMessage({ type: "error", text: "Please upload an image file" })
       return
     }
 
-    // Validate file size (2MB max)
     if (file.size > 2 * 1024 * 1024) {
       setMessage({ type: "error", text: "Image size must be less than 2MB" })
       return
     }
 
-    // Create preview
+    setProfileImage(file)
+
     const reader = new FileReader()
     reader.onload = () => {
       setPreviewImage(reader.result as string)
@@ -52,9 +47,17 @@ const ProfilePicture = () => {
     reader.readAsDataURL(file)
   }
 
-  const handleUpload = async () => {
-    if (!fileInputRef.current?.files?.length) {
-      setMessage({ type: "error", text: "Please select an image to upload" })
+  const handleRemoveImage = () => {
+    setProfileImage(null)
+    setPreviewImage(null)
+    if (fileInputRef.current) fileInputRef.current.value = ""
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!profileImage || !session?.user?.name) {
+      setMessage({ type: "error", text: "Missing image or user data." })
       return
     }
 
@@ -62,33 +65,23 @@ const ProfilePicture = () => {
     setMessage({ type: "", text: "" })
 
     const formData = new FormData()
-    formData.append("profilePicture", fileInputRef.current.files[0])
+    formData.append("image", profileImage)
+    formData.append("fullName", session.user.name)
 
     try {
-      // Example API call - replace with your actual endpoint
-      const response = await fetch("/api/user/upload-profile-image", {
-        method: "POST",
-        body: formData,
-      })
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/client/update-profile/${userId}`,
+        formData
+      )
 
-      if (response.ok) {
-        const data = await response.json()
-        setProfileImage(data.imageUrl)
-        setPreviewImage(null)
-        setMessage({
-          type: "success",
-          text: "Profile picture updated successfully!",
-        })
-
-        // Reset file input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ""
-        }
+      const data = response.data
+      if (data.success) {
+        setMessage({ type: "success", text: "Profile updated successfully!" })
+        setTimeout(() => router.push("/my-account"), 2000)
       } else {
-        const error = await response.json()
         setMessage({
           type: "error",
-          text: error.message || "Failed to upload profile picture",
+          text: data.message || "Failed to update profile.",
         })
       }
     } catch (error) {
@@ -101,20 +94,19 @@ const ProfilePicture = () => {
     }
   }
 
-  const handleRemoveImage = () => {
-    setPreviewImage(null)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+  useEffect(() => {
+    if (session?.user?.image) {
+      setCurrentImage(session.user.image)
     }
-  }
+  }, [session])
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Header with back button */}
+      {/* Header */}
       <div className="mb-8">
         <div
           onClick={() => router.back()}
-          className="inline-flex items-center text-primary-dark hover:text-primary-darker mb-4"
+          className="inline-flex items-center text-primary-dark hover:text-primary-darker mb-4 cursor-pointer"
         >
           <ArrowLeft size={16} className="mr-2" />
           Back to Account
@@ -127,9 +119,8 @@ const ProfilePicture = () => {
         </p>
       </div>
 
-      {/* Content */}
+      {/* Card */}
       <div className="bg-white rounded-lg shadow p-6">
-        {/* Status message */}
         {message.text && (
           <div
             className={`mb-6 p-4 rounded-md ${
@@ -142,47 +133,43 @@ const ProfilePicture = () => {
           </div>
         )}
 
-        {/* Current Profile Picture */}
-        <div className="mb-8">
+        {/* Current / Preview Picture */}
+        <div className="mb-8 text-center">
           <h2 className="text-lg font-medium mb-4">Current Profile Picture</h2>
-          <div className="flex justify-center">
-            <div className="relative w-48 h-48 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-              {profileImage ? (
-                <Image
-                  src={profileImage}
-                  alt="Profile"
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <UserCircle size={120} className="text-gray-400" />
-              )}
-            </div>
+          <div className="relative w-48 h-48 rounded-full overflow-hidden bg-gray-100 mx-auto flex items-center justify-center">
+            {currentImage ? (
+              <Image
+                src={currentImage}
+                alt="Preview"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <UserCircle size={120} className="text-gray-400" />
+            )}
           </div>
         </div>
 
-        {/* Upload New Picture */}
+        {/* Upload Section */}
         <div>
           <h2 className="text-lg font-medium mb-4">Upload New Picture</h2>
 
-          {/* Image Preview */}
+          {/* Preview with remove */}
           {previewImage && (
-            <div className="mb-6">
-              <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden bg-gray-100">
-                <Image
-                  src={previewImage}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                />
-                <button
-                  onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 focus:outline-none"
-                  title="Remove"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
+            <div className="mb-6 relative w-48 h-48 mx-auto rounded-full overflow-hidden bg-gray-100">
+              <Image
+                src={previewImage}
+                alt="Preview"
+                fill
+                className="object-cover"
+              />
+              <button
+                onClick={handleRemoveImage}
+                className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                title="Remove"
+              >
+                <Trash2 size={16} />
+              </button>
             </div>
           )}
 
@@ -212,10 +199,9 @@ const ProfilePicture = () => {
           {/* Upload Button */}
           <div className="flex justify-end">
             <button
-              type="button"
-              onClick={handleUpload}
+              onClick={handleSubmit}
               disabled={isUploading || !previewImage}
-              className={`flex items-center px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors ${
+              className={`flex items-center px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition ${
                 isUploading || !previewImage
                   ? "opacity-50 cursor-not-allowed"
                   : ""
