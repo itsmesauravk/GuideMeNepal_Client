@@ -98,7 +98,7 @@ const GuideNotifications = () => {
     if (notifications.length === 0) return
 
     try {
-      await axios.put(
+      await axios.patch(
         `${process.env.NEXT_PUBLIC_API_URL}/common/mark-all-notification-as-read/${session?.user?.id}/guide`
       )
       setNotifications((prev) =>
