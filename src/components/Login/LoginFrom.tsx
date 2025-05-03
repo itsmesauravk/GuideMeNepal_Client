@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Mail, Lock } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -9,11 +9,13 @@ import { useRouter } from "next/navigation"
 import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
 import { signIn } from "next-auth/react"
+import { set } from "date-fns"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("np03cs4s230139@heraldcollege.edu.np")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   const router = useRouter()
 
@@ -21,7 +23,7 @@ const LoginForm = () => {
     e.preventDefault()
     // console.log(email, password, userType)
     if (!email || !password) {
-      return toast.warning("Please fill all the fields")
+      return setErrorMessage("Please fill in all fields")
     }
 
     try {
@@ -47,7 +49,7 @@ const LoginForm = () => {
       })
 
       if (result?.error) {
-        toast.error(result.error)
+        setErrorMessage(result.error || "Invalid Email or Password")
       } else if (result?.url) {
         router.push(result.url)
       }
@@ -73,6 +75,12 @@ const LoginForm = () => {
       toast.error("Failed to initiate login")
     }
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage("")
+    }, 3000)
+  }, [errorMessage])
 
   return (
     <>
@@ -120,6 +128,11 @@ const LoginForm = () => {
               </p>
             </div>
             <div>
+              {errorMessage && (
+                <p className="text-red-500 bg-red-50 text-lg mb-2 p-4">
+                  {errorMessage}
+                </p>
+              )}
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
                 <input
