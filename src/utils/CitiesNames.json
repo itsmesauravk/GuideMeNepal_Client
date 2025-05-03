@@ -330,6 +330,11 @@
     "name": "Sindhuli"
   },
   {
+    "id": 77,
+    "districtId": "sindhupalchok",
+    "name": "Sindhupalchok"
+  },
+  {
     "id": 67,
     "districtId": "siraha",
     "name": "Siraha"
@@ -378,10 +383,5 @@
     "id": 76,
     "districtId": "western-rukum",
     "name": "Western Rukum"
-  },
-  {
-    "id": 77,
-    "districtId": "sindhupalchok",
-    "name": "Sindhupalchok"
   }
 ]

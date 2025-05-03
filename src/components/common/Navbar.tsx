@@ -16,7 +16,8 @@ import { Input } from "@/components/ui/input"
 
 import Logo from "./Logo"
 import Link from "next/link"
-import districtsData from "../../utils/CitiesNames.json"
+// import districtsData from "../../utils/CitiesNames.json"
+import districtsData from "../../utils/DistrictsNames.json"
 import Cookies from "js-cookie"
 
 import { Button as HeroButton, useDisclosure, Divider } from "@heroui/react"
@@ -40,6 +41,7 @@ interface District {
   id: number
   districtId: string
   name: string
+  tags?: string[] // Optional tags property
 }
 
 const Navbar = () => {
@@ -70,8 +72,18 @@ const Navbar = () => {
       return
     }
 
-    const filteredDistricts = districts.filter((district) =>
-      district.name.toLowerCase().includes(value)
+    // const filteredDistricts = districts.filter((district) =>
+    //   district.name.toLowerCase().includes(value)
+    // )
+    //for filtring by name and tags
+    const filteredDistricts = districts.filter(
+      (district) =>
+        district.name.toLowerCase().includes(value) ||
+        (district.tags &&
+          district.tags.some(
+            (tag) =>
+              typeof tag === "string" && tag.toLowerCase().includes(value)
+          ))
     )
 
     setSearchResults(filteredDistricts)
@@ -116,7 +128,7 @@ const Navbar = () => {
               />
 
               {/* Desktop Search Results Dropdown */}
-              {showResults && (
+              {/* {showResults && (
                 <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <ul className="py-2">
@@ -129,6 +141,48 @@ const Navbar = () => {
                           {district.name}
                         </li>
                       ))}
+                    </ul>
+                  ) : (
+                    <div className="px-4 py-3 text-red-500 font-medium text-left">
+                      Not found
+                    </div>
+                  )}
+                </div>
+              )} */}
+              {showResults && (
+                <div className="absolute mt-1 w-full max-w-2xl bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <ul className="py-2">
+                      {searchResults.map((district) => {
+                        // Find matching tags if they exist
+                        const matchingTags = district.tags?.filter(
+                          (tag) =>
+                            typeof tag === "string" &&
+                            tag.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+
+                        return (
+                          <li
+                            key={district.id}
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
+                            onClick={() => handleDistrictClick(district)}
+                          >
+                            <div className="flex flex-col">
+                              <span>{district.name}</span>
+                              {matchingTags && matchingTags.length > 0 && (
+                                <span className="text-sm text-gray-500">
+                                  {matchingTags.map((tag, index) => (
+                                    <React.Fragment key={index}>
+                                      {index > 0 && ", "}
+                                      {tag}
+                                    </React.Fragment>
+                                  ))}
+                                </span>
+                              )}
+                            </div>
+                          </li>
+                        )
+                      })}
                     </ul>
                   ) : (
                     <div className="px-4 py-3 text-red-500 font-medium text-left">
@@ -279,7 +333,7 @@ const Navbar = () => {
               />
 
               {/* Mobile Search Results Dropdown */}
-              {showResults && (
+              {/* {showResults && (
                 <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <ul className="py-2">
@@ -296,6 +350,48 @@ const Navbar = () => {
                   ) : (
                     <div className="px-4 py-3 text-red-500 font-medium text-left">
                       No locations found
+                    </div>
+                  )}
+                </div>
+              )} */}
+              {showResults && (
+                <div className="absolute mt-1 w-full max-w-2xl bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <ul className="py-2">
+                      {searchResults.map((district) => {
+                        // Find matching tags if they exist
+                        const matchingTags = district.tags?.filter(
+                          (tag) =>
+                            typeof tag === "string" &&
+                            tag.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+
+                        return (
+                          <li
+                            key={district.id}
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
+                            onClick={() => handleDistrictClick(district)}
+                          >
+                            <div className="flex flex-col">
+                              <span>{district.name}</span>
+                              {matchingTags && matchingTags.length > 0 && (
+                                <span className="text-sm text-gray-500">
+                                  {matchingTags.map((tag, index) => (
+                                    <React.Fragment key={index}>
+                                      {index > 0 && ", "}
+                                      {tag}
+                                    </React.Fragment>
+                                  ))}
+                                </span>
+                              )}
+                            </div>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  ) : (
+                    <div className="px-4 py-3 text-red-500 font-medium text-left">
+                      Not found
                     </div>
                   )}
                 </div>

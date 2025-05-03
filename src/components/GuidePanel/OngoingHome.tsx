@@ -12,6 +12,8 @@ import {
   PlayCircle,
   Loader2Icon,
   CalendarClockIcon,
+  RefreshCcw,
+  CalendarClock,
 } from "lucide-react"
 import Image from "next/image"
 import axios from "axios"
@@ -136,15 +138,66 @@ const OngoingTourGuideView = () => {
 
   if (!onGoingBooking) {
     return (
-      <div className="min-h-screen w-full bg-gray-50 p-4 flex flex-col gap-6 items-center justify-center">
-        <CalendarClockIcon className="h-36 w-36 text-gray-500" />
-        <p>No ongoing tour found.</p>
+      <div className="min-h-screen w-full  p-6 flex flex-col">
+        <div className="flex items-center justify-between mb-8 ">
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold text-gray-800">Ongoing Trip</h1>
+          </div>
+
+          <button
+            onClick={() => handleGetOngoingTour(guideId)}
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-primary-dark hover:bg-gray-50 transition-colors duration-200 shadow-sm"
+            title="Refresh tour status"
+          >
+            <RefreshCcw className="w-4 h-4" />
+            <span>Refresh</span>
+          </button>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div className=" p-10  flex flex-col items-center max-w-md w-full">
+            <div className="bg-gray-100 p-6 rounded-full mb-6">
+              <CalendarClock className="h-16 w-16 text-primary-dark" />
+            </div>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              No Ongoing Tours
+            </h2>
+            <p className="text-gray-500 text-center mb-6">
+              You don't have any active tours at the moment.
+            </p>
+            <div className="flex gap-4">
+              <button
+                className="px-4 py-2 bg-primary-dark text-white rounded-md hover:bg-primary-dark/90 transition-colors duration-200 flex items-center gap-2"
+                onClick={() => router.push("/guide/bookings")}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>View All Bookings</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen w-full bg-gray-50 p-4  mt-32 lg:mt-0 ">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <h1 className="text-2xl font-semibold">Ongoing Trip</h1>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleGetOngoingTour(guideId)}
+            className="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-full"
+            title="Refresh notifications"
+          >
+            <RefreshCcw className="w-5 h-5 text-primary-dark" />
+          </button>
+        </div>
+      </div>
+
       {(bookingTravelStatus === "not-started" ||
         bookingTravelStatus === "on-going") && (
         <>

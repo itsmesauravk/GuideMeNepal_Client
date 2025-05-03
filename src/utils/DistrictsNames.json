@@ -1,0 +1,1368 @@
+[
+  {
+    "id": 1,
+    "districtId": "achham",
+    "name": "Achham",
+    "tags": [
+      "Seti River",
+      "rural culture",
+      "hills",
+      "ancient temples",
+      "traditional farming",
+      "Ramaroshan Lake",
+      "trekking",
+      "homestays",
+      "Khaptad National Park",
+      "remote villages"
+    ]
+  },
+  {
+    "id": 2,
+    "districtId": "arghakhanchi",
+    "name": "Arghakhanchi",
+    "tags": [
+      "hills",
+      "terraced farming",
+      "Narpani",
+      "religious sites",
+      "hiking",
+      "temples",
+      "Sandhikharka",
+      "rural experience",
+      "scenic views",
+      "traditional culture"
+    ]
+  },
+  {
+    "id": 3,
+    "districtId": "baglung",
+    "name": "Baglung",
+    "tags": [
+      "suspension bridges",
+      "Dhorpatan Hunting Reserve",
+      "Galkot",
+      "Balewa",
+      "trekking",
+      "rural tourism",
+      "Dhaulagiri views",
+      "folk culture",
+      "copper crafts",
+      "religious sites"
+    ]
+  },
+  {
+    "id": 4,
+    "districtId": "baitadi",
+    "name": "Baitadi",
+    "tags": [
+      "Tripura Sundari Temple",
+      "border district",
+      "historic forts",
+      "traditional architecture",
+      "folk music",
+      "Mahakali River",
+      "handicrafts",
+      "mountains",
+      "rural tourism",
+      "religious pilgrimage"
+    ]
+  },
+  {
+    "id": 5,
+    "districtId": "bajhang",
+    "name": "Bajhang",
+    "tags": [
+      "Api Himal",
+      "Saipal Himal",
+      "trekking",
+      "Khaptad National Park",
+      "Surma Sarovar",
+      "high altitude lakes",
+      "remote villages",
+      "traditional culture",
+      "mountain views",
+      "wildlife"
+    ]
+  },
+  {
+    "id": 6,
+    "districtId": "bajura",
+    "name": "Bajura",
+    "tags": [
+      "remote landscapes",
+      "high altitude",
+      "Karnali River",
+      "Budhinanda Lake",
+      "rural villages",
+      "traditional farming",
+      "alpine meadows",
+      "mountains",
+      "cultural heritage",
+      "trekking"
+    ]
+  },
+  {
+    "id": 7,
+    "districtId": "banke",
+    "name": "Banke",
+    "tags": [
+      "Banke National Park",
+      "tiger habitat",
+      "Nepalgunj",
+      "border area",
+      "Tharu culture",
+      "wildlife",
+      "religious diversity",
+      "Bageshwori Temple",
+      "wetlands",
+      "bird watching"
+    ]
+  },
+  {
+    "id": 8,
+    "districtId": "bara",
+    "name": "Bara",
+    "tags": [
+      "Parsa National Park",
+      "Gadhimai Temple",
+      "industrial area",
+      "religious festivals",
+      "wildlife",
+      "agricultural land",
+      "Kalaiya",
+      "border region",
+      "Tharu culture",
+      "historical sites"
+    ]
+  },
+  {
+    "id": 9,
+    "districtId": "bardiya",
+    "name": "Bardiya",
+    "tags": [
+      "Bardiya National Park",
+      "tiger watching",
+      "wilderness",
+      "wildlife safari",
+      "Karnali River",
+      "endangered species",
+      "Tharu culture",
+      "jungle walks",
+      "bird watching",
+      "elephants",
+      "rhinos",
+      "Babai Valley",
+      "river dolphins",
+      "rafting",
+      "conservation",
+      "rural experience",
+      "Blackbuck Conservation Area",
+      "homestays",
+      "eco-tourism",
+      "fishing"
+    ]
+  },
+  {
+    "id": 10,
+    "districtId": "bhaktapur",
+    "name": "Bhaktapur",
+    "tags": [
+      "Durbar Square",
+      "UNESCO World Heritage",
+      "ancient city",
+      "pottery",
+      "Nyatapola Temple",
+      "Bhairavnath Temple",
+      "wood carving",
+      "traditional arts",
+      "Newari culture",
+      "architecture",
+      "festivals",
+      "cultural heritage",
+      "historical monuments",
+      "artisans",
+      "Juju Dhau"
+    ]
+  },
+  {
+    "id": 11,
+    "districtId": "bhojpur",
+    "name": "Bhojpur",
+    "tags": [
+      "khukuri crafting",
+      "handmade knives",
+      "eastern hills",
+      "scenic views",
+      "traditional crafts",
+      "rural villages",
+      "trekking",
+      "Tyamke Danda",
+      "Salpa Pass",
+      "Makalu views"
+    ]
+  },
+  {
+    "id": 12,
+    "districtId": "chitwan",
+    "name": "Chitwan",
+    "tags": [
+      "Chitwan National Park",
+      "UNESCO World Heritage",
+      "rhinos",
+      "jungle safari",
+      "Tharu culture",
+      "canoeing",
+      "elephant experiences",
+      "tiger habitat",
+      "bird watching",
+      "Rapti River",
+      "wildlife conservation",
+      "Sauraha",
+      "Bishazari Tal",
+      "nature walks",
+      "cultural performances"
+    ]
+  },
+  {
+    "id": 13,
+    "districtId": "dadeldhura",
+    "name": "Dadeldhura",
+    "tags": [
+      "Amargadhi Fort",
+      "historical sites",
+      "hills",
+      "remote villages",
+      "pine forests",
+      "trekking",
+      "Gaira Temple",
+      "Ugratara Temple",
+      "scenic views",
+      "rural culture"
+    ]
+  },
+  {
+    "id": 14,
+    "districtId": "dailekh",
+    "name": "Dailekh",
+    "tags": [
+      "ancient scripts",
+      "historical importance",
+      "Dullu",
+      "religious sites",
+      "trekking",
+      "rural landscapes",
+      "Panchkoshi area",
+      "cultural heritage",
+      "temples",
+      "traditional villages"
+    ]
+  },
+  {
+    "id": 15,
+    "districtId": "dang",
+    "name": "Dang",
+    "tags": [
+      "Dang Valley",
+      "Tharu culture",
+      "Rapti River",
+      "historical sites",
+      "Ambikeshwori Temple",
+      "Ghorahi",
+      "wildlife",
+      "agriculture",
+      "religious sites",
+      "cultural diversity"
+    ]
+  },
+  {
+    "id": 16,
+    "districtId": "darchula",
+    "name": "Darchula",
+    "tags": [
+      "Api Himal",
+      "Mahakali River",
+      "border district",
+      "trekking",
+      "remote villages",
+      "alpine landscapes",
+      "tribal cultures",
+      "religious sites",
+      "mountains",
+      "Vyasa Valley"
+    ]
+  },
+  {
+    "id": 17,
+    "districtId": "dhading",
+    "name": "Dhading",
+    "tags": [
+      "Ganesh Himal",
+      "Ruby Valley",
+      "Tamang heritage",
+      "white water rafting",
+      "Trishuli River",
+      "rural villages",
+      "trekking",
+      "agriculture",
+      "religious sites",
+      "mountain views"
+    ]
+  },
+  {
+    "id": 18,
+    "districtId": "dhankuta",
+    "name": "Dhankuta",
+    "tags": [
+      "eastern hills",
+      "tea gardens",
+      "scenic views",
+      "Namaste Waterfall",
+      "orange orchards",
+      "Hile",
+      "Nepal Administrative Staff College",
+      "traditional villages",
+      "rural tourism",
+      "agriculture"
+    ]
+  },
+  {
+    "id": 19,
+    "districtId": "dhanusha",
+    "name": "Dhanusha",
+    "tags": [
+      "Janakpur",
+      "Janaki Temple",
+      "birthplace of Sita",
+      "religious pilgrimage",
+      "cultural heritage",
+      "Mithila art",
+      "Hindu festivals",
+      "Dhanush Sagar",
+      "Ganga Sagar",
+      "historical importance"
+    ]
+  },
+  {
+    "id": 20,
+    "districtId": "dolakha",
+    "name": "Dolakha",
+    "tags": [
+      "Gaurishankar Conservation Area",
+      "trekking",
+      "Bhimsen Temple",
+      "Kalinchowk",
+      "Tamakoshi River",
+      "pilgrimage sites",
+      "mountain views",
+      "Jiri",
+      "gateway to Everest",
+      "Charikot"
+    ]
+  },
+  {
+    "id": 21,
+    "districtId": "dolpa",
+    "name": "Dolpa",
+    "tags": [
+      "Shey Phoksundo National Park",
+      "Phoksundo Lake",
+      "remote landscapes",
+      "high altitude",
+      "Himalayan culture",
+      "Tibetan influence",
+      "trekking",
+      "Dolpo-pa people",
+      "ancient monasteries",
+      "crystal mountain",
+      "Himalayan Yarsagumba"
+    ]
+  },
+  {
+    "id": 22,
+    "districtId": "doti",
+    "name": "Doti",
+    "tags": [
+      "Khaptad National Park",
+      "Saileshwori Temple",
+      "rural landscapes",
+      "traditional culture",
+      "Dipayal",
+      "religious sites",
+      "mountain views",
+      "trekking",
+      "historical importance",
+      "far western culture"
+    ]
+  },
+  {
+    "id": 23,
+    "districtId": "eastern-rukum",
+    "name": "Eastern Rukum",
+    "tags": [
+      "Sisne Himal",
+      "trekking",
+      "rural landscapes",
+      "traditional villages",
+      "Putha Hiunchuli",
+      "mountain views",
+      "cultural heritage",
+      "remote areas",
+      "Rukumkot",
+      "folk music"
+    ]
+  },
+  {
+    "id": 24,
+    "districtId": "gorkha",
+    "name": "Gorkha",
+    "tags": [
+      "Gorkha Palace",
+      "historical significance",
+      "birth of modern Nepal",
+      "Manaslu Circuit",
+      "Manaslu Conservation Area",
+      "religious sites",
+      "trekking",
+      "mountain views",
+      "rural villages",
+      "cultural heritage"
+    ]
+  },
+  {
+    "id": 25,
+    "districtId": "gulmi",
+    "name": "Gulmi",
+    "tags": [
+      "hills",
+      "Resunga",
+      "religious sites",
+      "traditional villages",
+      "Ruru",
+      "temples",
+      "scenic views",
+      "trekking",
+      "rural culture",
+      "agriculture"
+    ]
+  },
+  {
+    "id": 26,
+    "districtId": "humla",
+    "name": "Humla",
+    "tags": [
+      "Karnali River",
+      "remote landscapes",
+      "bordering Tibet",
+      "high altitude",
+      "Limi Valley",
+      "Simikot",
+      "mountain passes",
+      "ancient culture",
+      "monasteries",
+      "trekking routes",
+      "Hilsa"
+    ]
+  },
+  {
+    "id": 27,
+    "districtId": "ilam",
+    "name": "Ilam",
+    "tags": [
+      "tea gardens",
+      "Mai Valley",
+      "Kanyam",
+      "Sandakphu",
+      "mountain views",
+      "trekking",
+      "Ilam Tea Garden",
+      "Antu Danda",
+      "sunrise views",
+      "rural tourism",
+      "Mai Pokhari"
+    ]
+  },
+  {
+    "id": 28,
+    "districtId": "jajarkot",
+    "name": "Jajarkot",
+    "tags": [
+      "remote villages",
+      "rural landscape",
+      "Bheri River",
+      "traditional culture",
+      "trekking",
+      "historical sites",
+      "mountain views",
+      "forests",
+      "rural tourism",
+      "Khalanga"
+    ]
+  },
+  {
+    "id": 29,
+    "districtId": "jhapa",
+    "name": "Jhapa",
+    "tags": [
+      "tea plantations",
+      "Kechana Wetlands",
+      "border region",
+      "agricultural land",
+      "industrial area",
+      "Bhadrapur",
+      "religious diversity",
+      "Kankai River",
+      "flatlands",
+      "bird watching"
+    ]
+  },
+  {
+    "id": 30,
+    "districtId": "jumla",
+    "name": "Jumla",
+    "tags": [
+      "high altitude",
+      "Rara National Park",
+      "Jumla Marsi rice",
+      "apple farming",
+      "Sinja Valley",
+      "ancient culture",
+      "trekking",
+      "Tila River",
+      "mountain views",
+      "traditional villages"
+    ]
+  },
+  {
+    "id": 31,
+    "districtId": "kailali",
+    "name": "Kailali",
+    "tags": [
+      "Mohana River",
+      "Tharu culture",
+      "Tikapur",
+      "Ghodaghodi Lake",
+      "wetlands",
+      "bird watching",
+      "agricultural land",
+      "religious festivals",
+      "Dhangadhi",
+      "rural tourism"
+    ]
+  },
+  {
+    "id": 32,
+    "districtId": "kalikot",
+    "name": "Kalikot",
+    "tags": [
+      "Karnali River",
+      "remote villages",
+      "high altitude",
+      "rural landscapes",
+      "traditional culture",
+      "trekking routes",
+      "mountain views",
+      "religious sites",
+      "scenic beauty",
+      "rural lifestyle"
+    ]
+  },
+  {
+    "id": 33,
+    "districtId": "kanchanpur",
+    "name": "Kanchanpur",
+    "tags": [
+      "Shuklaphanta National Park",
+      "swamp deer",
+      "birding",
+      "border area",
+      "Tharu culture",
+      "Bhimdatta",
+      "wildlife",
+      "Mahendranagar",
+      "Dodhara Chandani",
+      "religious sites"
+    ]
+  },
+  {
+    "id": 34,
+    "districtId": "kapilvastu",
+    "name": "Kapilvastu",
+    "tags": [
+      "Buddha's birthplace",
+      "Tilaurakot",
+      "archeological sites",
+      "religious significance",
+      "Buddhist heritage",
+      "Kapilvastu Museum",
+      "ancient ruins",
+      "Taulihawa",
+      "historical importance",
+      "pilgrimage"
+    ]
+  },
+  {
+    "id": 35,
+    "districtId": "kaski",
+    "name": "Kaski",
+    "tags": [
+      "Pokhara",
+      "Phewa Lake",
+      "Annapurna Range",
+      "paragliding",
+      "Sarangkot",
+      "Begnas Lake",
+      "adventure tourism",
+      "World Peace Pagoda",
+      "boating",
+      "trekking",
+      "Annapurna Base Camp",
+      "Davis Falls",
+      "Gupteshwor Cave",
+      "mountain views",
+      "International Mountain Museum"
+    ]
+  },
+  {
+    "id": 36,
+    "districtId": "kathmandu",
+    "name": "Kathmandu",
+    "tags": [
+      "capital city",
+      "Durbar Square",
+      "UNESCO World Heritage",
+      "Swayambhunath",
+      "Boudhanath",
+      "Pashupatinath",
+      "Thamel",
+      "historical sites",
+      "ancient temples",
+      "cultural heritage",
+      "shopping",
+      "nightlife",
+      "museums",
+      "Garden of Dreams",
+      "Newari culture",
+      "art galleries",
+      "festivals",
+      "Kirtipur",
+      "Dakshinkali"
+    ]
+  },
+  {
+    "id": 37,
+    "districtId": "kavrepalanchok",
+    "name": "Kavrepalanchok",
+    "tags": [
+      "Dhulikhel",
+      "Namobuddha",
+      "sunrise views",
+      "mountain panorama",
+      "Banepa",
+      "Panauti",
+      "ancient temples",
+      "traditional architecture",
+      "farming terraces",
+      "rural tourism",
+      "religious sites"
+    ]
+  },
+  {
+    "id": 38,
+    "districtId": "khotang",
+    "name": "Khotang",
+    "tags": [
+      "Halesi Mahadev Temple",
+      "religious pilgrimage",
+      "eastern hills",
+      "rural villages",
+      "trekking routes",
+      "scenic views",
+      "traditional culture",
+      "farming terraces",
+      "mountain landscapes",
+      "Diktel"
+    ]
+  },
+  {
+    "id": 39,
+    "districtId": "lalitpur",
+    "name": "Lalitpur",
+    "tags": [
+      "Patan Durbar Square",
+      "UNESCO World Heritage",
+      "ancient city",
+      "traditional arts",
+      "Krishna Temple",
+      "Golden Temple",
+      "Newari culture",
+      "architecture",
+      "metal crafts",
+      "woodcarving",
+      "historical monuments",
+      "museums",
+      "art galleries",
+      "Tibetan refugee center",
+      "handicrafts"
+    ]
+  },
+  {
+    "id": 40,
+    "districtId": "lamjung",
+    "name": "Lamjung",
+    "tags": [
+      "Annapurna Circuit",
+      "trekking",
+      "Marshyangdi River",
+      "mountain views",
+      "cultural diversity",
+      "rural villages",
+      "Besisahar",
+      "traditional farming",
+      "scenic landscapes",
+      "white water rafting"
+    ]
+  },
+  {
+    "id": 41,
+    "districtId": "mahottari",
+    "name": "Mahottari",
+    "tags": [
+      "Jaleshwar",
+      "religious sites",
+      "Tarai culture",
+      "agriculture",
+      "rural landscapes",
+      "temples",
+      "border region",
+      "historical sites",
+      "festivals",
+      "traditional villages"
+    ]
+  },
+  {
+    "id": 42,
+    "districtId": "makwanpur",
+    "name": "Makwanpur",
+    "tags": [
+      "Chitwan National Park fringe",
+      "Indrasarovar",
+      "Daman",
+      "mountain views",
+      "Hetauda",
+      "industrial center",
+      "Thaha",
+      "wildlife",
+      "religious sites",
+      "scenic landscapes"
+    ]
+  },
+  {
+    "id": 43,
+    "districtId": "manang",
+    "name": "Manang",
+    "tags": [
+      "Annapurna Circuit",
+      "high altitude",
+      "Tilicho Lake",
+      "Thorong La Pass",
+      "Himalayan culture",
+      "mountain landscapes",
+      "Ice Lake",
+      "traditional villages",
+      "Buddhist monasteries",
+      "trekking",
+      "Gangapurna Lake",
+      "Milarepa Cave"
+    ]
+  },
+  {
+    "id": 44,
+    "districtId": "morang",
+    "name": "Morang",
+    "tags": [
+      "Biratnagar",
+      "industrial hub",
+      "Koshi Tappu Wildlife Reserve",
+      "wetlands",
+      "bird watching",
+      "agricultural land",
+      "border region",
+      "cultural diversity",
+      "religious sites",
+      "Koshi River"
+    ]
+  },
+  {
+    "id": 45,
+    "districtId": "mugu",
+    "name": "Mugu",
+    "tags": [
+      "Rara Lake",
+      "Rara National Park",
+      "high altitude",
+      "remote villages",
+      "mountain views",
+      "crystal clear water",
+      "pristine nature",
+      "trekking",
+      "alpine meadows",
+      "traditional culture"
+    ]
+  },
+  {
+    "id": 46,
+    "districtId": "mustang",
+    "name": "Mustang",
+    "tags": [
+      "Upper Mustang",
+      "Lo Manthang",
+      "ancient kingdom",
+      "Trans-Himalayan region",
+      "Tibetan culture",
+      "cave monasteries",
+      "desert landscapes",
+      "trekking",
+      "Muktinath Temple",
+      "pilgrimage site",
+      "apple orchards",
+      "Kagbeni",
+      "ancient caves",
+      "Jomsom",
+      "Annapurna Circuit"
+    ]
+  },
+  {
+    "id": 47,
+    "districtId": "myagdi",
+    "name": "Myagdi",
+    "tags": [
+      "Dhaulagiri Circuit",
+      "trekking",
+      "mountain views",
+      "Dhaulagiri Icefall",
+      "rural villages",
+      "traditional culture",
+      "Beni",
+      "religious sites",
+      "scenic beauty",
+      "Ghorepani"
+    ]
+  },
+  {
+    "id": 48,
+    "districtId": "nawalpur",
+    "name": "Nawalpur",
+    "tags": [
+      "Chitwan National Park fringe",
+      "Narayani River",
+      "wildlife",
+      "Daunne Hill",
+      "Devghat",
+      "religious pilgrimage",
+      "rural landscapes",
+      "cultural diversity",
+      "forests",
+      "agricultural land"
+    ]
+  },
+  {
+    "id": 49,
+    "districtId": "nuwakot",
+    "name": "Nuwakot",
+    "tags": [
+      "Nuwakot Palace",
+      "historical significance",
+      "Trishuli River",
+      "rafting",
+      "scenic views",
+      "rural villages",
+      "Kakani",
+      "strawberry farming",
+      "mountain landscapes",
+      "traditional culture"
+    ]
+  },
+  {
+    "id": 50,
+    "districtId": "okhaldhunga",
+    "name": "Okhaldhunga",
+    "tags": [
+      "eastern hills",
+      "rural landscapes",
+      "traditional villages",
+      "trekking routes",
+      "Everest region access",
+      "religious sites",
+      "scenic views",
+      "farming terraces",
+      "cultural heritage",
+      "Rumjatar"
+    ]
+  },
+  {
+    "id": 51,
+    "districtId": "palpa",
+    "name": "Palpa",
+    "tags": [
+      "Tansen",
+      "Rani Mahal",
+      "Srinagar Hill",
+      "historical sites",
+      "cultural heritage",
+      "traditional crafts",
+      "scenic views",
+      "Bhairabsthan",
+      "architecture",
+      "Palpa Palace"
+    ]
+  },
+  {
+    "id": 52,
+    "districtId": "panchthar",
+    "name": "Panchthar",
+    "tags": [
+      "tea gardens",
+      "Tinjure-Milke-Jaljale",
+      "rhododendron forests",
+      "trekking",
+      "Phidim",
+      "eastern hills",
+      "rural landscapes",
+      "mountain views",
+      "traditional culture",
+      "scenic beauty"
+    ]
+  },
+  {
+    "id": 53,
+    "districtId": "parasi",
+    "name": "Parasi",
+    "tags": [
+      "Daunne Hills",
+      "religious sites",
+      "agricultural land",
+      "border region",
+      "cultural diversity",
+      "rural landscapes",
+      "Ramgram Stupa",
+      "Buddhist pilgrimage",
+      "Narayani River",
+      "wetlands"
+    ]
+  },
+  {
+    "id": 54,
+    "districtId": "parbat",
+    "name": "Parbat",
+    "tags": [
+      "Gupteshwor Cave",
+      "Panchase",
+      "mountain views",
+      "trekking",
+      "rural villages",
+      "Modi River",
+      "traditional culture",
+      "religious sites",
+      "farming terraces",
+      "Kushma"
+    ]
+  },
+  {
+    "id": 55,
+    "districtId": "parsa",
+    "name": "Parsa",
+    "tags": [
+      "Parsa National Park",
+      "wildlife",
+      "Birgunj",
+      "border area",
+      "industrial center",
+      "religious diversity",
+      "agricultural land",
+      "cultural heritage",
+      "Tharu settlements",
+      "Bishrampur"
+    ]
+  },
+  {
+    "id": 56,
+    "districtId": "pyuthan",
+    "name": "Pyuthan",
+    "tags": [
+      "Swargadwari",
+      "religious pilgrimage",
+      "rural landscapes",
+      "traditional villages",
+      "scenic views",
+      "hills",
+      "cultural heritage",
+      "agricultural terraces",
+      "mountain views",
+      "Jhimruk River"
+    ]
+  },
+  {
+    "id": 57,
+    "districtId": "ramechhap",
+    "name": "Ramechhap",
+    "tags": [
+      "gateway to Everest",
+      "Likhu River",
+      "rural landscapes",
+      "Sundhupalchok",
+      "Those",
+      "mountain views",
+      "traditional villages",
+      "religious sites",
+      "trekking routes",
+      "cultural heritage"
+    ]
+  },
+  {
+    "id": 58,
+    "districtId": "rasuwa",
+    "name": "Rasuwa",
+    "tags": [
+      "Langtang National Park",
+      "Langtang Valley",
+      "trekking",
+      "Gosaikunda Lake",
+      "religious pilgrimage",
+      "mountain views",
+      "border district",
+      "Tamang culture",
+      "hot springs",
+      "alpine meadows",
+      "Kyanjin Gompa"
+    ]
+  },
+  {
+    "id": 59,
+    "districtId": "rautahat",
+    "name": "Rautahat",
+    "tags": [
+      "agricultural land",
+      "rural landscapes",
+      "border region",
+      "religious diversity",
+      "Bagmati River",
+      "cultural heritage",
+      "Gaur",
+      "historical sites",
+      "traditional villages",
+      "farming"
+    ]
+  },
+  {
+    "id": 60,
+    "districtId": "rolpa",
+    "name": "Rolpa",
+    "tags": [
+      "civil war history",
+      "rural landscapes",
+      "hills",
+      "traditional villages",
+      "Thawang",
+      "cultural heritage",
+      "mountain views",
+      "remote areas",
+      "scenic beauty",
+      "trekking routes"
+    ]
+  },
+  {
+    "id": 61,
+    "districtId": "rupandehi",
+    "name": "Rupandehi",
+    "tags": [
+      "Lumbini",
+      "birthplace of Buddha",
+      "UNESCO World Heritage",
+      "Buddhist pilgrimage",
+      "Maya Devi Temple",
+      "monasteries",
+      "archaeological sites",
+      "international Buddhist community",
+      "religious significance",
+      "meditation",
+      "peace"
+    ]
+  },
+  {
+    "id": 62,
+    "districtId": "salyan",
+    "name": "Salyan",
+    "tags": [
+      "hills",
+      "rural landscapes",
+      "traditional villages",
+      "Sharada River",
+      "cultural heritage",
+      "trekking routes",
+      "mountain views",
+      "farming terraces",
+      "remote areas",
+      "Kupinde"
+    ]
+  },
+  {
+    "id": 63,
+    "districtId": "sankhuwasabha",
+    "name": "Sankhuwasabha",
+    "tags": [
+      "Makalu Barun National Park",
+      "Arun Valley",
+      "trekking",
+      "biodiversity",
+      "mountain views",
+      "rural villages",
+      "traditional culture",
+      "Khandbari",
+      "scenic landscapes",
+      "Shiva Cave"
+    ]
+  },
+  {
+    "id": 64,
+    "districtId": "saptari",
+    "name": "Saptari",
+    "tags": [
+      "Koshi Tappu Wildlife Reserve",
+      "wetlands",
+      "bird watching",
+      "agricultural land",
+      "rural landscapes",
+      "Koshi River",
+      "religious diversity",
+      "Chinnamasta Temple",
+      "cultural heritage",
+      "Rajbiraj"
+    ]
+  },
+  {
+    "id": 65,
+    "districtId": "sarlahi",
+    "name": "Sarlahi",
+    "tags": [
+      "agricultural land",
+      "rural landscapes",
+      "religious diversity",
+      "traditional villages",
+      "cultural heritage",
+      "Malangwa",
+      "border region",
+      "farming",
+      "historical sites",
+      "festivals"
+    ]
+  },
+  {
+    "id": 66,
+    "districtId": "sindhuli",
+    "name": "Sindhuli",
+    "tags": [
+      "Sindhuli Gadhi",
+      "historical significance",
+      "rural landscapes",
+      "Kamalamai",
+      "Sun Koshi River",
+      "trekking routes",
+      "traditional villages",
+      "cultural heritage",
+      "mountain views",
+      "farming terraces"
+    ]
+  },
+  {
+    "id": 77,
+    "districtId": "sindhupalchok",
+    "name": "Sindhupalchok",
+    "tags": [
+      "Jugal Himal",
+      "trekking",
+      "Helambu",
+      "Bhote Koshi River",
+      "bungee jumping",
+      "adventure tourism",
+      "rural villages",
+      "traditional culture",
+      "mountain views",
+      "Tatopani hot springs"
+    ]
+  },
+  {
+    "id": 67,
+    "districtId": "siraha",
+    "name": "Siraha",
+    "tags": [
+      "agricultural land",
+      "rural landscapes",
+      "religious diversity",
+      "traditional villages",
+      "cultural heritage",
+      "Siraha Bazaar",
+      "border region",
+      "farming",
+      "historical sites",
+      "festivals"
+    ]
+  },
+  {
+    "id": 68,
+    "districtId": "solukhumbu",
+    "name": "Solukhumbu",
+    "tags": [
+      "Mount Everest",
+      "Sagarmatha National Park",
+      "UNESCO World Heritage",
+      "Everest Base Camp",
+      "Khumbu",
+      "Sherpa culture",
+      "trekking",
+      "mountaineering",
+      "Namche Bazaar",
+      "Tengboche Monastery",
+      "Gokyo Lakes",
+      "mountain views",
+      "high altitude",
+      "adventure tourism",
+      "Lukla"
+    ]
+  },
+  {
+    "id": 69,
+    "districtId": "sunsari",
+    "name": "Sunsari",
+    "tags": [
+      "Koshi Tappu Wildlife Reserve",
+      "wetlands",
+      "Bhedetar",
+      "Dharan",
+      "Barahachhetra",
+      "religious pilgrimage",
+      "industrial area",
+      "Itahari",
+      "bird watching",
+      "cultural diversity"
+    ]
+  },
+  {
+    "id": 70,
+    "districtId": "surkhet",
+    "name": "Surkhet",
+    "tags": [
+      "Surkhet Valley",
+      "Bulbule Lake",
+      "trekking routes",
+      "Kakre Bihar",
+      "historical sites",
+      "Birendranagar",
+      "religious diversity",
+      "rural landscapes",
+      "scenic views",
+      "cultural heritage"
+    ]
+  },
+  {
+    "id": 71,
+    "districtId": "syangja",
+    "name": "Syangja",
+    "tags": [
+      "hills",
+      "scenic views",
+      "traditional villages",
+      "rural landscapes",
+      "cultural heritage",
+      "religious sites",
+      "farming terraces",
+      "mountain views",
+      "Kali Gandaki River",
+      "trekking routes"
+    ]
+  },
+  {
+    "id": 72,
+    "districtId": "tanahun",
+    "name": "Tanahun",
+    "tags": [
+      "Seti River",
+      "Damauli",
+      "Bandipur",
+      "historical town",
+      "traditional architecture",
+      "white water rafting",
+      "religious sites",
+      "cultural heritage",
+      "rural tourism",
+      "mountain views"
+    ]
+  },
+  {
+    "id": 73,
+    "districtId": "taplejung",
+    "name": "Taplejung",
+    "tags": [
+      "Kanchenjunga Conservation Area",
+      "trekking",
+      "third highest mountain",
+      "tea gardens",
+      "mountain views",
+      "alpine meadows",
+      "rural villages",
+      "traditional culture",
+      "remote landscapes",
+      "high altitude lakes"
+    ]
+  },
+  {
+    "id": 74,
+    "districtId": "terhathum",
+    "name": "Terhathum",
+    "tags": [
+      "eastern hills",
+      "tea plantations",
+      "scenic views",
+      "traditional villages",
+      "Tinjure-Milke-Jaljale",
+      "rhododendron forests",
+      "cultural heritage",
+      "rural landscapes",
+      "mountain views",
+      "Myanglung"
+    ]
+  },
+  {
+    "id": 75,
+    "districtId": "udayapur",
+    "name": "Udayapur",
+    "tags": [
+      "Saptakoshi River",
+      "rural landscapes",
+      "hills",
+      "traditional villages",
+      "Gaighat",
+      "cultural heritage",
+      "religious sites",
+      "scenic views",
+      "mountain vistas",
+      "farmlands"
+    ]
+  },
+  {
+    "id": 76,
+    "districtId": "western-rukum",
+    "name": "Western Rukum",
+    "tags": [
+      "Sisne Himal",
+      "rural landscapes",
+      "traditional villages",
+      "Musikot",
+      "mountain views",
+      "cultural heritage",
+      "religious sites",
+      "trekking routes",
+      "remote areas",
+      "scenic beauty"
+    ]
+  }
+]
