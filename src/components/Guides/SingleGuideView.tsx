@@ -27,6 +27,7 @@ import { GuideDetailsType, GuideReviewType } from "@/utils/Types"
 import Link from "next/link"
 import TimeAgo from "../common/TimeAgo"
 import Image from "next/image"
+import FullSizeImage from "../common/ViewFullImage"
 
 export async function generateMetadata({
   params,
@@ -71,6 +72,8 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
   const [loadingReviews, setLoadingReviews] = useState(true)
 
   const [expanded, setExpanded] = useState(false)
+
+  const [viewFullImage, setViewFullImage] = useState(false)
 
   const handleGetGuideDetails = async () => {
     try {
@@ -145,6 +148,10 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
     )
   }
 
+  const handleViewFullImage = () => {
+    setViewFullImage(!viewFullImage)
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Breadcrumb */}
@@ -195,26 +202,46 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
 
             {/* Image gallery */}
             <div className="space-y-4">
-              {/* Sample Gallery Images - Replace with actual gallery when available */}
-              <div className="bg-gray-100 rounded-lg h-28 overflow-hidden">
+              <div
+                className="bg-gray-100 rounded-lg h-28 overflow-hidden"
+                onClick={handleViewFullImage}
+              >
                 {guideDetails.profilePhoto && (
-                  <img
+                  <Image
                     src={guideDetails.profilePhoto}
                     alt="Profile"
                     className="w-full h-full object-cover"
+                    width={150}
+                    height={100}
                   />
                 )}
               </div>
-              <div className="bg-gray-100 rounded-lg h-28 overflow-hidden">
+              <div
+                className="bg-gray-100 rounded-lg h-28 overflow-hidden"
+                onClick={handleViewFullImage}
+              >
                 {guideDetails.liscensePhoto && (
-                  <img
+                  <Image
                     src={guideDetails.liscensePhoto}
                     alt="License"
                     className="w-full h-full object-cover"
+                    width={150}
+                    height={100}
                   />
                 )}
               </div>
             </div>
+
+            {viewFullImage && (
+              <FullSizeImage
+                handleViewFullImage={handleViewFullImage}
+                viewFullImage={viewFullImage}
+                imageUrls={[
+                  guideDetails.profilePhoto,
+                  guideDetails.liscensePhoto,
+                ]}
+              />
+            )}
           </div>
 
           {/* Guide Info */}

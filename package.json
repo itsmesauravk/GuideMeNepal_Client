@@ -43,7 +43,8 @@
     "sonner": "^1.7.2",
     "swiper": "^11.2.6",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "yet-another-react-lightbox": "^3.23.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

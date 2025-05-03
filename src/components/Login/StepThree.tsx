@@ -28,6 +28,7 @@ const StepThree: React.FC<StepThreeProps> = ({
         </label>
         <Textarea
           name="aboutMe"
+          required
           value={formData.aboutMe}
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary min-h-[150px]"
@@ -37,7 +38,10 @@ const StepThree: React.FC<StepThreeProps> = ({
 
       <div className="space-y-3">
         <label className="block text-text-primary font-medium">
-          Experience
+          Experience{" "}
+          <span className="text-text-secondary italic text-sm">
+            (each experience word limit 200)
+          </span>
         </label>
         {formData.experiences.map((exp, index) => (
           <div key={index} className="flex space-x-2">
@@ -45,6 +49,7 @@ const StepThree: React.FC<StepThreeProps> = ({
               <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
               <Input
                 type="text"
+                maxLength={200}
                 value={exp}
                 onChange={(e) =>
                   handleArrayInput("experiences", index, e.target.value)

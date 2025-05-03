@@ -17,8 +17,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Guide Me Nepal",
-  description: "Hire trusted travel guides in Nepal",
+  title: "Guide Me Nepal - Hire Verified Travel Guides for Trekking & Tours",
+  description:
+    "Find and hire verified, local travel guides in Nepal for trekking, cultural tours, and adventure activities. Trusted, experienced, and government-certified guides for every journey.",
 }
 
 export default function RootLayout({
