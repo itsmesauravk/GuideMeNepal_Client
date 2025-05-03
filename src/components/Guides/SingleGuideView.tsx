@@ -28,6 +28,36 @@ import Link from "next/link"
 import TimeAgo from "../common/TimeAgo"
 import Image from "next/image"
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const { slug } = params
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/guide/single-guide-details/${slug}`
+    )
+    const data = response.data
+    if (data.success) {
+      console.log("from metadata", data.data)
+      return {
+        title: `${data.data.fullname} - Guide Me Nepal`,
+        description: `Explore the profile of ${data.data.fullname}, a verified guide in ${data.data.guidingAreas[0]}. Discover their experiences, reviews, and more.`,
+        openGraph: {
+          images: [
+            {
+              url: data.data.profilePhoto || "/images/default_user.avif",
+            },
+          ],
+        },
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching guide details:", error)
+  }
+}
+
 const SingleGuideView = ({ slug }: { slug: string }) => {
   const [guideDetails, setGuideDetails] = useState<GuideDetailsType | null>(
     null
