@@ -13,8 +13,8 @@ const page = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <Dashboard />
-      {/* <h1>Dashboard will be under development soon...</h1> */}
+      {/* <Dashboard /> */}
+      <h1>Dashboard will be under development soon...</h1>
     </div>
   )
 }

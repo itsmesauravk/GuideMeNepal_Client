@@ -7,7 +7,7 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@heroui/theme/dist/components/(accordion|avatar|button|calendar|divider|drawer|dropdown|spinner|table|tabs|popover|ripple|modal|menu|checkbox|form|spacer).js"
+    "./node_modules/@heroui/theme/dist/components/(accordion|avatar|button|calendar|divider|drawer|dropdown|spinner|toggle|table|tabs|popover|ripple|modal|menu|checkbox|form|spacer).js"
   ],
   theme: {
     extend: {

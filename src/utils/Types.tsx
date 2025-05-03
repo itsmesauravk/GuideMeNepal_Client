@@ -18,8 +18,10 @@ export interface GuideRegisterForm {
 export interface GuideDetailsType {
   id: number
   fullname: string
+  email?: string
   slug: string
   guidingAreas: string[]
+  contact?: string
   profilePhoto: string
   liscensePhoto: string
   selfVideo: string
@@ -28,8 +30,9 @@ export interface GuideDetailsType {
   aboutMe: string
   experiences: string[]
   languageSpeak: string[]
+  guideType?: string[]
   availability: {
-    isActive: boolean
+    isActivate: boolean
     isAvailable: boolean
   }
   created_at: string

@@ -22,7 +22,9 @@ const page = () => {
           </div>
         }
       >
-        <UserMessages />
+        <div className="w-full mt-32 lg:mt-0">
+          <UserMessages />
+        </div>
       </Suspense>
     </div>
   )

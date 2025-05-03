@@ -1,17 +1,18 @@
 import Sidebar from "@/components/common/Sidebar"
+import SettingPage from "@/components/GuidePanel/SettingPage"
 import React from "react"
 
 export const metadata = {
-  title: "Districts - Guide Me Nepal",
+  title: "Setting - Guide Me Nepal",
   description:
-    "Browse all districts of Nepal to find and connect with verified, government-licensed local guides. Discover travel experiences by location and hire trusted guides with ease.",
+    "This is the setting page of Guide Me Nepal, where you can customize your experience.",
 }
 
 const page = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div>hello</div>
+      <SettingPage />
     </div>
   )
 }

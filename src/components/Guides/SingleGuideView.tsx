@@ -9,6 +9,7 @@ import {
   Calendar,
   CheckCircle,
   Loader2Icon,
+  BirdIcon,
 } from "lucide-react"
 import {
   Breadcrumb,
@@ -68,7 +69,7 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
   const [totalReviews, setTotalReviews] = useState(0)
   const [averageRating, setAverageRating] = useState(0)
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [loadingReviews, setLoadingReviews] = useState(true)
 
   const [expanded, setExpanded] = useState(false)
@@ -82,7 +83,7 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/guide/single-guide-details/${slug}`
       )
       const data = response.data
-      if (data.success) {
+      if (data.success && data.data !== null) {
         setGuideDetails(data.data)
         setGuideId(data.data.id)
       }
@@ -131,7 +132,7 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-2 justify-center items-center h-screen">
+      <div className="flex flex-col gap-2 justify-center items-center ">
         <Loader2Icon className="animate-spin text-primary-dark h-10 w-10 mx-auto" />
         <p className="text-lg text-gray-600 animate-pulse">
           Loading Guide Profile...
@@ -142,8 +143,15 @@ const SingleGuideView = ({ slug }: { slug: string }) => {
 
   if (!guideDetails) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl font-medium">Guide not found</div>
+      <div className="w-full flex flex-col items-center justify-center py-16 md:py-32 px-4  mx-auto text-center bg-gray-50 rounded-lg border border-gray-100 shadow-sm">
+        <BirdIcon className="w-16 h-16 text-gray-500 mb-4" />
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          Guide Not Found
+        </h2>
+        <p className="text-gray-600 mb-6">
+          The guide you're looking for is unavailable. They might be temporarily
+          inactive, suspended, or the profile may have been removed.
+        </p>
       </div>
     )
   }
