@@ -1,5 +1,7 @@
 import Sidebar from "@/components/common/Sidebar"
-import Dashboard from "@/components/GuidePanel/Dashboard"
+import TourGuideDashboard from "@/components/GuidePanel/Dashboard"
+
+// import LocationTrack from "@/components/GuidePanel/LiveLocation"
 
 import React from "react"
 
@@ -13,8 +15,9 @@ const page = () => {
   return (
     <div className="flex">
       <Sidebar />
-      {/* <Dashboard /> */}
-      <h1>Dashboard will be under development soon...</h1>
+      <TourGuideDashboard />
+      {/* <LocationTrack /> */}
+      {/* <h1>Dashboard will be under development soon...</h1> */}
     </div>
   )
 }
