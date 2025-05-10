@@ -163,3 +163,23 @@ export interface NotificationType {
   bookingId?: number
   createdAt: string
 }
+
+//dashboard
+
+// Metrics Type
+interface Metrics {
+  profileViews: number
+  bookingCompletedCount: number
+  totalReviews: number
+  averageRating: number
+  totalEarnings: number
+  totalRequests: number
+}
+
+// Main Guide Panel Dashboard Data Type
+export interface GuidePanelData {
+  metrics: Metrics
+  ongoingTrip: any | null // If you have a structure, define a specific interface
+  notifications: NotificationType[]
+  bookingRequests: BookingType[]
+}
