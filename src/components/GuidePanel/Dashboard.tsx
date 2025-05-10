@@ -23,11 +23,14 @@ import axios from "axios"
 import { GuidePanelData } from "@/utils/Types"
 import TimeAgo from "../common/TimeAgo"
 import Link from "next/link"
+import { useNotificationCount } from "@/providers/NotificationCountProvider"
 
 // Dashboard component
 export default function TourGuideDashboard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const { notificationCount, setNotificationCount } = useNotificationCount()
 
   const [dashboardData, setDashboardData] = useState<GuidePanelData | null>(
     null
@@ -66,6 +69,7 @@ export default function TourGuideDashboard() {
 
       if (data.success) {
         setDashboardData(data.data)
+        setNotificationCount(data.data.metrics.unreadNotifications || 0)
         setError(null)
       } else {
         setError("Failed to load dashboard data")

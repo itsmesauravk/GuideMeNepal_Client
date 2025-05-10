@@ -18,7 +18,6 @@ import Logo from "./Logo"
 import Link from "next/link"
 // import districtsData from "../../utils/CitiesNames.json"
 import districtsData from "../../utils/DistrictsNames.json"
-import Cookies from "js-cookie"
 
 import { Button as HeroButton, useDisclosure, Divider } from "@heroui/react"
 import Notification from "./Notification"
@@ -35,6 +34,9 @@ import {
 import { signOut } from "next-auth/react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import axios from "axios"
+
+import { SessionData } from "@/utils/Types"
 
 // Define the District type
 interface District {
@@ -55,9 +57,11 @@ const Navbar = () => {
 
   const router = useRouter()
 
-  const { notificationCount } = useNotificationCount()
+  const { notificationCount, setNotificationCount } = useNotificationCount()
 
-  const { data: session } = useSession()
+  const { data: sessionData } = useSession()
+
+  const session = sessionData as unknown as SessionData
 
   // Import districts data
   const districts: District[] = districtsData
@@ -98,9 +102,26 @@ const Navbar = () => {
     setIsMobileMenuOpen(false)
   }
 
+  const handleGetNotifications = async () => {
+    if (!session?.user?.id) return
+
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/common/all-notifications/${session?.user?.id}/${session?.user?.role}`
+      )
+      const data = response.data
+      if (data.success) {
+        setNotificationCount(data.data.unreadCount || 0)
+      }
+    } catch (error) {
+      console.error("Error fetching notifications:", error)
+    }
+  }
+
   useEffect(() => {
     if (session?.user) {
       setIsloggedIn(true)
+      handleGetNotifications()
     } else {
       setIsloggedIn(false)
     }
@@ -128,27 +149,7 @@ const Navbar = () => {
               />
 
               {/* Desktop Search Results Dropdown */}
-              {/* {showResults && (
-                <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
-                  {searchResults.length > 0 ? (
-                    <ul className="py-2">
-                      {searchResults.map((district) => (
-                        <li
-                          key={district.id}
-                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
-                          onClick={() => handleDistrictClick(district)}
-                        >
-                          {district.name}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <div className="px-4 py-3 text-red-500 font-medium text-left">
-                      Not found
-                    </div>
-                  )}
-                </div>
-              )} */}
+
               {showResults && (
                 <div className="absolute mt-1 w-full max-w-2xl bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
                   {searchResults.length > 0 ? (
@@ -332,28 +333,6 @@ const Navbar = () => {
                 className="w-full pl-10 h-12 bg-background border-ui-divider focus:border-primary focus:ring-primary"
               />
 
-              {/* Mobile Search Results Dropdown */}
-              {/* {showResults && (
-                <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
-                  {searchResults.length > 0 ? (
-                    <ul className="py-2">
-                      {searchResults.map((district) => (
-                        <li
-                          key={district.id}
-                          className="px-4 py-3 hover:bg-gray-100 cursor-pointer font-medium text-gray-800 text-left"
-                          onClick={() => handleDistrictClick(district)}
-                        >
-                          {district.name}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <div className="px-4 py-3 text-red-500 font-medium text-left">
-                      No locations found
-                    </div>
-                  )}
-                </div>
-              )} */}
               {showResults && (
                 <div className="absolute mt-1 w-full max-w-2xl bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
                   {searchResults.length > 0 ? (
