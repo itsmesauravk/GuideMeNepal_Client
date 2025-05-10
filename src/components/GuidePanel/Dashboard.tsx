@@ -30,7 +30,7 @@ export default function TourGuideDashboard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { notificationCount, setNotificationCount } = useNotificationCount()
+  const { setNotificationCount } = useNotificationCount()
 
   const [dashboardData, setDashboardData] = useState<GuidePanelData | null>(
     null
@@ -87,16 +87,21 @@ export default function TourGuideDashboard() {
   }, [session?.user?.id])
 
   // Get notification icon based on type
+
   const getNotificationIcon = (type: string) => {
     switch (type) {
+      case "auth":
+        return "🔐"
       case "booking":
-        return <Users className="w-5 h-5 text-blue-500" />
+        return "📅"
+      case "trip":
+        return "✈️"
       case "review":
-        return <Star className="w-5 h-5 text-yellow-500" />
-      case "message":
-        return <MessageSquare className="w-5 h-5 text-green-500" />
+        return "📝"
+      case "report":
+        return "⚠️"
       default:
-        return <Bell className="w-5 h-5 text-gray-500" />
+        return "📣"
     }
   }
 
