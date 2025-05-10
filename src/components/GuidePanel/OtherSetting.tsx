@@ -101,26 +101,29 @@ const OtherSetting: React.FC<OtherSettingProps> = ({
               profile will not be shown to users and you won't receive any
               requests.
             </p>
-            <p className="text-sm text-gray-500">
-              This is useful when you want to take a break or are temporarily
-              unavailable.
+
+            <p className="text-sm text-gray-500 ">
+              Note: You cannot turn off when you have active bookings or trip on
+              going.
             </p>
           </div>
 
           <div className="flex flex-col items-center">
-            {/* Toggle Switch */}
-            <Switch
-              isSelected={isActive}
-              onChange={handleActivityToggle}
-              disabled={loading}
-              color="success"
-            >
-              {isActive ? (
-                <span className="text-green-600">Active</span>
-              ) : (
-                <span className="text-gray-500">Inactive</span>
-              )}
-            </Switch>
+            {guideDetails?.availability?.isActivate ? (
+              <Switch
+                isSelected={isActive}
+                onChange={handleActivityToggle}
+                color="success"
+              >
+                {isActive ? (
+                  <span className="text-green-600">Active</span>
+                ) : (
+                  <span className="text-gray-500">Inactive</span>
+                )}
+              </Switch>
+            ) : (
+              <p className="text-red-500">You have ongoing booking.</p>
+            )}
           </div>
         </div>
       </div>
