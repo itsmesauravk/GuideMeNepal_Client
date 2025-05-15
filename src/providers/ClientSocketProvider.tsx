@@ -43,6 +43,7 @@ export function ClientSocketProvider({ children }: ClientSocketProviderProps) {
       const socket = io(process.env.NEXT_PUBLIC_API_URL_MAIN, {
         query: {
           userId: userId,
+          role: session?.user?.role,
         },
         transports: ["websocket"],
       })

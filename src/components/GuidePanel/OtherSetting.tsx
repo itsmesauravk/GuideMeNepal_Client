@@ -109,7 +109,7 @@ const OtherSetting: React.FC<OtherSettingProps> = ({
           </div>
 
           <div className="flex flex-col items-center">
-            {guideDetails?.availability?.isActivate ? (
+            {guideDetails?.availability?.isAvailable ? (
               <Switch
                 isSelected={isActive}
                 onChange={handleActivityToggle}

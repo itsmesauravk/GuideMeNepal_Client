@@ -174,6 +174,7 @@ interface Metrics {
   averageRating: number
   totalEarnings: number
   totalRequests: number
+  unreadNotifications: number
 }
 
 // Main Guide Panel Dashboard Data Type
