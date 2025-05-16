@@ -1,6 +1,8 @@
 "use client"
 
+import { user } from "@heroui/theme"
 import axios from "axios"
+import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -9,6 +11,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState("")
+  const [userType, setUserType] = useState("")
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
@@ -25,7 +28,7 @@ const ResetPassword = () => {
     try {
       setLoading(true)
       const response = await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/client/password-reset/${token}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/client/password-reset/${token}?user=${userType}`,
         {
           password,
         }
@@ -59,8 +62,15 @@ const ResetPassword = () => {
 
   useEffect(() => {
     const t = searchParams.get("t")
+    const u = searchParams.get("u")
     if (t) {
       setToken(t)
+      setUserType(u || "")
+      if (u === "guide") {
+        setUserType("guide")
+      } else {
+        setUserType("client")
+      }
     } else {
       setError("Invalid token")
     }
@@ -128,9 +138,21 @@ const ResetPassword = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <a href="/login" className="text-sm text-blue-600 hover:underline">
-            Back to Login
-          </a>
+          {userType === "guide" ? (
+            <Link
+              href="/login/guide"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Back to Login
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Back to Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

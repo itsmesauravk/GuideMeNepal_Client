@@ -334,9 +334,7 @@ const handler = NextAuth({
     async signIn({ user, account, profile }) {
       // Only process OAuth accounts (Google, Facebook)
       if (account?.provider === "google" || account?.provider === "facebook") {
-        console.log("we are in signIn callback")
         try {
-          console.log("INside try")
           // Send OAuth user data to your backend to create/update user
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL_MAIN}/auth/${account.provider}/register`,
