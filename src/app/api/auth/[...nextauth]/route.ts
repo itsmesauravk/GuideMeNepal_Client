@@ -290,6 +290,7 @@ const handler = NextAuth({
           }
           return null
         } catch (error: any) {
+          console.log("error", error)
           if (error.response?.data?.error) {
             throw new Error(error.response.data.error.message)
           }
