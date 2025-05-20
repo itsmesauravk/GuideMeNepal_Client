@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import { Mail, Lock, User } from "lucide-react"
+import { Mail, Lock, User, EyeIcon, EyeClosed } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { toast } from "sonner"
@@ -14,10 +14,17 @@ const RegisterFormClient = () => {
   const [fullName, setFullName] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [viewPassword, setViewPassword] = useState(false)
   const [successMessage, setSuccessMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
   const router = useRouter()
+
+  const passwordValdiation = (password: string) => {
+    // minimun 6 characters, at least one uppercase letter, one lowercase letter, one number
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+    return passwordRegex.test(password)
+  }
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,7 +33,15 @@ const RegisterFormClient = () => {
       return toast.warning("Please fill all the fields")
     }
 
+    if (!passwordValdiation(password)) {
+      return setErrorMessage(
+        "Password must be at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
+      )
+    }
+
     try {
+      setLoading(true)
+      setErrorMessage("")
       const formData = new FormData()
 
       formData.append("email", email)
@@ -45,14 +60,18 @@ const RegisterFormClient = () => {
         // toast.success(response.data.message || "Registered successfully")
         // router.push("/login")
         setSuccessMessage("Please check your email to verify your account")
+        setErrorMessage("")
       } else {
         // toast.error(response.data.message || "Failed to register")
         setErrorMessage(response.data.message || "Failed to register")
+        setSuccessMessage("")
       }
     } catch (error: any) {
       console.log(error, "error")
       // toast.error(error.response?.data?.message || "Failed to register")
       setErrorMessage(error.response?.data?.message || "Failed to register")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -61,7 +80,7 @@ const RegisterFormClient = () => {
       setSuccessMessage("")
       setErrorMessage("")
     }, 5000)
-  }, [setSuccessMessage, setErrorMessage])
+  }, [successMessage, errorMessage])
 
   return (
     <>
@@ -108,6 +127,7 @@ const RegisterFormClient = () => {
                 <input
                   type="text"
                   value={fullName}
+                  required
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary"
                   placeholder="Full Name"
@@ -123,6 +143,7 @@ const RegisterFormClient = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary"
                   placeholder="Email"
+                  required
                 />
               </div>
             </div>
@@ -130,12 +151,24 @@ const RegisterFormClient = () => {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5" />
                 <input
-                  type="password"
+                  type={viewPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-background-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary bg-background-secondary"
                   placeholder="Password"
+                  required
                 />
+                {viewPassword ? (
+                  <EyeIcon
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5 cursor-pointer"
+                    onClick={() => setViewPassword(!viewPassword)}
+                  />
+                ) : (
+                  <EyeClosed
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary w-5 h-5 cursor-pointer"
+                    onClick={() => setViewPassword(!viewPassword)}
+                  />
+                )}
               </div>
             </div>
 
@@ -143,7 +176,7 @@ const RegisterFormClient = () => {
               type="submit"
               className="w-full bg-primary-dark hover:bg-primary-darker text-white py-3 rounded-lg transition-colors font-medium"
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </button>
 
             <p className="text-center text-text-secondary">

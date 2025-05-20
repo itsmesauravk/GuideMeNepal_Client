@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Mail, Lock } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -10,11 +10,14 @@ import Navbar from "../common/Navbar"
 import Footer from "../common/Footer"
 import { getSession, signIn } from "next-auth/react"
 import { SessionData } from "@/utils/Types"
+import { set } from "date-fns"
 
 const GuideLoginForm = () => {
   const [email, setEmail] = useState("sanjeetkazithapa@gmail.com")
   const [password, setPassword] = useState("secret123")
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
 
   const router = useRouter()
 
@@ -57,7 +60,8 @@ const GuideLoginForm = () => {
       })
 
       if (result?.error) {
-        toast.error(result.error)
+        // toast.error(result.error)
+        setErrorMessage(result.error)
       } else if (result?.url) {
         // router.push(result.url)
         // Get the session to check firstTimeLogin
@@ -74,9 +78,19 @@ const GuideLoginForm = () => {
       }
     } catch (error: any) {
       console.log(error, "error")
-      toast.error(error.response?.data?.message || "Failed to login")
+      setErrorMessage(error.response?.data?.message || "Failed to login")
+      // toast.error(error.response?.data?.message || "Failed to login")
+    } finally {
+      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage("")
+      setSuccessMessage("")
+    }, 5000)
+  }, [errorMessage, successMessage])
 
   return (
     <>
@@ -88,6 +102,17 @@ const GuideLoginForm = () => {
           <h1 className="text-4xl font-semibold text-primary mb-8 text-center">
             Login as a Guide
           </h1>
+
+          {errorMessage && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+              <span className="block sm:inline">{errorMessage}</span>
+            </div>
+          )}
+          {successMessage && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+              <span className="block sm:inline">{successMessage}</span>
+            </div>
+          )}
 
           {/* Login Form */}
           <form className="space-y-6" onSubmit={loginHandler}>
