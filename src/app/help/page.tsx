@@ -43,7 +43,7 @@ const SupportPage = () => {
                 booking process, and more.
               </p>
               <Link
-                href="/faq"
+                href="/faqs"
                 className="inline-flex items-center px-4 py-2 bg-primary-dark text-white rounded-md hover:bg-primary-darkertransition-colors"
               >
                 Browse FAQs
