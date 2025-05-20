@@ -15,7 +15,6 @@ import {
 import Link from "next/link"
 import React from "react"
 import { Accordion, AccordionItem } from "@heroui/react"
-import exp from "constants"
 
 const page = () => {
   const defaultContent =
