@@ -21,7 +21,12 @@ const Footer = () => {
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">About Us</a>
+                <Link
+                  href={"/about"}
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  About Us
+                </Link>
               </li>
               <li>
                 <a className="text-gray-600 hover:text-gray-800">
@@ -37,20 +42,36 @@ const Footer = () => {
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Contact Us</a>
+                <Link
+                  href={"/help"}
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Contact Us
+                </Link>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">FAQ's</a>
+                <Link
+                  href={"/faqs"}
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  FAQ's
+                </Link>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">
+                <Link
+                  href={"/terms"}
+                  className="text-gray-600 hover:text-gray-800"
+                >
                   Terms & Conditions
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">
+                <Link
+                  href={"/privacy-policy"}
+                  className="text-gray-600 hover:text-gray-800"
+                >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
             </nav>
           </div>
